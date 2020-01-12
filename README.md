@@ -1,5 +1,5 @@
 # Coins
-Research on Bitcoin Scalability and Usability. Prototypes and Papers.
+Research on Bitcoin scalability and usability. Prototypes and papers.
 
 ## Projects
 - [Coins Whitepaper](coins.pdf)
