@@ -20,9 +20,9 @@ The LN facilitates millions of off-chain transactions. Still, there are many ope
   - Currently, the payee has to compute a route to his recipient. 
 
 Unfortunatly, these usability issues exclude most endusers.
-The LN cannot work on a mobile device with an unreliable connection. Nevertheless, exactly that is the setup of the next billion users that we want to on-board to a better financial system.   
+The LN cannot work on mobile devices with unreliable connections. Nevertheless, exactly that is the setup of the next billion users.   
 
-Users expect a frictionless payment experience. Humans thrive for simplicity.
+And users expect a frictionless payment experience. Humans thrive for simplicity.
 
 Therefore, to gain popularity, most LN Apps such as [BlueWallet](https://bluewallet.io/) or [Tippin.me](https://tippin.me/) have to offer custodial wallets to endusers.
 Currently, full custody is the only way to bridge the usability gap and enable LN payments for mobile users.
