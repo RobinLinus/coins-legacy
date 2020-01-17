@@ -112,4 +112,6 @@ Such a language should be expressed both in a design specification and in high-q
 
 Is it possible to develop tools for an open source community with usability standards as high as Apple's or Google's? 
 
+How can we provide flexibility to the developer community and consistency to users? Certainly, one classical approach is modularity. Even further goes the [Unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy). "The Unix philosophy emphasizes building simple, short, clear, modular, and extensible code that can be easily maintained and repurposed by developers other than its creators. The Unix philosophy favors composability as opposed to monolithic design.". 
 
+Thus, the design of the Bitcoin ecosystem for users must include the Bitcoin app developers. It should provide a set of flexible standards and libraries which make it easy to build high quality user experiences. 
