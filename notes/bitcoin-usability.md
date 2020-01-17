@@ -4,7 +4,7 @@ This is a loose compilation of ideas and concepts regarding the usability of Bit
 
 Assuming hyperbitcoinization – a world were most people pay in bitcoin – what would the usability be like?
 
-Certainly, user-friendly Bitcoin is hard. In general, cryptography is hard. Usability is hard. Usable cryptography is insanely hard. It is an on-going process to balance the gap between security and usability. The following is a map of Bitcoin design challenges and solutions.
+Certainly, user-friendly Bitcoin is hard. In general, cryptography is hard. Usability is hard. Usable cryptography is insanely hard. Balancing the gap between security and usability is an on-going process. The following is a map of Bitcoin design challenges and solutions.
 
 ## Simplicity
 Simplicity is a universal design philosophy. It is a fundamental heuristic with applications ranging from cryptography to product design.
