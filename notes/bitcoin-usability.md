@@ -1,6 +1,6 @@
 # Bitcoin Usability 
 
-This is a loose compilation of concepts regarding the usability of Bitcoin. 
+This is a loose compilation of ideas and concepts regarding the usability of Bitcoin. 
 
 Assuming hyperbitcoinization – a world were most people pay in bitcoin – what would the usability be like?
 
