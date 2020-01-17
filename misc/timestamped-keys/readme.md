@@ -15,7 +15,7 @@ Drawbacks:
 - The proof is additional 64 bytes to store 
 - The proof is the secret. Can not share the proof
 
-### Alternative Description for the Protocol ( copied from a chat log )
+### Alternative Description for the Construction ( copied from a chat log )
 
 Here's a scheme which might make synchronization of SPV clients more efficient:
 
