@@ -1,6 +1,6 @@
 # Coins
 Research on Bitcoin scalability and usability. Prototypes and papers.
-Don't take anything too seriously. I am certrainly wrong most of the time.
+Feedback very welcome! 
 
 ## Projects
 - [Coins Whitepaper](https://coins.github.io/coins.pdf)
