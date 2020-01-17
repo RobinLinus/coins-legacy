@@ -25,7 +25,12 @@ The LN cannot work on mobile devices with unreliable connections. Nevertheless, 
 And users expect a frictionless payment experience. Humans thrive for simplicity.
 
 Therefore, to gain popularity, most LN Apps such as [BlueWallet](https://bluewallet.io/) or [Tippin.me](https://tippin.me/) have to offer custodial wallets to endusers.
-Currently, full custody is the only way to bridge the usability gap and enable LN payments for mobile users.
+Currently, full custody is the only way to bridge the usability gap and enable LN payments for mobile users. 
+
+There are non-custodial solutions, which actually do run a light node on your phone. Nevertheless:
+- You have to be always online
+- Inbound capacity is required for you to receive funds
+- The cost of an on-chain transaction must be neglectable for you
 
 Most users are on mobiles. Both in the emerging markets and in the western world. Thus, we have to adapt Bitcoin's scalability solution to people's reality without compromising their security.
 
