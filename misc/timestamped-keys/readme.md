@@ -33,4 +33,4 @@ A simple timestamping scheme uses a seed which is the hash of some entropy conca
 `seed = Hash( entropy || most_recent_block )`
 
 The tuple `(entropy, most_recent_block)` proves that `seed` was created after `most_recent_block`. 
-Thus, we need to scan only newer blocks to verify the full transaction history of `seed`.
+Thus, we need to scan only newer blocks to verify the full transaction history of any address derived from `seed`.
