@@ -15,14 +15,7 @@ Drawbacks:
 - The proof is additional 64 bytes to store 
 - The proof is the secret. Can not share the proof
 
-
-## BIP32 Compatible Scheme
-- use a derivation path 
-
-
-
-
-## Alternative Protocol Description ( copied from a chat log )
+### Alternative Description for the Protocol ( copied from a chat log )
 
 Here's a scheme which might make synchronization of SPV clients more efficient:
 
@@ -34,3 +27,8 @@ A simple timestamping scheme uses a seed which is the hash of some entropy conca
 
 The tuple `(entropy, most_recent_block)` proves that `seed` was created after `most_recent_block`. 
 Thus, we need to scan only newer blocks to verify the full transaction history of any address derived from `seed`.
+
+
+#### Furter Ideas
+- Use a BIP32-compatible scheme and derivation path like `/<block_hash>/.../`
+- Use the taproot scheme like (`P = x*G + H( x*G || block_hash )*G`) to publicly prove knowledge of `block_hash` and thus, the age of key `P`. Then the tuple `(x*G, block_hash)` is sufficient for anyone to prove that `P` did not receive any transactions before the block with id `block_hash` 
