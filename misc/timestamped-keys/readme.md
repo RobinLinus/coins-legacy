@@ -22,7 +22,7 @@ Drawbacks:
 
 
 
-## Alternative Protocol Description
+## Alternative Protocol Description ( copied from a chat log )
 
 Here's a scheme which might make synchronization of SPV clients more efficient:
 
