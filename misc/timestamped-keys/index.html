@@ -1,0 +1,57 @@
+<script>
+
+function sha256(buffer) {
+    return crypto.subtle.digest({ name: 'SHA-256' }, buffer).then(d => new Uint8Array(d))
+}
+
+function hexToBuffer(hexString) {
+    let result = [];
+    for (let i = 0; i < hexString.length; i += 2) {
+        result.push(parseInt(hexString.substr(i, 2), 16));
+    }
+    return new Uint8Array(result)
+}
+
+function bufferToHex(byteArray) {
+    return Array.prototype.map.call(byteArray, function(byte) {
+        return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+    }).join('');
+}
+
+function concatTypedArrays(a, b) {
+    const c = new(a.constructor)(a.length + b.length);
+    c.set(a, 0);
+    c.set(b, a.length);
+    return c;
+}
+
+function concat(a, b) {
+    return concatTypedArrays(
+        new Uint8Array(a.buffer || a),
+        new Uint8Array(b.buffer || b)
+    ).buffer;
+}
+
+function fromUnicode(string, encoding = 'utf-8') {
+    const encoder = new TextEncoder(encoding);
+    return encoder.encode(string);
+}
+
+const timestampedKey = {
+    phrase: 'witch collapse practice feed shame open despair creek road again ice least',
+    block: {
+        id: '000000000000000000020596f619f7210f23305a47c62fd1f45613a52d6018d5',
+        height: 603515,
+        timestamp: '2019-11-13 2:29 AM'
+    }
+}
+
+function generateKey(key) {
+    const blockId = hexToBuffer(key.block.id);
+    const seed = fromUnicode(key.phrase)
+    const sum = concat(blockId, seed);
+    return sha256(sum)
+}
+
+generateKey(timestampedKey).then(key => console.log(bufferToHex(key)))
+</script>
