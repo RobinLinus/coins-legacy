@@ -102,7 +102,7 @@ Those two apps should be clearly visible. The apps should be simple. Never too s
 
 
 ## Ecosystem of Apps
-Ideally, there exists a clean ecosystem of solutions which are designed to inter-operate seamlessly and cover the full spectrum of use cases. Ideally, the Bitcoin community offers an ecosystem experience like Apple or Google.
+Ideally, there exists a clean ecosystem of solutions which are designed to inter-operate seamlessly and cover the full spectrum of use cases. Ideally, the Bitcoin community offers a frictionless ecosystem experience like Apple or Google.
 
 Of course, there is already a great ecosystem. It is growing and I love that. Still, I would advocate for better standards and consistency. All successful ecosystems have a clear design language. Ideally such a language accompanies the user consistently throughout the full experience. The consistent repetition of designs and usability metaphors simplifies the user experience and thus, makes it secure. 
 
