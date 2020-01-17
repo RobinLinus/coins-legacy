@@ -12,7 +12,7 @@ Only simple constructions provide strong security. Only simplicity works because
 
 Obviously, Bitcoin services have special security requirements and therefore, special simplicity requirements. 
 
-The need for simplicity goes even deeper psychologically, since there is a high mental cost to complexity because of our instinctive loss aversion behavior when dealing with money.
+Regarding mainstream adoption, the need for simplicity goes even deeper psychologically, since there is a high mental cost to complexity because of our instinctive loss aversion behavior when dealing with money.
 [Daniel Kahneman's "Thinking, Fast and Slow"](https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow) summarizes research conducted over decades. 
 It can be interpreted as a theoretical foundation to describe our cognitive need for simplicity.
 
