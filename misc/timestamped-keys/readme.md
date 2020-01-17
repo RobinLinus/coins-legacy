@@ -29,6 +29,6 @@ The tuple `(entropy, most_recent_block)` proves that `seed` was created after `m
 Thus, we need to scan only newer blocks to verify the full transaction history of any address derived from `seed`.
 
 
-#### Furter Ideas
+### Furter Ideas
 - Use a BIP32-compatible scheme and derivation path like `/<block_hash>/.../`
 - Use the taproot scheme like (`P = x*G + H( x*G || block_hash )*G`) to publicly prove knowledge of `block_hash` and thus, the age of key `P`. Then the tuple `(x*G, block_hash)` is sufficient for anyone to prove that `P` did not receive any transactions before the block with id `block_hash` 
