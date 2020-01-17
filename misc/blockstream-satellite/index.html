@@ -1,0 +1,26 @@
+Open the console.
+<script type="text/javascript">
+const BASE_URI = 'https://api.blockstream.space';
+async function broadcast(message, bid) {
+    const formData = new FormData();
+    formData.append('bid', bid);
+    formData.append('message', message)
+    const response = await fetch(`${BASE_URI}/order`, { method: 'POST', body: formData });
+    const json = await response.json();
+    const invoice = json.lightning_invoice.payreq
+    return invoice;
+}
+
+const bid_in_milli_satoshis = 3000;
+const message = 'Broadcasted with ❤ by Robin Linus';
+
+broadcast(message, bid_in_milli_satoshis).then(console.log)
+
+
+console.log(`
+	Usage: 
+		broadcast( <message>, <bid_in_milli_satoshis> )
+		then pay the invoice to broadcast your message via the blockstream satellite
+	`)
+
+</script>
