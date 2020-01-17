@@ -1,6 +1,6 @@
 # Timestamped Keys 
 
-All clients have to scan the entire blockchain to prove the history of an address. There's a more efficient solution.
+Clients have to scan the entire blockchain to prove the history of an address. There's a more efficient solution.
 We can generate "timestamped" private keys such that we do not have to scan the blockchain for transactions occurring before the creation date of the keys.
 This reduces the scan's run time significantly.
 
