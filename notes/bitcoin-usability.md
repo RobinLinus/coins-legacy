@@ -106,12 +106,12 @@ Ideally, there exists a clean ecosystem of solutions which are designed to inter
 
 Of course, there is already a great ecosystem. It is growing and I love that. Still, I would advocate for better standards and consistency. All successful ecosystems have a clear design language. Ideally such a language accompanies the user consistently throughout the full experience. The consistent repetition of designs and usability metaphors simplifies the user experience and thus, makes it secure. 
 
-Google invented the [Material Design Language](https://material.io/design/) for their ecosystem. Material is meant to be highly flexible and customizable so I'd suggest to define a Material Design Dialect to serve as Bitcoin's design language.
-Ideally, A security design language covers also best practices and common pitfalls in Bitcoin designs. 
-Such a language should be expressed both in a design specification and in high-quality libraries of UI components. In tradition of best practices like security audits, we should develop industry standards for usability audits. 
-
 Is it possible to develop tools for an open source community with usability standards as high as Apple's or Google's? 
 
 How can we provide flexibility to the developer community and consistency to users? Certainly, one classical approach is modularity. Even further goes the [Unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy). "The Unix philosophy emphasizes building simple, short, clear, modular, and extensible code that can be easily maintained and repurposed by developers other than its creators. The Unix philosophy favors composability as opposed to monolithic design.". 
 
-Thus, the design of the Bitcoin ecosystem for users must include the Bitcoin app developers. It should provide a set of flexible standards and libraries which make it easy to build high quality user experiences. 
+The design of the Bitcoin ecosystem for users must include the Bitcoin app developers. It should provide a set of flexible standards and libraries which make it easy to build high quality user experiences. 
+
+Google invented the [Material Design Language](https://material.io/design/) for their ecosystem. Material is meant to be highly flexible and customizable so I'd suggest to define a Material Design Dialect to serve as Bitcoin's design language.
+Ideally, A security design language covers also best practices and common pitfalls in Bitcoin designs. 
+Such a language should be expressed both in a design specification and in high-quality libraries of UI components. In tradition of best practices like security audits, we should develop industry standards for usability audits. 
