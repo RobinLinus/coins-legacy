@@ -39,8 +39,8 @@ spendable:
   
 The following mechanism compresses well: 
 
-The covenant contains lots of redundancy. Actually, it is just a workaround to commit to the hash of a next transaction.
-So the covenant's private key can be a public constant. His nonce can be reused and thus, is also just a constant.
+The covenant contains lots of redundancy. Actually, we use its signatures `s` value as a workaround to commit to the hash of a particular next transaction.
+So the covenant's private key can be a public constant. His nonce can be reused and thus, is can also be just a constant.
 
 For maximum compression we can define: 
   - The redeem key equals the key of the sender of the funding transaction. 
