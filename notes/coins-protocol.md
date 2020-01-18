@@ -39,7 +39,7 @@ spendable:
   
 The following mechanism compresses well: 
 
-The covenant contains lots of redundancy. Actually, we use its signatures `s` value as a workaround to commit to the hash of a particular next transaction.
+The covenant contains lots of redundancy. Actually, we just use its signature's `s` value as a workaround to commit to the hash of a particular next transaction.
 So the covenant's private key can be a public constant. His nonce can be reused and thus, is can also be just a constant.
 
 For maximum compression we can define: 
