@@ -27,10 +27,19 @@ And users expect a frictionless payment experience. Humans thrive for simplicity
 Therefore, to gain popularity, most LN Apps such as [BlueWallet](https://bluewallet.io/) or [Tippin.me](https://tippin.me/) have to offer custodial wallets to endusers.
 Currently, full custody is the only way to bridge the usability gap and enable LN payments for mobile users. 
 
-There are great non-custodial solutions such as [Zap](https://zap.jackmallers.com/). And you can run a light node on your phone using [Neutrino](https://bitcoinmagazine.com/articles/neutrino-privacy-preserving-light-wallet-protocol). Nevertheless, to use the LN:
+There are great non-custodial solutions such as [Zap](https://zap.jackmallers.com/) or [Breez](https://github.com/breez). And you can run a light node on your phone using [Neutrino](https://bitcoinmagazine.com/articles/neutrino-privacy-preserving-light-wallet-protocol). Nevertheless, to use the LN:
 - You have to be always online
 - Inbound capacity is required for you to receive funds
 - The cost of an on-chain transaction must be neglectable for you
 
 Most users are on mobiles. Both in the emerging markets and in the western world. Thus, we have to adapt Bitcoin's scalability solution to people's reality without compromising their security.
 
+
+
+## Solutions 
+There's lots of active research around the above topics. 
+
+- Offline recipients
+	- [Lightning Rod](https://github.com/breez/LightningRod) allows you to send payments to offline recipients.
+	
+	
