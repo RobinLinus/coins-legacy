@@ -5,7 +5,7 @@
 To simplify the interface with Bitcoin's consensus we can enforce the following consensus rules for staking transactions:
 - Validators have to mark their funding transactions by mining a certain transaction hash. This way, a bitcoin block header and a list of the hashes of all transactions is sufficient to scan a block for funding transactions.
   - The same principle applies to punishment transactions. (Assuming `SIGHASH_NOINPUT`)
-  - Redeem transactions can be ignored because validators are remove as soon as their time lock opens. When they redeem their funds is not important.
+  - Redeem transactions can be ignored because validators are removed as soon as their time lock opens. The moment when they redeem their funds is not important.
   
 ## Staking Transactions
 There are three kinds of staking transactions 
@@ -17,6 +17,7 @@ To avoid data withholding attacks, all funding transactions must contain their p
 - The punishment transaction is compressible. We know upfront:
   - The input ( the funding transaction )
   - The output ( the full amount goes to `0x00....00` )
+  - The timelock ( i.e. 1 year )
   - What we do not know yet:
     - the covenant signature `(R,s)`
     - the covenant key
