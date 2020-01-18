@@ -37,9 +37,12 @@ Most users are on mobiles. Both in the emerging markets and in the western world
 
 
 ## Solutions 
-There's lots of active research around the above topics. 
+The above topics are actively researched. [Here you can find a discussion with t-bast from ACINQ](https://github.com/coins/coins.github.io/commit/dfb92618077c3b9cb8bd011993d0e7d81ee2cfac) sharing state of the art solutions. 
+
+Including:
 
 - Offline recipients
 	- [Lightning Rod](https://github.com/breez/LightningRod) allows you to send payments to offline recipients.
-	
+- Payment Routing 
+	- [Trampoline routing](https://medium.com/breez-technology/lightning-network-routing-privacy-and-efficiency-in-a-positive-sum-game-b8e443f50247) allows you to delegate the routing to a payment service
 	
