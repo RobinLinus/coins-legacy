@@ -56,5 +56,5 @@ For maximum compression we can define:
 
 In total, this scheme requires only 32 bytes of overhead in Bitcoin's blockchain.
 
-(Additionally, 32 bytes for the first nonce commitment is required. Is a Taproot-like construction possible? )
+(Additionally, 32 bytes for the first nonce commitment is required. Is a Taproot-like construction possible to hide the commitment in a public key? )
 
