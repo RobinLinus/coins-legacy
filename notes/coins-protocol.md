@@ -21,8 +21,8 @@ To avoid data withholding attacks, all funding transactions must contain their p
 The punishment transaction is compressible. We know upfront:
 - The only input ( the funding transaction )
 - The only output
-  - the full amount of the funding TX 
-  - recipient address is a global constant like `0x00....00`
+  - the value is the full amount of the funding TX minus a constant fee.
+  - the recipient address is a global constant like `0x00....00`
 - The timelock is a global constant like 1 year
 
 What we do not know yet:
@@ -56,5 +56,5 @@ For maximum compression we can define:
 
 In total, this scheme requires only 32 bytes of overhead in Bitcoin's blockchain.
 
-
+(Additionally, 32 bytes for the first nonce commitment is required. Is a Taproot-like construction possible? )
 
