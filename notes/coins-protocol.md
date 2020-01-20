@@ -1,5 +1,13 @@
 # Coins 
 
+Implementation details of the Coins protocol.
+
+## Staking Transactions
+There are three kinds of staking transactions 
+  - funding 
+  - redeem
+  - punishment
+  
 ## Lightclient
 
 To simplify the interface with Bitcoin's consensus we can enforce the following consensus rules for staking transactions:
@@ -7,22 +15,18 @@ To simplify the interface with Bitcoin's consensus we can enforce the following 
   - The same principle applies to punishment transactions. (Assuming `SIGHASH_NOINPUT`)
   - Redeem transactions can be ignored because validators are removed as soon as their time lock opens. The moment when they redeem their funds is not important.
   
-## Staking Transactions
-There are three kinds of staking transactions 
-  - funding 
-  - redeem
-  - punishment
-
+## Withholding Attacks
+It is a very nice property to have all necessary data always available within Bitcoin's blockchain.
 To avoid data withholding attacks, all funding transactions must contain their punishment transaction in an `OP_RETURN` output.
-- The punishment transaction is compressible. We know upfront:
-  - The input ( the funding transaction )
-  - The output ( the full amount goes to `0x00....00` )
-  - The timelock ( i.e. 1 year )
-  - What we do not know yet:
-    - the covenant signature `(R,s)`
-    - the covenant key
-    - validator key 
-    - redeem key
+The punishment transaction is compressible. We know upfront:
+- The input ( the funding transaction )
+- The output ( the full amount goes to `0x00....00` )
+- The timelock ( i.e. 1 year )
+- What we do not know yet:
+  - the covenant signature `(R,s)`
+  - the covenant key
+  - validator key 
+  - redeem key
 
 Let's recall the collateral contract:
 
