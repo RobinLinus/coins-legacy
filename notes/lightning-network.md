@@ -45,6 +45,8 @@ Including:
 - Offline recipients
 	- [Lightning Rod](https://github.com/breez/LightningRod) allows you to send payments to offline recipients.
 - Payment Routing 
-	- [Trampoline routing](https://medium.com/breez-technology/lightning-network-routing-privacy-and-efficiency-in-a-positive-sum-game-b8e443f50247) allows you to delegate the routing to a payment service
+	- [Trampoline routing](https://medium.com/breez-technology/lightning-network-routing-privacy-and-efficiency-in-a-positive-sum-game-b8e443f50247) will allow you to delegate the routing to a payment service
 - Off-chain on-boarding
 	- Channel Factories are meant to facilitate off-chain on-boarding, yet I don't understand how. Can someone point me to an explanation? The [paper introducing channel factories](https://tik-old.ee.ethz.ch/file//a20a865ce40d40c8f942cf206a7cba96/Scalable_Funding_Of_Blockchain_Micropayment_Networks%20(1).pdf) doesn't mention that topic. It discusses only channels between the users of the factory which are determined by its funding via on-chain multi-sig UTXO. 
+- Inbound capacity 
+	- [Pay to Open](https://medium.com/@ACINQ/phoenix-part-2-pay-to-open-4a8a482dd4d) is a trust-reduced way to provide inbound channel capacity on demand. Still, it requires an on-chain transaction and fees.
