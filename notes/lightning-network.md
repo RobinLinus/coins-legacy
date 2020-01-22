@@ -49,4 +49,4 @@ Including:
 - Off-chain on-boarding
 	- Channel Factories are meant to facilitate off-chain on-boarding, yet I don't understand how. Can someone point me to an explanation? The [paper introducing channel factories](https://tik-old.ee.ethz.ch/file//a20a865ce40d40c8f942cf206a7cba96/Scalable_Funding_Of_Blockchain_Micropayment_Networks%20(1).pdf) doesn't mention that topic. It discusses only channels between the existing users of the factory which are determined by its funding via on-chain multi-sig UTXO. 
 - Inbound capacity 
-	- [Pay to Open](https://medium.com/@ACINQ/phoenix-part-2-pay-to-open-4a8a482dd4d) is a trust-reduced way to provide inbound channel capacity on demand. Still, it requires an on-chain transaction and fees.
+	- [Pay to open](https://medium.com/@ACINQ/phoenix-part-2-pay-to-open-4a8a482dd4d) is a trust-reduced mechanism to provide inbound channel capacity on demand. Still, it requires an on-chain transaction and fees.
