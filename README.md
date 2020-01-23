@@ -12,5 +12,3 @@ Feedback is very welcome!
 - [Exotic Bitcoin Scripts](https://github.com/coins/bitcoin-scripts)
 - [CoinThx - A simple bitcoin button](https://github.com/coins/thx)
 - [Notes on Bitcoin](https://github.com/coins/coins.github.io/tree/master/notes)
-
-[<img src="https://coins.github.io/thx/logo-color-large-pill-320px.png" alt="CoinThx" width="200"/>](https://coins.github.io/thx/#1K9zQ8f4iTyhKyHWmiDKt21cYX2QSDckWB?label=Coins%20Project&message=Thank%20you%20for%20your%20contribution!)
