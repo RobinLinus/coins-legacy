@@ -8,12 +8,14 @@ There are three kinds of staking transactions
   - redeem
   - punishment
   
-## Lightclient
+## Bitcoin Lightclient
 
 To simplify the interface with Bitcoin's consensus we can enforce the following consensus rules for staking transactions:
 - Validators have to mark their funding transactions by mining a certain transaction hash. This way, a bitcoin block header and a list of the hashes of all transactions is sufficient to scan a block for funding transactions.
   - The same principle applies to punishment transactions. (Assuming `SIGHASH_NOINPUT`)
   - Redeem transactions can be ignored because validators are removed as soon as their time lock opens. The moment when they redeem their funds is not important.
+  - This filters the block size down to about `3000 TX/block * 32 bytes/TX ~ 96 kBytes/block`
+  
   
 ## Withholding Attacks
 It is a very nice property to have all necessary data always available within Bitcoin's blockchain.
