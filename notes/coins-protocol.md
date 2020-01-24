@@ -14,7 +14,8 @@ To simplify the interface with Bitcoin's consensus we can enforce the following 
 - Validators have to mark their funding transactions by mining a certain transaction hash. This way, a bitcoin block header and a list of the hashes of all transactions is sufficient to scan a block for funding transactions.
   - The same principle applies to punishment transactions. (Assuming `SIGHASH_NOINPUT`)
   - Redeem transactions can be ignored because validators are removed as soon as their time lock opens. The moment when they redeem their funds is not important.
-  - This filters the block size down to about `3000 TX/block * 32 bytes/TX ~ 96 kBytes/block`
+  - This filters the block size down to about `3000 TX/block * 32 bytes/TX ~ 96 kBytes/block`. This is about 90% less than downloading a full block.
+  - ( Downside is the computational cost for the TX. Mining a collision resistancy of 1/10000 took me 2.5s on an iphone. In our case that's a neglectable once-per-year cost. For LN transactions this would we way too slow though? Note that this could be done in a privacy preserving way. The hash prefix does not have to be zeros. It can be any bit string, hiding your identity ) 
   
   
 ## Withholding Attacks
