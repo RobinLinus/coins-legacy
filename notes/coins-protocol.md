@@ -15,7 +15,8 @@ To simplify the interface with Bitcoin's consensus we can enforce the following 
   - The same principle applies to punishment transactions. (Assuming `SIGHASH_NOINPUT`)
   - Redeem transactions can be ignored because validators are removed as soon as their time lock opens. The moment when they redeem their funds is not important.
   - This filters the block size down to about `3000 TX/block * 32 bytes/TX ~ 96 kBytes/block`. This is about 90% less than downloading a full block.
-  - ( Downside is the computational cost for the TX. Mining a collision resistancy of 1:10000 took me 2.5s on an iphone. In our case that's a neglectable once-per-year cost. For LN transactions this would we way too slow though? Note that this could be done in a privacy preserving way. The hash prefix does not have to be zeros. It can be any bit string, hiding your identity ) 
+  - ( Downside is the computational cost for the TX. Mining a collision resistancy of 1:10000 took me 2.5s on an iphone. In our case that's a neglectable once-per-year cost. Theoretically it could be as high as requiring a couple seconds on an ASIC.
+For LN transactions this would we a bit too slow though... Still, note that this could be done in a privacy preserving way. The hash prefix does not have to be zeros. It can be any bit string, hiding your identity ) 
   
   
 ## Withholding Attacks
