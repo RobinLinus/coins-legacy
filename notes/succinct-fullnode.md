@@ -37,19 +37,24 @@ Currently, the set of all UTXO's output numbers would be about `70 000 000 * 5 b
 ### UTXO Bit Vector
 Using Output Numbers, we can represent the status of all outputs within a large bit vector. Naively, there are 
 `#blocks * transactions/block * outputs/transaction` many outputs. We need one bit to reprensent `spent/unspent`.
+
 `615000 * 3000 * 2 bits ~ 461 MB` . There are only `70 000 000` unspent outputs. 
 This means the ratio of  `1` vs `0` is about `1:52`. Thus, we can compress the bit vector heavily.
 
 Simple entropy encoding already reduces to: 
 
-`-log2(1/52) * 1/52 * 70000000 -log2(51/52) * 51/52 * 3690000000 bits ~ 13 MB`
+`-log2(1/52) * 1/52 * 70000000 -log2(51/52) * 51/52 * 3690000000 bits ~ 13 MB`.
 
-Even in the compressed state we can update efficiently. 
+This holds true, even if we allow for up to 3000 outputs per transactions.
+
+Note that even in the compressed state we can update efficiently. 
+
+
 
 #### References 
 - http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
 - https://www.youtube.com/watch?v=52FVkHlCh7Y
 - https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
-
+- https://bitcoin.stackexchange.com/questions/29786/what-is-the-maximum-number-of-output-addresses-i-can-send-to-with-one-bitcoin-tr?rq=1
 
 
