@@ -1,6 +1,6 @@
 # Succinct Bitcoin Consensus 
 
-The following are order-of-magnitude estimates of ideas to compress bitcoin's blockchain for light clients.
+The following are order-of-magnitude estimates regarding ideas to compress bitcoin's blockchain for light nodes.
 
 ## Headers Chain
 The raw size of the headers chain is `block_height * 80 bytes`. As of today this is about `615000 blocks * 80 bytes ~ 49.2 MB`. 
