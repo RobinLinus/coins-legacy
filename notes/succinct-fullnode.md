@@ -14,13 +14,15 @@ As a ballpark figure for "a lot of data for an enduser" we assume a [YouTube vid
 ## Headers Chain
 The raw size of the headers chain is `block_height * 80 bytes`. As of today this is about `615000 blocks * 80 bytes ~ 49.2 MB`. 
 Headers are not random data, but compressible with a factor of about `1.77` 
-([see Headergolf](https://github.com/alecalve/headergolf)). This compresses the current chain down to `27 MB`.
+([see Headergolf](https://github.com/alecalve/headergolf)). This compresses the current chain down to `27 MB`. 
+
+A consensus change to support [FlyClient](https://eprint.iacr.org/2019/226.pdf) or [NiPoPoW](https://eprint.iacr.org/2017/963.pdf) could compress the headers chain down to about 1 MB.  
 
 ## UTXO Set
 
 ### Inclusion Proofs for Spent Outputs
 
-We can can extend each block with Merkle inclusion proofs for every spent output. Block extensions prove output inclusion. They reduce the required knowledge of the UTXO set to the question, if a particular output is actually unspent. The construction requires an overhead of about:
+We can extend each block with Merkle inclusion proofs for every spent output. Block extensions prove output inclusion. They reduce the required knowledge of the UTXO set to the question, if a particular output is actually unspent. The construction requires an overhead of about:
 - `proof_size * outputs/transaction * transactions / block`
   - `proof_size ~ ( log2( transactions/block ) - 1) * 32 bytes` ( We can do `-1` here because the Merkle root is in the header and the transaction hash is in the current block as UTXO-ID, which's inclusion we want to prove. )
 - `( (log2(3000) -1) * 32 bytes ) * 2 * 3000 ~ 1.83 MB / block` for the inclusion proofs
