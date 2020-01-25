@@ -1,6 +1,6 @@
 # Succinct Bitcoin Consensus 
 
-The following are back of the envelope calculations regarding ideas to compress bitcoin's blockchain for light nodes.
+The following are back-of-the-envelope calculations regarding ideas to compress bitcoin's blockchain for light nodes.
 I guess most of these ideas [have been discussed vaguely before](#references). This work estimates order-of-magnitudes that help assess their feasibility.
 
 We assume Bitcoin's blockchain currently has 
@@ -65,10 +65,9 @@ Using Output Paths, we can represent the status of all outputs within a large bi
 This means the ratio of  `1` vs `0` is about `1:52`. Thus, we can compress the bit vector heavily.
 
 Simple entropy encoding already reduces to: 
+`-(log2(1/52) * 1/52 +log2(51/52) * 51/52) * 3690000000 bits ~ 63 MB`.
 
-`-log2(1/52) * 1/52 * 70000000 -log2(51/52) * 51/52 * 3690000000 bits ~ 13 MB`.
-
-A more realistic model, with up to 3000 outputs per transaction is just about `1 MB` larger. Note there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. 
+A more realistic model, with up to 3000 outputs per transaction is about `2x` larger. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. 
 
 #### Bit Vector Commitment
 We can generate hash commitments of the bit vector. Digesting 13 MB every block might be inefficient.
@@ -78,7 +77,7 @@ We can easily exploit the fact that old UTXOs are much more unlikely to get spen
 ## Sync Succinctly
 If we had a commitment to the bit vector at some block height, we could simply download the bit vector and start syncing the chain from there with extended blocks. Extended blocks are about 4x as big as regular blocks. Thus, syncing with this scheme is efficient only if we can cut off more than 3/4 of the chain. In theory, this is no problem - every block could have a commitment. Then we could cut off almost the full chain. If we would check only the 100 most recent extended blocks, we could sync our succinct full node by downloading: 
 
-`headers_chain + bit_vector + extended_blocks ~ 27 MB + 15 MB + 100 * 4 MB = 442 MB`. 
+`headers_chain + bit_vector + extended_blocks ~ 27 MB + 63 MB + 100 * 4 MB = 490 MB`. 
 
 This is only 1.5 YouTube videos and therefore interesting to serve endusers.
 
