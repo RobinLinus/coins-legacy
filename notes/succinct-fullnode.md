@@ -35,7 +35,7 @@ In the following, blocks extended with such inclusion proofs are denoted as *ext
 
 ### Output Paths
 We can address every output ever happened with a simple scheme: `block_index/transaction_index/output_index`. We call that an *output path*.
-This fits perfectly with Merkle inclusion proofs. To verify an inclusion proof, we need to know the block header in the chain, 
+Output paths correspond perfectly with inclusion proofs via Merkle paths. To verify an inclusion proof, we need to know the block header in the chain, 
 which corresponds to a `block_index`. The inclusion proof is a Merkle path, which corresponds to a certain `transaction_index` 
 within that block. The full transaction defines the `output_index` of its outputs. 
 Thus, an inclusion proof corresponds to an output path.
