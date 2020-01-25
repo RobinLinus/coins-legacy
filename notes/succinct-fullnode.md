@@ -45,9 +45,7 @@ Simple entropy encoding already reduces to:
 
 `-log2(1/52) * 1/52 * 70000000 -log2(51/52) * 51/52 * 3690000000 bits ~ 13 MB`.
 
-This holds true, even if we allow for up to 3000 outputs per transactions.
-
-Note that even in the compressed state we can update efficiently. 
+A more realistic model, with up to 3000 outputs per transaction is just about `1 MB` larger. Note there are simple data structures, such that, even in a compressed state, we can update our bit vector efficiently. 
 
 
 
