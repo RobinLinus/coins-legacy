@@ -70,3 +70,9 @@ Furthermore, blocks with more than 50% SegWit transactions are proportionally mo
 - https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
 
 
+
+### Further Ideas
+
+#### Successive Hash Digest?
+The transactions within the inclusion proofs are a major inefficiency. SegWit transactions help because they exclude the Signatures from a transaction's hash. We might be able to reduce the data further by successively digesting the transaction. 
+We do not care about its inputs - we want to prove only one output. So we can pre-digest all inputs and all outputs up to our output's index. This compresses the "first half" of the transaction into a SHA256 digest state which has 32 bytes. That is sufficient. In particular because we perform a second round of SHA256 with the result to derive the actual TXID.
