@@ -73,7 +73,7 @@ Math.round(E / 8 / 1e6)+' MB'
 >> 155 MB
 ```
 
-A more realistic model, with much less than 3000 outputs per transaction is only about `60 MB`. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. 
+Using a more realistic model, with much less than 3000 outputs per transaction is only about `63 MB`. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. 
 
 #### Bit Vector Commitment
 We can generate hash commitments of the bit vector. Digesting 63 MB every block might be inefficient.
