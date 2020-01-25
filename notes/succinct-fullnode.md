@@ -61,12 +61,19 @@ Currently, the set of all UTXO paths would be about `70 000 000 * 6 bytes = 420 
 Using Output Paths, we can represent the status of all outputs within a large bit vector. Naively, there are 
 `#blocks * transactions/block * outputs/transaction` many outputs. We need one bit to represent `spent/unspent`.
 
-`615000 * 3000 * 2 bits ~ 461 MB` . There are only `70 000 000` unspent outputs. 
-This means the ratio of  `1` vs `0` is about `1:52`. Thus, we can compress the bit vector heavily. Simple entropy encoding already reduces to: 
+`615000 * 3000 * 3000 bits ~ 691 GB` . Yet, there are only `70 000 000` unspent outputs. Thus, we can compress the bit vector heavily. Simple entropy encoding already reduces to: 
 
-`-(log2(1/52) * 1/52 + log2(51/52) * 51/52) * 3690000000 bits ~ 63 MB`.
+```
+outputs = 615000 * 3000 * 3000;
+unspent_outputs = 70 * 1e6;
+P = unspent_outputs/outputs;  
+E = - (Math.log2(P)*P + Math.log2(1-P)*(1-P)) * outputs
 
-A more realistic model, with up to 3000 outputs per transaction is about `2x` larger. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. 
+Math.round(E / 8 / 1e6)+' MB'
+>> 155 MB
+```
+
+A more realistic model, with much less than 3000 outputs per transaction is only about `60 MB`. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. 
 
 #### Bit Vector Commitment
 We can generate hash commitments of the bit vector. Digesting 63 MB every block might be inefficient.
