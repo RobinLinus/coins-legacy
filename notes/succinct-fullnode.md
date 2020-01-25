@@ -69,7 +69,7 @@ This means the ratio of  `1` vs `0` is about `1:52`. Thus, we can compress the b
 A more realistic model, with up to 3000 outputs per transaction is about `2x` larger. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. 
 
 #### Bit Vector Commitment
-We can generate hash commitments of the bit vector. Digesting 13 MB every block might be inefficient.
+We can generate hash commitments of the bit vector. Digesting 63 MB every block might be inefficient.
 We can split up the bit vector into chunks of, say, 1 MB and commit to them in another Merkle tree.
 We can easily exploit the fact that old UTXOs are much more unlikely to get spent, simply by chunking using the natural order of the output paths. For example, we would almost never have to update the first chunk. 
 
