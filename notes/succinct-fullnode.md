@@ -18,9 +18,9 @@ We can can extend each block with Merkle inclusion proofs for every spent output
 - The proof is incomplete without the corresponding transaction, which is additionally about 250 bytes per transaction.
   - This means about another `2 * 3000 * 256 bytes ~ 1.53 MB / block`
     - We can remove the spending UTXO-Ids from the most recent blocks and replace them with their UTXO-Number, which saves us about `32-4 bytes` per transaction, so `(32-4)*3000*2 bytes ~ 168 kBytes/Block`
-  - Segwit transactions are significantly more compact for this usecase because we do not need the signature data. The non-witness part of a transaction is roughly `#inputs * 32 + #outputs * 32 bytes`, which reduces our average transaction size to about `128 bytes`
-    - A segwit-only block: `2 * 3000 * 128 bytes ~ 768 kBytes / block`
-    - Currently, 50% segwit-active block: `2 * 1500 * 256 bytes + 2 * 1500 * 128 bytes ~ 1.15 MB / block`
+  - SegWit transactions are significantly more compact for this use case because we do not need the signature data. The non-witness part of a transaction is roughly `#inputs * 32 + #outputs * 32 bytes`, which reduces our average transaction size to about `128 bytes`
+    - A SegWit-only block: `2 * 3000 * 128 bytes ~ 768 kBytes / block`
+    - Currently, 50% SegWit-active block: `2 * 1500 * 256 bytes + 2 * 1500 * 128 bytes ~ 1.15 MB / block`
 
 A total overhead of about `1.83 MB + 1.15 MB - 168 kBytes ~ 2.8 MB / block` is necessary.
 
@@ -37,7 +37,7 @@ Currently, the set of all UTXO's output numbers would be about `70 000 000 * 5 b
 
 ### UTXO Bit Vector
 Using Output Numbers, we can represent the status of all outputs within a large bit vector. Naively, there are 
-`#blocks * transactions/block * outputs/transaction` many outputs. We need one bit to reprensent `spent/unspent`.
+`#blocks * transactions/block * outputs/transaction` many outputs. We need one bit to represent `spent/unspent`.
 
 `615000 * 3000 * 2 bits ~ 461 MB` . There are only `70 000 000` unspent outputs. 
 This means the ratio of  `1` vs `0` is about `1:52`. Thus, we can compress the bit vector heavily.
@@ -49,12 +49,12 @@ Simple entropy encoding already reduces to:
 A more realistic model, with up to 3000 outputs per transaction is just about `1 MB` larger. Note there are simple data structures, such that, even in a compressed state, we can update our bit vector efficiently. 
 
 #### Bit Vector Commitments
-If we had a commitment to the bit vector at some block heigth, we could simply download the bit vector and start syncing the chain from there with extended blocks. Extended blocks are about 4x as big as regular blocks. Thus, syncing with this scheme is efficient only if we can cut off more than 3/4 of the chain. In theory, this is no problem - every block could have a commitment. Then we could cut off allmost the full chain. If we would check only the 100 most recent extended blocks, we could sync our succinct fullnode by downloading: 
+If we had a commitment to the bit vector at some block height, we could simply download the bit vector and start syncing the chain from there with extended blocks. Extended blocks are about 4x as big as regular blocks. Thus, syncing with this scheme is efficient only if we can cut off more than 3/4 of the chain. In theory, this is no problem - every block could have a commitment. Then we could cut off almost the full chain. If we would check only the 100 most recent extended blocks, we could sync our succinct fullnode by downloading: 
 
 `headers_chain + bit_vector + extended_blocks ~ 27 MB + 15 MB + 100 * 4 MB = 442 MB`. 
 
 #### Succinct Extended Blocks
-Can we further compress the necessary data? Obviously, we would have to compress the extended blocks because they make up 90% of the data. Some extensions are redundant. We can remove any inclusion proof for an output created within those 100 blocks.
+Can we further compress the necessary data? Obviously, we would have to compress the extended blocks because they make up 90% of the data. Some extensions are indeed redundant. We can remove any inclusion proof for an output created within those 100 blocks.
 Additionally, some proofs intersect which we can further exploit. Still, the majority of extended block data remains.
 
 
