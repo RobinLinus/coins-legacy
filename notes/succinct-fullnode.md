@@ -18,7 +18,7 @@ Headers are not random data, but compressible with a factor of about `1.77`
 
 A consensus change to support [FlyClient](https://eprint.iacr.org/2019/226.pdf) or [NiPoPoW](https://eprint.iacr.org/2017/963.pdf) could compress the headers chain down to about 1 MB.  
 
-## UTXO Set
+## Extended Blocks
 
 ### Inclusion Proofs for Spent Outputs
 
@@ -38,6 +38,35 @@ In total a overhead of about `1.83 MB + 1.15 MB - 192 kBytes ~ 2.8 MB / block` i
 In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. The size of an extended block is about `1.2 MB + 2.8 MB ~ 4 MB`.
 
 
+### Further Compression Ideas
+
+#### Succinct Extended Blocks
+Can we further compress the data? Obviously, we would have to compress the extended blocks because they make up 90% of the download. Some extensions are indeed redundant. We can remove any inclusion proof for an output created within those 100 blocks.
+Additionally, some proofs intersect which we can further exploit. Still, the majority of extended block data remains.
+Furthermore, blocks with more than 50% SegWit transactions are proportionally more efficient than our estimate.
+
+#### Progressive Hash Digest
+The transactions within the inclusion proofs are a major inefficiency. SegWit transactions help because they exclude the Signatures from a transaction's hash. We might be able to reduce the data further by progressively digesting the transaction. 
+We do not care about its inputs - we want to prove only one output. So we can pre-digest all inputs and all outputs up to our output's index. This compresses the "first half" of the transaction into a SHA256 digest state which has 32 bytes. That is sufficient. In particular because we perform a second round of SHA256 with the final hash to derive the actual TXID.
+
+Question: Can SHA256 digest the prefix of a preimage to an intermediate hash which can be later digested with the postfix to result in the preimage's hash? Formally, let `preimage = prefix + postfix` then is there 
+
+`SHA256( preimage ) = G( H( prefix ), postfix)`? 
+
+Indeed, according to the [pseudo code](https://en.wikipedia.org/wiki/SHA-2#Pseudocode) it should be possible to diggest a message progressively in chunks of 64 bytes into an intermediate hash of 32 bytes. [Demo code](https://coins.github.io/notes/progressive-sha256.html). This means output inclusion proofs do not grow with the size of funding inputs. This compresses non-SegWit transactions, too.
+
+An even more efficient construction would work in three steps `preimage = prefix + output + postfix` and pre-digest both the prefix and the postfix such that we would have to insert only our output to retrieve the hash. This is probably(?) impossible though.
+
+#### Extending Blocks on Request
+We might be able to reduce the network overhead further by extending blocks interactively. New UTXOs are more likely to get spent. Thus, the longer a node listens the fewer block extensions it requires. The more blocks it knows, the more proofs it can generate by itself. We can extend our protocol such that a node requests "blocks with extensions since chain height X" where X is a constant communicated at the beginning of a peer session.
+
+
+
+
+## UTXO Set
+
+
+
 ### Output Paths
 We can address every output ever happened with a simple scheme: `block_index/transaction_index/output_index`. We call that an *output path*.
 Output paths correspond perfectly with inclusion proofs via Merkle paths. To verify an inclusion proof, we need to know the block header in the chain, 
@@ -55,8 +84,6 @@ We can encode an output path naively by padding zeros. This results in:
 ```
 
 Currently, the set of all UTXO paths would be about `70 000 000 * 6 bytes = 420 MB`.
-
-
 
 
 ### UTXO Bit Vector
@@ -86,29 +113,6 @@ If we had a commitment to the bit vector at some block height, we could simply d
 `headers_chain + bit_vector + extended_blocks ~ 27 MB + 63 MB + 100 * 4 MB = 490 MB`. 
 
 This is only 1.5 YouTube videos and therefore interesting to serve endusers.
-
-### Further Compression Ideas
-
-#### Succinct Extended Blocks
-Can we further compress the data? Obviously, we would have to compress the extended blocks because they make up 90% of the download. Some extensions are indeed redundant. We can remove any inclusion proof for an output created within those 100 blocks.
-Additionally, some proofs intersect which we can further exploit. Still, the majority of extended block data remains.
-Furthermore, blocks with more than 50% SegWit transactions are proportionally more efficient than our estimate.
-
-#### Progressive Hash Digest
-The transactions within the inclusion proofs are a major inefficiency. SegWit transactions help because they exclude the Signatures from a transaction's hash. We might be able to reduce the data further by progressively digesting the transaction. 
-We do not care about its inputs - we want to prove only one output. So we can pre-digest all inputs and all outputs up to our output's index. This compresses the "first half" of the transaction into a SHA256 digest state which has 32 bytes. That is sufficient. In particular because we perform a second round of SHA256 with the final hash to derive the actual TXID.
-
-Question: Can SHA256 digest the prefix of a preimage to an intermediate hash which can be later digested with the postfix to result in the preimage's hash? Formally, let `preimage = prefix + postfix` then is there 
-
-`SHA256( preimage ) = G( H( prefix ), postfix)`? 
-
-Indeed, according to the [pseudo code](https://en.wikipedia.org/wiki/SHA-2#Pseudocode) it should be possible to diggest a message progressively in chunks of 64 bytes into an intermediate hash of 32 bytes. [Demo code](https://coins.github.io/notes/progressive-sha256.html). This means output inclusion proofs do not grow with the size of funding inputs. This compresses non-SegWit transactions, too.
-
-An even more efficient construction would work in three steps `preimage = prefix + output + postfix` and pre-digest both the prefix and the postfix such that we would have to insert only our output to retrieve the hash. This is probably(?) impossible though.
-
-#### Extending Blocks on Request
-We might be able to reduce the network overhead further by extending blocks interactively. New UTXOs are more likely to get spent. Thus, the longer a node listens the fewer block extensions it requires. The more blocks it knows, the more proofs it can generate by itself. We can extend our protocol such that a node requests "blocks with extensions since chain height X" where X is a constant communicated at the beginning of a peer session.
-
 
 
 ### Efficient UTXO Queries
