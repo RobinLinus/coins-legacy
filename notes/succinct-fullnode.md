@@ -68,6 +68,5 @@ Furthermore, blocks with more than 50% SegWit transactions are proportionally mo
 - http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
 - https://www.youtube.com/watch?v=52FVkHlCh7Y
 - https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
-- 
 
 
