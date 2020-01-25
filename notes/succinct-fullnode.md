@@ -1,7 +1,7 @@
 # Succinct Bitcoin Consensus 
 
 The following are back-of-the-envelope calculations regarding ideas to compress bitcoin's blockchain for light nodes.
-I guess most of these ideas [have been discussed vaguely before](#references). This work estimates order-of-magnitudes that help assess their feasibility.
+Most of these ideas [have been discussed vaguely before](#references). This work estimates order-of-magnitudes that help assess their feasibility.
 
 We assume Bitcoin's blockchain currently has 
 - `615 000 blocks` [Source](https://statoshi.info/)
