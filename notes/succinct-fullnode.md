@@ -9,6 +9,8 @@ We assume Bitcoin's blockchain currently has
 - `max 3000 TX/block` [Source](https://www.blockchain.com/en/charts/n-transactions-per-block?timespan=2years)
 - `max 3000 outputs/TX` [Source](https://bitcoin.stackexchange.com/questions/29786/what-is-the-maximum-number-of-output-addresses-i-can-send-to-with-one-bitcoin-tr?rq=1)
 
+As a ballpark figure for "a lot of data for an enduser" we assume a [YouTube video is about 300 MB](https://www.quora.com/What-is-the-average-size-of-a-YouTube-video).
+
 ## Headers Chain
 The raw size of the headers chain is `block_height * 80 bytes`. As of today this is about `615000 blocks * 80 bytes ~ 49.2 MB`. 
 Headers are not random data, but compressible with a factor of about `1.77` 
