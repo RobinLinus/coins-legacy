@@ -57,7 +57,7 @@ A more realistic model, with up to 3000 outputs per transaction is just about `1
 #### Bit Vector Commitment
 We can generate hash commitments of the bitvector. Digesting 13 MB every block might be inefficient.
 We can split up the bitvector into chunks of, say, 1 MB and commit to them in another Merkle tree.
-Chunking simply by natural order of the paths automatically exploits the fact that old UTXOs are much more unlikely to get spent. For example, we would almost never have to update the first chunk. 
+We can easily exploit the fact that old UTXOs are much more unlikely to get spent, simply by chunking using the natural order of the output paths. For example, we would almost never have to update the first chunk. 
 
 ### Sync Succinctly
 If we had a commitment to the bit vector at some block height, we could simply download the bit vector and start syncing the chain from there with extended blocks. Extended blocks are about 4x as big as regular blocks. Thus, syncing with this scheme is efficient only if we can cut off more than 3/4 of the chain. In theory, this is no problem - every block could have a commitment. Then we could cut off almost the full chain. If we would check only the 100 most recent extended blocks, we could sync our succinct fullnode by downloading: 
