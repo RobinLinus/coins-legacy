@@ -13,7 +13,7 @@ Headers are not random data, but compressable with a factor of about `1.77`
 
 ### Inclusion Proofs for Spent Outputs
 
-We can can extend each block with Merkle inclusion proofs for every spent output. This results in an overhead of about:
+We can can extend each block with Merkle inclusion proofs for every spent output. Block extensions prove output inclusion. They reduce the required knowledge of the UTXO set to the question, if a particular output is actually unspent. The construction requires an overhead of about:
 - `proof_size * outputs/transaction * transactions / block`
   - `proof_size ~ ( log2( transactions/block ) - 2) * 32 bytes` ( We can do `-2` here because the Merkle root is in the header and the transaction hash is in the current block as UTXO-ID, which's inclusion we want to prove. )
 - `( (log2(3000) -2) * 32 bytes ) * 2 * 3000 ~ 1.83 MB / block` for the inclusion proofs
@@ -24,9 +24,9 @@ We can can extend each block with Merkle inclusion proofs for every spent output
     - A SegWit-only block: `2 * 3000 * 128 bytes ~ 768 kBytes / block`
     - Currently, 50% SegWit-active block: `2 * 1500 * 256 bytes + 2 * 1500 * 128 bytes ~ 1.15 MB / block`
 
-A total overhead of about `1.83 MB + 1.15 MB - 168 kBytes ~ 2.8 MB / block` is necessary.
+In total a overhead of about `1.83 MB + 1.15 MB - 168 kBytes ~ 2.8 MB / block` is necessary.
 
-This proves inclusion and reduces our required knowledge of the UTXO set to the question, if a particular output is actually unspent. In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. The size of an extended block is about `1.2 MB + 2.8 MB ~ 4 MB`.
+In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. The size of an extended block is about `1.2 MB + 2.8 MB ~ 4 MB`.
 
 
 ### Output Number
