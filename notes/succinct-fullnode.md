@@ -77,7 +77,7 @@ We can encode an output path naively by padding zeros. This results in:
 ~ 6 bytes
 ```
 
-Currently, the set of all UTXO paths would be about `70 000 000 * 6 bytes = 420 MB`.
+Currently, the set of all UTXO paths would be about `70'000'000 * 6 bytes = 420 MB`.
 
 
 ### UTXO Bit Vector
@@ -96,7 +96,7 @@ Math.round(E / 8 / 1e6)+' MB'
 
 A more realistic model, with much less than 3000 outputs per transaction, is only about `63 MB`. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. There are only two update operations: delete and append. 
 
-#### Bit Vector 
+#### Bit Vector Commitments
 We can generate hash commitments of the bit vector. Digesting 63 MB every block might be inefficient.
 We can split up the bit vector into chunks of, say, 1 MB and commit to them in another Merkle tree.
 We can easily exploit the fact that old UTXOs are much more unlikely to get spent, simply by chunking in the natural order of the output paths. For example, we would almost never have to update the first chunk. 
