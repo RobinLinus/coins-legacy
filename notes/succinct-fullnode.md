@@ -24,7 +24,8 @@ We can can extend each block with Merkle inclusion proofs for every spent output
 
 A total overhead of about `1.83 MB + 1.15 MB - 168 kBytes ~ 2.8 MB / block` is necessary.
 
-This proves inclusion and reduces our required knowledge of the UTXO set to the question, if a particular output is actually unspent.
+This proves inclusion and reduces our required knowledge of the UTXO set to the question, if a particular output is actually unspent. In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*.
+
 
 ### Output Number
 We can address every output ever happened with a simple scheme: `block_index/transaction_index/output_index`. 
@@ -47,9 +48,14 @@ Simple entropy encoding already reduces to:
 
 A more realistic model, with up to 3000 outputs per transaction is just about `1 MB` larger. Note there are simple data structures, such that, even in a compressed state, we can update our bit vector efficiently. 
 
+#### Bit Vector Commitments
+If we had a some commitment to the bit vector at some block heigth, we could simply download the bit vector and start syncing the chain from there with extended blocks. Extended blocks are about 3.5x as big as regular blocks. Thus, syncing with this scheme is efficient only if we cut off more than 3/4 of the chain. In theory, this is no problem - every block could have a commitment and we could cut of 99.9% of the chain.
 
 
-#### References 
+
+
+
+### References 
 - http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
 - https://www.youtube.com/watch?v=52FVkHlCh7Y
 - https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
