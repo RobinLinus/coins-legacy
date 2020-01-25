@@ -1,6 +1,7 @@
 # Succinct Bitcoin Consensus 
 
-The following are order-of-magnitude estimates regarding ideas to compress bitcoin's blockchain for light nodes.
+The following are back of the envelope calculations regarding ideas to compress bitcoin's blockchain for light nodes.
+I guess most of these ideas have been discussed before, but this estimates order-of-magnitudes that help assess their feasability.
 
 We assume Bitcoin's blockchain currently has 
 - `615 000 blocks` [Source](https://statoshi.info/)
@@ -81,12 +82,6 @@ In regards to our database that means the output path next to our previous query
 #### Efficient Set of Output Paths
 A set size of 420 MB is not really handy. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely needs to get touched. 
 
-### References 
-- http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
-- https://www.youtube.com/watch?v=52FVkHlCh7Y
-- https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
-
-
 
 ### Further Compression Ideas
 
@@ -103,4 +98,11 @@ We do not care about its inputs - we want to prove only one output. So we can pr
 We might be able to reduce the network overhead further by extending blocks interactively. New UTXOs are more likely to get spent. Thus, the longer a node listens the fewer block extensions it requires. The more blocks it knows, the more proofs it can generate by itself. We can extend our protocol such that a node requests "blocks with extensions since chainheight X" where X is a constant communicated at the beginning of a peer session.
 
 
+
+
+
+### References 
+- http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
+- https://www.youtube.com/watch?v=52FVkHlCh7Y
+- https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
 
