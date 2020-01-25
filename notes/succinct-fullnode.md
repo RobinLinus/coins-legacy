@@ -46,7 +46,7 @@ We can encode an output path naively by padding zeros. This results in:
 ```   
   log2( max_chain_height * max_transactions * max_outputs) bits 
 = log2( 2*10^6 * 3000 * 3000 ) bits
-~ 5.4 bytes 
+~ 5.5 bytes 
 ~ 6 bytes
 ```
 
