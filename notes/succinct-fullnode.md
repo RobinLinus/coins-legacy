@@ -80,7 +80,9 @@ The output path's index won't change much. Furthermore, we are mostly intrested 
 In regards to our database that means the output path next to our previous query result must have changed. Only if that entry changed a receiving transaction could have occured. 
 
 #### Efficient Set of Output Paths
-A set size of 420 MB is not really handy. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely needs to get touched. 
+A set size of 420 MB is not really handy. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. 
+
+Note that chunks sorted by time reduce the entropy within a chunk drastically. Every chunk has a chainheight where it starts and ends, and for every output path in the chunk that reduces the `block_index` to values in that range.
 
 
 ### Further Compression Ideas
