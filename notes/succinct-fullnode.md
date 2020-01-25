@@ -49,7 +49,7 @@ Simple entropy encoding already reduces to:
 A more realistic model, with up to 3000 outputs per transaction is just about `1 MB` larger. Note there are simple data structures, such that, even in a compressed state, we can update our bit vector efficiently. 
 
 #### Bit Vector Commitments
-If we had a some commitment to the bit vector at some block heigth, we could simply download the bit vector and start syncing the chain from there with extended blocks. Extended blocks are about 3.5x as big as regular blocks. Thus, syncing with this scheme is efficient only if we cut off more than 3/4 of the chain. In theory, this is no problem - every block could have a commitment and we could cut of 99.9% of the chain.
+If we had a some commitment to the bit vector at some block heigth, we could simply download the bit vector and start syncing the chain from there with extended blocks. Extended blocks are about 3.5x as big as regular blocks. Thus, syncing with this scheme is efficient only if we cut off more than 3/4 of the chain. In theory, this is no problem - every block could have a commitment and we could cut of 99.9% of the chain. If we would download only the 100 most recent extended blocks, we would be able to sync our succinct full node by downloading `extended_blocks + bit_vector ~ 100 * 4 MB + 15MB = 415 MB`. 
 
 
 
