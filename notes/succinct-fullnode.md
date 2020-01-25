@@ -48,7 +48,7 @@ Question: Can SHA256 digest the prefix of a preimage to an intermediate hash whi
 
 `SHA256( preimage ) = G( H( prefix ), postfix)`? 
 
-Indeed, according to the [pseudo code](https://en.wikipedia.org/wiki/SHA-2#Pseudocode) it should be possible to diggest a message progressively in chunks of 64 bytes into an intermediate hash of 32 bytes. [Demo code](https://coins.github.io/notes/progressive-sha256.html). This means output inclusion proofs do not grow with the size of funding inputs. This compresses non-SegWit transactions, too.
+Indeed, according to the [pseudo code](https://en.wikipedia.org/wiki/SHA-2#Pseudocode) it should be possible to digest a message progressively in chunks of 64 bytes into an intermediate hash of 32 bytes. [Demo code](https://coins.github.io/notes/progressive-sha256.html). This means output inclusion proofs do not grow with the size of funding inputs. This compresses non-SegWit transactions, too.
 
 An even more efficient construction would work in three steps `preimage = prefix + output + postfix` and pre-digest both the prefix and the postfix such that we would have to insert only our output to retrieve the hash. This is probably(?) impossible though.
 
