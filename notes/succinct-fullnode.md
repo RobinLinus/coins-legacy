@@ -54,9 +54,9 @@ If we had a commitment to the bit vector at some block height, we could simply d
 `headers_chain + bit_vector + extended_blocks ~ 27 MB + 15 MB + 100 * 4 MB = 442 MB`. 
 
 #### Succinct Extended Blocks
-Can we further compress the necessary data? Obviously, we would have to compress the extended blocks because they make up 90% of the data. Some extensions are indeed redundant. We can remove any inclusion proof for an output created within those 100 blocks.
+Can we further compress the data? Obviously, we would have to compress the extended blocks because they make up 90% of the download. Some extensions are indeed redundant. We can remove any inclusion proof for an output created within those 100 blocks.
 Additionally, some proofs intersect which we can further exploit. Still, the majority of extended block data remains.
-
+Furthermore, blocks with more than 50% SegWit transactions are proportionally more efficient than our estimate.
 
 ### References 
 - http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
