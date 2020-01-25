@@ -73,7 +73,8 @@ Math.round(E / 8 / 1e6)+' MB'
 
 A more realistic model, with much less than 3000 outputs per transaction, is only about `63 MB`. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. There are only two update operations: delete and append. 
 
-#### Bit Vector Commitment
+#### Bit Vector 
+nt
 We can generate hash commitments of the bit vector. Digesting 63 MB every block might be inefficient.
 We can split up the bit vector into chunks of, say, 1 MB and commit to them in another Merkle tree.
 We can easily exploit the fact that old UTXOs are much more unlikely to get spent, simply by chunking using the natural order of the output paths. For example, we would almost never have to update the first chunk. 
@@ -111,7 +112,7 @@ The output path's index won't change much. Furthermore, we are mostly interested
 In regards to our database that means the output path next to our previous query result must have changed. Only if that entry changed a receiving transaction could have occurred. 
 
 #### Efficient Set of Output Paths
-A set size of 420 MB is cumbersome. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. Probably you don't need to know it ever. This scheme enables efficient set commitments. Assuming hashing speeds of [1GB/sec on a single core](https://github.com/minio/blake2b-simd#introduction), this is neglectable effort. We can easily commitment to the full set within every block.
+A set size of 420 MB is cumbersome. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. Probably you don't need to know it ever. This scheme enables efficient set commitments. Assuming hashing speeds of [1GB/sec on a single core](https://github.com/minio/blake2b-simd#introduction), this is neglectable effort. We can easily commit to the full set within every block.
 
 Note that chunks sorted by time reduce the entropy within a chunk drastically. Every chunk has a chain height where it starts and ends, and for every output path in the chunk that reduces the `block_index` to values in that range.
 Furthermore, our encoding of 6 bytes per output path is highly inefficient. Almost no transaction has 3000 outputs and if it has, then it can not have 3000 transactions. This compresses well. I'd assume an efficiently updatable data structure with a compression factor of 2 is realistic. That would reduce the total set size down to 210 MB with chunks of size 2.5 MB. Most of the chunks are never needed. A query for very old addresses could be seen as "very expensive" because it requires lookups in many chunks. 
