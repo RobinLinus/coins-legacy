@@ -89,9 +89,11 @@ Can we further compress the data? Obviously, we would have to compress the exten
 Additionally, some proofs intersect which we can further exploit. Still, the majority of extended block data remains.
 Furthermore, blocks with more than 50% SegWit transactions are proportionally more efficient than our estimate.
 
-#### Successive Hash Digest?
-The transactions within the inclusion proofs are a major inefficiency. SegWit transactions help because they exclude the Signatures from a transaction's hash. We might be able to reduce the data further by successively digesting the transaction. 
+#### Progressive Hash Digest?
+The transactions within the inclusion proofs are a major inefficiency. SegWit transactions help because they exclude the Signatures from a transaction's hash. We might be able to reduce the data further by progressively digesting the transaction. 
 We do not care about its inputs - we want to prove only one output. So we can pre-digest all inputs and all outputs up to our output's index. This compresses the "first half" of the transaction into a SHA256 digest state which has 32 bytes. That is sufficient. In particular because we perform a second round of SHA256 with the final hash to derive the actual TXID.
+
+Question: Can SHA256 digest the prefix of a preimage, to an intermediate hash which can later digested with the postix to result in the preimage's hash?
 
 #### Extending Blocks on Request
 We might be able to reduce the network overhead further by extending blocks interactively. New UTXOs are more likely to get spent. Thus, the longer a node listens the fewer block extensions it requires. The more blocks it knows, the more proofs it can generate by itself. We can extend our protocol such that a node requests "blocks with extensions since chain height X" where X is a constant communicated at the beginning of a peer session.
