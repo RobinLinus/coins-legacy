@@ -50,7 +50,7 @@ We can encode an output path naively by padding zeros. This results in:
 ~ 6 bytes
 ```
 
-Currently, the set of all UTXO's would be about `70 000 000 * 6 bytes = 420 MB`.
+Currently, the set of all UTXO paths would be about `70 000 000 * 6 bytes = 420 MB`.
 
 
 
