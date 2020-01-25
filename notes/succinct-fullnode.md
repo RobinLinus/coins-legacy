@@ -40,6 +40,10 @@ Using Output Numbers, we can represent the status of all outputs within a large 
 `615000 * 3000 * 2 bits ~ 461 MB` . There are only `70 000 000` unspent outputs. 
 This means the ratio of  `1` vs `0` is about `1:52`. Thus, we can compress the bit vector heavily.
 
+Simple entropy encoding already reduces to: 
+
+`-log2(1/52) * 1/52 * 70000000 -log2(51/52) * 51/52 * 3690000000 bits ~ 13 MB`
+
 Even in the compressed state we can update efficiently. 
 
 #### References 
