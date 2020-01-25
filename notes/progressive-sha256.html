@@ -1,12 +1,14 @@
-/*
-
+Open console
+<pre>
   Example of intermediate sha256 hashes to compress merkle inclusion proofs of bitcoin transaction outputs
   
   
   DISCLAIMER: THIS CODE IS INSECURE. DO NOT USE IN PRODUCTION
   SHA256 implementation from https://geraintluff.github.io/sha256/
-  
-*/
+</pre> 
+
+<script>
+
 
 
 var sha256 = function sha256(ascii, h, original_l) {
@@ -110,3 +112,6 @@ preimage = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb
 intermediate = [-547637220, -400685530, -79320940, 1339297585, -1302435818, -690710079, -1416607447, 6512230]
 
 console.log( sha256(preimage), sha256('bbbb', intermediate, preimage.length*8) )
+
+	
+</script>
