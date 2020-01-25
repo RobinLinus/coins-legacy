@@ -2,9 +2,11 @@
 
 The following are order-of-magnitude estimates regarding ideas to compress bitcoin's blockchain for light nodes.
 
+We assume Bitcoin's blockchain currently has `70 000 000 UTXOs` and `615 000 blocks`.
+
 ## Headers Chain
 The raw size of the headers chain is `block_height * 80 bytes`. As of today this is about `615000 blocks * 80 bytes ~ 49.2 MB`. 
-A headers are not random data, but compressable with a factor of about `1.77` 
+Headers are not random data, but compressable with a factor of about `1.77` 
 ([see Headergolf](https://github.com/alecalve/headergolf)). This compresses the current chain down to `27 MB`.
 
 ## UTXO Set
