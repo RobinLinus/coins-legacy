@@ -4,8 +4,8 @@ The following are back-of-the-envelope calculations regarding ideas to compress 
 Most of these ideas [have been discussed vaguely before](#references). This work estimates order-of-magnitudes that help assess their feasibility.
 
 We assume Bitcoin's blockchain currently has 
-- `615 000 blocks` [Source](https://statoshi.info/)
-- `70 000 000 UTXOs` [Source](https://statoshi.info/dashboard/db/unspent-transaction-output-set)
+- `615'000 blocks` [Source](https://statoshi.info/)
+- `70'000'000 UTXOs` [Source](https://statoshi.info/dashboard/db/unspent-transaction-output-set)
 - `max 3000 TX/block` [Source](https://www.blockchain.com/en/charts/n-transactions-per-block?timespan=2years)
 - `max 3000 outputs/TX` [Source](https://bitcoin.stackexchange.com/questions/29786/what-is-the-maximum-number-of-output-addresses-i-can-send-to-with-one-bitcoin-tr?rq=1)
 
@@ -59,9 +59,7 @@ Currently, the set of all UTXO paths would be about `70 000 000 * 6 bytes = 420 
 
 ### UTXO Bit Vector
 Using Output Paths, we can represent the status of all outputs within a large bit vector. Naively, there are 
-`#blocks * transactions/block * outputs/transaction` many outputs. We need one bit to represent `spent/unspent`.
-
-`615000 * 3000 * 3000 bits ~ 691 GB` . Yet, there are only `70 000 000` unspent outputs. Thus, we can compress the bit vector heavily. Simple entropy encoding already reduces to: 
+`#blocks * transactions/block * outputs/transaction` many outputs. Their status `spent` or `unspent` is represented in one bit. This is `615000 * 3000 * 3000 bits ~ 691 GB`. Yet, there are only `70'000'000` unspent outputs. Thus, we can compress the bit vector heavily. Simple entropy encoding already reduces to: 
 
 ```
 outputs = 615000 * 3000 * 3000;
