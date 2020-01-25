@@ -80,6 +80,7 @@ If we had a commitment to the bit vector at some block height, we could simply d
 
 `headers_chain + bit_vector + extended_blocks ~ 27 MB + 15 MB + 100 * 4 MB = 442 MB`. 
 
+This is only 1.5 YouTube videos and therefore interesting to serve endusers.
 
 ### Further Compression Ideas
 
