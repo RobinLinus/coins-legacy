@@ -28,12 +28,12 @@ We can extend each block with Merkle inclusion proofs for every spent output. Bl
 - `( (log2(3000) -1) * 32 bytes ) * 2 * 3000 ~ 1.83 MB / block` for the inclusion proofs
 - The proof is incomplete without the corresponding transaction, which is additionally about 250 bytes per transaction.
   - This means about another `2 * 3000 * 256 bytes ~ 1.53 MB / block`
-    - We can remove the spending UTXO-Ids from the most recent blocks and replace them with their UTXO-Number, which saves us about `32-4 bytes` per transaction, so `(32-4)*3000*2 bytes ~ 168 kBytes/Block`
+    - We can remove the spending UTXO-Ids from the most recent blocks and replace them with their UTXO-Number, which saves us about `32 bytes` per transaction, so `32*3000*2 bytes ~ 192 kBytes/Block`
   - SegWit transactions are significantly more compact for this use case because we do not need the signature data. The non-witness part of a transaction is roughly `#inputs * 32 + #outputs * 32 bytes`, which reduces our average transaction size to about `128 bytes`
     - A SegWit-only block: `2 * 3000 * 128 bytes ~ 768 kBytes / block`
     - Currently, 50% SegWit-active block: `2 * 1500 * 256 bytes + 2 * 1500 * 128 bytes ~ 1.15 MB / block`
 
-In total a overhead of about `1.83 MB + 1.15 MB - 168 kBytes ~ 2.8 MB / block` is necessary.
+In total a overhead of about `1.83 MB + 1.15 MB - 192 kBytes ~ 2.8 MB / block` is necessary.
 
 In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. The size of an extended block is about `1.2 MB + 2.8 MB ~ 4 MB`.
 
