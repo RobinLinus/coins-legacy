@@ -64,7 +64,7 @@ Using Output Paths, we can represent the status of all outputs within a large bi
 `615000 * 3000 * 2 bits ~ 461 MB` . There are only `70 000 000` unspent outputs. 
 This means the ratio of  `1` vs `0` is about `1:52`. Thus, we can compress the bit vector heavily. Simple entropy encoding already reduces to: 
 
-`-(log2(1/52) * 1/52 +log2(51/52) * 51/52) * 3690000000 bits ~ 63 MB`.
+`-(log2(1/52) * 1/52 + log2(51/52) * 51/52) * 3690000000 bits ~ 63 MB`.
 
 A more realistic model, with up to 3000 outputs per transaction is about `2x` larger. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. 
 
