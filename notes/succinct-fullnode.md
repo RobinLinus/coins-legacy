@@ -2,7 +2,11 @@
 
 The following are order-of-magnitude estimates regarding ideas to compress bitcoin's blockchain for light nodes.
 
-We assume Bitcoin's blockchain currently has `70 000 000 UTXOs` and `615 000 blocks`.
+We assume Bitcoin's blockchain currently has 
+- `615 000 blocks` [Source](https://statoshi.info/)
+- `70 000 000 UTXOs` [Source](https://statoshi.info/dashboard/db/unspent-transaction-output-set)
+- `max 3000 TX/block` [Source](https://www.blockchain.com/en/charts/n-transactions-per-block?timespan=2years)
+- `max 3000 outputs/TX` [Source](https://bitcoin.stackexchange.com/questions/29786/what-is-the-maximum-number-of-output-addresses-i-can-send-to-with-one-bitcoin-tr?rq=1)
 
 ## Headers Chain
 The raw size of the headers chain is `block_height * 80 bytes`. As of today this is about `615000 blocks * 80 bytes ~ 49.2 MB`. 
@@ -64,6 +68,6 @@ Furthermore, blocks with more than 50% SegWit transactions are proportionally mo
 - http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
 - https://www.youtube.com/watch?v=52FVkHlCh7Y
 - https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
-- https://bitcoin.stackexchange.com/questions/29786/what-is-the-maximum-number-of-output-addresses-i-can-send-to-with-one-bitcoin-tr?rq=1
+- 
 
 
