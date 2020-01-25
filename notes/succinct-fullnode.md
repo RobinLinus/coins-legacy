@@ -58,7 +58,7 @@ Indeed, according to the [pseudo code](https://en.wikipedia.org/wiki/SHA-2#Pseud
 An even more efficient construction would work in three steps `preimage = prefix + output + postfix` and pre-digest both the prefix and the postfix such that we would have to insert only our output to retrieve the hash. This is probably(?) impossible though.
 
 #### Extending Blocks on Request
-We might be able to reduce the network overhead further by extending blocks interactively. New UTXOs are more likely to get spent. Thus, the longer a node listens the fewer block extensions it requires. The more blocks it knows, the more proofs it can generate by itself. We can extend our protocol such that a node requests "blocks with extensions since chain height X" where X is a constant communicated at the beginning of a peer session.
+We might be able to reduce the network overhead further by extending blocks interactively. New UTXOs are more likely to get spent. Thus, the longer a node listens the fewer block extensions it requires. The more blocks it knows, the more proofs it can generate by itself. We can extend our protocol such that a node requests "blocks extended with proofs from before chain height X" where X is a constant communicated at the beginning of a peer session.
 
 
 
