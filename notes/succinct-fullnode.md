@@ -84,7 +84,7 @@ A set size of 420 MB is not really handy. Again, Merkle FTW! We chunk it into pi
 
 Note that chunks sorted by time reduce the entropy within a chunk drastically. Every chunk has a chainheight where it starts and ends, and for every output path in the chunk that reduces the `block_index` to values in that range.
 
-Furthermore, our encoding of 6 bytes per output path is highly inefficient. Almost no transaction has 3000 outputs and if it has, then it can not have 3000 transactions. Assuming intuitively, that we can compress 
+Furthermore, our encoding of 6 bytes per output path is highly inefficient. Almost no transaction has 3000 outputs and if it has, then it can not have 3000 transactions. This compresses well. I'd assume an efficiently updatable data structure with a compression factor of 2 is realisitic. That would reduce the total set size down to 210 MB with chunks of size 2.5 MB.
 
 ### Further Compression Ideas
 
