@@ -22,8 +22,8 @@ Headers are not random data, but compressible with a factor of about `1.77`
 
 We can can extend each block with Merkle inclusion proofs for every spent output. Block extensions prove output inclusion. They reduce the required knowledge of the UTXO set to the question, if a particular output is actually unspent. The construction requires an overhead of about:
 - `proof_size * outputs/transaction * transactions / block`
-  - `proof_size ~ ( log2( transactions/block ) - 2) * 32 bytes` ( We can do `-2` here because the Merkle root is in the header and the transaction hash is in the current block as UTXO-ID, which's inclusion we want to prove. )
-- `( (log2(3000) -2) * 32 bytes ) * 2 * 3000 ~ 1.83 MB / block` for the inclusion proofs
+  - `proof_size ~ ( log2( transactions/block ) - 1) * 32 bytes` ( We can do `-1` here because the Merkle root is in the header and the transaction hash is in the current block as UTXO-ID, which's inclusion we want to prove. )
+- `( (log2(3000) -1) * 32 bytes ) * 2 * 3000 ~ 1.83 MB / block` for the inclusion proofs
 - The proof is incomplete without the corresponding transaction, which is additionally about 250 bytes per transaction.
   - This means about another `2 * 3000 * 256 bytes ~ 1.53 MB / block`
     - We can remove the spending UTXO-Ids from the most recent blocks and replace them with their UTXO-Number, which saves us about `32-4 bytes` per transaction, so `(32-4)*3000*2 bytes ~ 168 kBytes/Block`
@@ -74,10 +74,9 @@ Math.round(E / 8 / 1e6)+' MB'
 A more realistic model, with much less than 3000 outputs per transaction, is only about `63 MB`. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. There are only two update operations: delete and append. 
 
 #### Bit Vector 
-nt
 We can generate hash commitments of the bit vector. Digesting 63 MB every block might be inefficient.
 We can split up the bit vector into chunks of, say, 1 MB and commit to them in another Merkle tree.
-We can easily exploit the fact that old UTXOs are much more unlikely to get spent, simply by chunking using the natural order of the output paths. For example, we would almost never have to update the first chunk. 
+We can easily exploit the fact that old UTXOs are much more unlikely to get spent, simply by chunking in the natural order of the output paths. For example, we would almost never have to update the first chunk. 
 
 ## Sync Succinctly
 If we had a commitment to the bit vector at some block height, we could simply download the bit vector and start syncing the chain from there with extended blocks. Extended blocks are about 4x as big as regular blocks. Thus, syncing with this scheme is efficient only if we can cut off more than 3/4 of the chain. In theory, this is no problem - every block could have a commitment. Then we could cut off almost the full chain. If we would check only the 100 most recent extended blocks, we could sync our succinct full node by downloading: 
@@ -97,7 +96,7 @@ Furthermore, blocks with more than 50% SegWit transactions are proportionally mo
 The transactions within the inclusion proofs are a major inefficiency. SegWit transactions help because they exclude the Signatures from a transaction's hash. We might be able to reduce the data further by progressively digesting the transaction. 
 We do not care about its inputs - we want to prove only one output. So we can pre-digest all inputs and all outputs up to our output's index. This compresses the "first half" of the transaction into a SHA256 digest state which has 32 bytes. That is sufficient. In particular because we perform a second round of SHA256 with the final hash to derive the actual TXID.
 
-Question: Can SHA256 digest the prefix of a preimage to an intermediate hash which can be later digested with the postfix to result in the preimage's hash? Formally, let `preimage = prefix + postfix` then is there `SHA256( preimage ) = G( H( prefix ), postfix )` ? Yep, according to the [pseudo code](https://en.wikipedia.org/wiki/SHA-2#Pseudocode) it should be possible, to diggest a message progressively in chunks of 64 bytes into an intermediate hash of 32 bytes. This means output inclusion proofs do not grow with the number of funding inputs.
+Question: Can SHA256 digest the prefix of a preimage to an intermediate hash which can be later digested with the postfix to result in the preimage's hash? Formally, let `preimage = prefix + postfix` then is there `SHA256( preimage ) = G( H( prefix ), postfix )` ? Indeed, according to the [pseudo code](https://en.wikipedia.org/wiki/SHA-2#Pseudocode) it should be possible to diggest a message progressively in chunks of 64 bytes into an intermediate hash of 32 bytes. This means output inclusion proofs do not grow with the number of funding inputs. An even more efficient construction would work in three steps `preimage = prefix + output + postfix` and pre-digest both the prefix and the postfix such that we would have to insert only our output to retrieve the hash. This is probably(?) impossible though.
 
 #### Extending Blocks on Request
 We might be able to reduce the network overhead further by extending blocks interactively. New UTXOs are more likely to get spent. Thus, the longer a node listens the fewer block extensions it requires. The more blocks it knows, the more proofs it can generate by itself. We can extend our protocol such that a node requests "blocks with extensions since chain height X" where X is a constant communicated at the beginning of a peer session.
