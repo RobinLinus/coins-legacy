@@ -33,16 +33,16 @@ In total a overhead of about `1.83 MB + 1.15 MB - 168 kBytes ~ 2.8 MB / block` i
 In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. The size of an extended block is about `1.2 MB + 2.8 MB ~ 4 MB`.
 
 
-### Output Number
-We can address every output ever happened with a simple scheme: `block_index/transaction_index/output_index`. 
+### Output Paths
+We can address every output ever happened with a simple scheme: `block_index/transaction_index/output_index`. We call that an *output path*.
 This fits perfectly with Merkle inclusion proofs. To verify an inclusion proof, we need to know the block header in the chain, 
 which corresponds to a `block_index`. The inclusion proof is a Merkle path, which corresponds to a certain `transaction_index` 
 within that block. The full transaction defines the `output_index` of its outputs. 
-Thus, an inclusion proof corresponds to an output number.
-Currently, the set of all UTXO's output numbers would be about `70 000 000 * 5 bytes ~ 350 MB`.
+Thus, an inclusion proof corresponds to an output path.
+We can encode an output path naively in 5 bits by padding zeros. Currently, the set of all UTXO's would be about `70 000 000 * 5 bytes ~ 350 MB`.
 
 ### UTXO Bit Vector
-Using Output Numbers, we can represent the status of all outputs within a large bit vector. Naively, there are 
+Using Output Paths, we can represent the status of all outputs within a large bit vector. Naively, there are 
 `#blocks * transactions/block * outputs/transaction` many outputs. We need one bit to represent `spent/unspent`.
 
 `615000 * 3000 * 2 bits ~ 461 MB` . There are only `70 000 000` unspent outputs. 
