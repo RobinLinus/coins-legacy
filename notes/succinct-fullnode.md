@@ -64,10 +64,22 @@ If we had a commitment to the bit vector at some block height, we could simply d
 
 `headers_chain + bit_vector + extended_blocks ~ 27 MB + 15 MB + 100 * 4 MB = 442 MB`. 
 
-#### Succinct Extended Blocks
-Can we further compress the data? Obviously, we would have to compress the extended blocks because they make up 90% of the download. Some extensions are indeed redundant. We can remove any inclusion proof for an output created within those 100 blocks.
-Additionally, some proofs intersect which we can further exploit. Still, the majority of extended block data remains.
-Furthermore, blocks with more than 50% SegWit transactions are proportionally more efficient than our estimate.
+### Efficient Blockchain Queries
+We can modify our scheme for efficient queries `address -> balance`. An output path requires naively: 
+```   
+  log2( max_chain_height * max_transactions * max_outputs) bits 
+= log2( 10^6 * 3000 * 3000 ) bits
+~ 5.4 bytes 
+~ 6 bytes
+```
+so the set of unspent output paths has `70 * 10^6 * 6 bytes ~ 420 MB`. Assuming we have that set from a trusted source (see below for better solutions). Assuming further, the set is ordered lexicographically by the Bitcoin address of the corresponding output. Then we can perform a binary search to find all outputs of an address. In an UTXO set size of `N` this requires `log(N)` steps. For every step we have to query the corresponding inclusion proof for the output path to check its address. This assumes, someone provides the proofs.
+
+We can optimize the scheme above. A second query, at a later block, can reuse the knowledge retrieved from the first query. 
+The output path's index won't change much. Furthermore, we are mostly intrested in the question if we received new bitcoins. 
+In regards to our database that means the output path next to our previous query result must have changed. Only if that entry changed a receiving transaction could have occured. 
+
+#### Efficient Set of Output Paths
+A set size of 420 MB is not really handy. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely needs to get touched. 
 
 ### References 
 - http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
@@ -76,7 +88,12 @@ Furthermore, blocks with more than 50% SegWit transactions are proportionally mo
 
 
 
-### Further Ideas
+### Further Compression Ideas
+
+#### Succinct Extended Blocks
+Can we further compress the data? Obviously, we would have to compress the extended blocks because they make up 90% of the download. Some extensions are indeed redundant. We can remove any inclusion proof for an output created within those 100 blocks.
+Additionally, some proofs intersect which we can further exploit. Still, the majority of extended block data remains.
+Furthermore, blocks with more than 50% SegWit transactions are proportionally more efficient than our estimate.
 
 #### Successive Hash Digest?
 The transactions within the inclusion proofs are a major inefficiency. SegWit transactions help because they exclude the Signatures from a transaction's hash. We might be able to reduce the data further by successively digesting the transaction. 
@@ -85,5 +102,5 @@ We do not care about its inputs - we want to prove only one output. So we can pr
 #### Extending Blocks on Request
 We might be able to reduce the network overhead further by extending blocks interactively. New UTXOs are more likely to get spent. Thus, the longer a node listens the fewer block extensions it requires. The more blocks it knows, the more proofs it can generate by itself. We can extend our protocol such that a node requests "blocks with extensions since chainheight X" where X is a constant communicated at the beginning of a peer session.
 
-#### Efficient Blockchain Queries
+
 
