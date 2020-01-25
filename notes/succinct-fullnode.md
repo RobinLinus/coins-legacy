@@ -69,7 +69,7 @@ If we had a commitment to the bit vector at some block height, we could simply d
 We can modify our scheme for efficient queries `address -> balance`. An output path requires naively: 
 ```   
   log2( max_chain_height * max_transactions * max_outputs) bits 
-= log2( 10^6 * 3000 * 3000 ) bits
+= log2( 2*10^6 * 3000 * 3000 ) bits
 ~ 5.4 bytes 
 ~ 6 bytes
 ```
@@ -80,10 +80,11 @@ The output path's index won't change much. Furthermore, we are mostly intrested 
 In regards to our database that means the output path next to our previous query result must have changed. Only if that entry changed a receiving transaction could have occured. 
 
 #### Efficient Set of Output Paths
-A set size of 420 MB is not really handy. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. 
+A set size of 420 MB is not really handy. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. Probably you don't need to know it ever.
 
 Note that chunks sorted by time reduce the entropy within a chunk drastically. Every chunk has a chainheight where it starts and ends, and for every output path in the chunk that reduces the `block_index` to values in that range.
 
+Furthermore, our encoding of 6 bytes per output path is highly inefficient. Almost no transaction has 3000 outputs and if it has, then it can not have 3000 transactions. Assuming intuitively, that we can compress 
 
 ### Further Compression Ideas
 
