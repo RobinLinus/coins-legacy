@@ -40,7 +40,20 @@ Output paths correspond perfectly with inclusion proofs via Merkle paths. To ver
 which corresponds to a `block_index`. The inclusion proof is a Merkle path, which corresponds to a certain `transaction_index` 
 within that block. The full transaction defines the `output_index` of its outputs. 
 Thus, an inclusion proof corresponds to an output path.
-We can encode an output path naively in 5 bits by padding zeros. Currently, the set of all UTXO's would be about `70 000 000 * 5 bytes ~ 350 MB`.
+
+
+We can encode an output path naively by padding zeros. This results in:
+```   
+  log2( max_chain_height * max_transactions * max_outputs) bits 
+= log2( 2*10^6 * 3000 * 3000 ) bits
+~ 5.4 bytes 
+~ 6 bytes
+```
+
+Currently, the set of all UTXO's would be about `70 000 000 * 6 bytes = 420 MB`.
+
+
+
 
 ### UTXO Bit Vector
 Using Output Paths, we can represent the status of all outputs within a large bit vector. Naively, there are 
@@ -66,14 +79,7 @@ If we had a commitment to the bit vector at some block height, we could simply d
 `headers_chain + bit_vector + extended_blocks ~ 27 MB + 15 MB + 100 * 4 MB = 442 MB`. 
 
 ### Efficient Blockchain Queries
-We can modify our scheme for efficient queries `address -> balance`. An output path requires naively: 
-```   
-  log2( max_chain_height * max_transactions * max_outputs) bits 
-= log2( 2*10^6 * 3000 * 3000 ) bits
-~ 5.4 bytes 
-~ 6 bytes
-```
-so the set of unspent output paths has `70 * 10^6 * 6 bytes ~ 420 MB`. Assuming we have that set from a trusted source (see below for better solutions). Assuming further, the set is ordered lexicographically by the Bitcoin address of the corresponding output. Then we can perform a binary search to find all outputs of an address. In an UTXO set size of `N` this requires `log(N)` steps. For every step we have to query the corresponding inclusion proof for the output path to check its address. This assumes, someone provides the proofs.
+We can modify our scheme for efficient queries `address -> balance`. An output path requires naively 6 bytes, so the set of unspent output paths has `70 * 10^6 * 6 bytes ~ 420 MB`. Assuming we have that set from a trusted source (see below for better solutions). Assuming further, the set is ordered lexicographically by the Bitcoin address of the corresponding output. Then we can perform a binary search to find all outputs of an address. In an UTXO set size of `N` this requires `log(N)` steps. For every step we have to query the corresponding inclusion proof for the output path to check its address. This assumes, someone provides the proofs.
 
 We can optimize the scheme above. A second query, at a later block, can reuse the knowledge retrieved from the first query. 
 The output path's index won't change much. Furthermore, we are mostly interested in the question if we received new bitcoins. 
