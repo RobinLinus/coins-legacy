@@ -90,7 +90,7 @@ How to respond to a proof query? We have already reduced the number of proof que
 
 Ideally, there would be a network of light nodes, sharing inclusion proofs. Ideally, once the light network has grown large enough, the light nodes would never have to request an old block from mainnet full nodes again. There's a tipping point where they can fully serve themselves with inclusion proofs derived from new blocks.
 
-#### Efficient Set of Output Paths
+### Efficient Set of Output Paths
 A set size of 420 MB is cumbersome. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. Probably you don't need to know it ever. This scheme enables efficient set commitments. Assuming hashing speeds of [1GB/sec on a single core](https://github.com/minio/blake2b-simd#introduction), this is neglectable effort. Within each block we can commit to the full set.
 
 Note that chunks sorted by time reduce the entropy within a chunk drastically. Every chunk has a chain height where it starts and ends, and for every output path in the chunk that reduces the `block_index` to values in that range.
