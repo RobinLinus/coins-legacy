@@ -8,6 +8,7 @@ We assume Bitcoin's blockchain currently has
 - `70'000'000 UTXOs` [Source](https://statoshi.info/dashboard/db/unspent-transaction-output-set)
 - `max 3000 TX/block` [Source](https://www.blockchain.com/en/charts/n-transactions-per-block?timespan=2years)
 - `max 3000 outputs/TX` [Source](https://bitcoin.stackexchange.com/questions/29786/what-is-the-maximum-number-of-output-addresses-i-can-send-to-with-one-bitcoin-tr?rq=1)
+- `1.2 MB avg block size` [Source](https://www.blockchain.com/en/charts/avg-block-size)
 
 As a ballpark figure for "a lot of data for an enduser" we assume a [YouTube video is about 300 MB](https://www.quora.com/What-is-the-average-size-of-a-YouTube-video).
 
