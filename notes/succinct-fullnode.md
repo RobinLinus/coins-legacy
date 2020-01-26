@@ -86,8 +86,10 @@ We can optimize the scheme above. A second query, at a later block, can reuse th
 The output path's index won't change much. Furthermore, we are mostly interested in the question if we received new bitcoins. 
 In regards to our database that means the output path next to our previous query result must have changed. Only if that entry changed a receiving transaction could have occurred. 
 
-How to respond to a proof query? We want to answer a `query: output_path -> output_inclusion_proof`. Per definition is `output_path = block_index/tx_index/output_index`. Thus the trivial response is the full block at height `block_index`. Today's bitcoin nodes can already answer such a query. Yet, a block is about 1.2 MB (that might be good for privacy though). In total, the naive overhead is 
+How to respond to a proof query? We need bridge nodes that answer queries like `query: output_path -> output_inclusion_proof`. The cost of running a bridge node must be minimal. Per definition is `output_path = block_index/tx_index/output_index`. Thus the trivial response is the full block at height `block_index`. Today's bitcoin nodes can answer a simple query for a block. Yet, a block is about 1.2 MB (that might be good for privacy though). In total, the naive overhead is 
 `1.2 MB * log2(N) = 1.2 MB * log2(70'000'000) ~ 31 MB` to prove the first balance query. We showed how to reduce the number of proof queries below `log(N)` by guessing the index. Most likely, 5 to 10 queries are sufficient. That would reduce the worst case overhead to 6 - 12 MB.
+Even better are bridge nodes serving pruned blocks as described in the bitcoin whitepaper chapter "Reclaiming Disk Space". Progressively reducing blocks is some computational overhead, yet it can be done lazily. This way bridge node requires much less disk space. 
+Furtermore, bridge nodes can use progressive hash digests to reduce transaction data to the outputs. This removes all witness data and makes pruned blocks even more compact.
 
 Ideally, there would be a network of light nodes, sharing succinct inclusion proofs. Ideally, once the lite network has grown large enough, the lite nodes would never have to request an old block from mainnet full nodes again. There's a tipping point where they can fully serve themselves with inclusion proofs derived from new blocks.
 
@@ -110,6 +112,11 @@ If we had a commitment to the set of UTXO paths at some block height, we could s
 `headers_chain + utxo_paths + extended_blocks ~ 27 MB + 140 MB + 100 * 4 MB = 567 MB`. 
 
 This is only 2 YouTube videos and therefore interesting for endusers. Also, this is an upper bound and real world compression might be up to 25% better. Syncing Bitcoin in 425 MB might be realistic. 
+
+
+
+## Lite Network
+Usually, Bitcoin SPV clients join the network to find servers. Such clients consume resources but they do not contribute to the network. Ideally, there are no SPV clients but only lite nodes instead. Lite nodes share their state and contribute to the network. They process new blocks while they are online and they try to answer each others' queries. Forming a lite node network might also help to provide better privacy. 
 
 
 
