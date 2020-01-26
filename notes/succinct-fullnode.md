@@ -76,46 +76,17 @@ We can encode an output path naively by padding zeros. This results in:
 Currently, the set of all UTXO paths would be about `70'000'000 * 6 bytes = 420 MB`.
 
 
-### UTXO Bit Vector
-Using output paths, we can represent the status of all outputs within a large bit vector. Naively, there are 
-`#blocks * transactions/block * outputs/transaction` many outputs. Their status `spent` or `unspent` is represented in one bit. This is `615000 * 3000 * 3000 bits ~ 691 GB`. Yet, there are only `70'000'000` unspent outputs. Thus, we can compress the bit vector heavily. Simple entropy encoding already reduces to: 
-
-```
-outputs = 615000 * 3000 * 3000;
-unspent_outputs = 70 * 1e6;
-P = unspent_outputs/outputs;  
-E = - (Math.log2(P)*P + Math.log2(1-P)*(1-P)) * outputs
-
-Math.round(E / 8 / 1e6)+' MB'
->> 155 MB
-```
-
-A more realistic model, with much less than 3000 outputs per transaction, is only about `63 MB`. Note, there are simple data structures, such that even in a compressed state, we can update our bit vector efficiently. There are only two update operations: delete and append. 
-
-#### Bit Vector Commitments
-We can generate hash commitments of the bit vector. Digesting 63 MB every block might be inefficient.
-We can split up the bit vector into chunks of, say, 1 MB and commit to them in another Merkle tree.
-We can easily exploit the fact that old UTXOs are much more unlikely to get spent, simply by chunking in the natural order of the output paths. For example, we would almost never have to update the first chunk. 
-
-## Sync Succinctly
-If we had a commitment to the bit vector at some block height, we could simply download the bit vector and start syncing the chain from there with extended blocks. Extended blocks are about 4x as big as regular blocks. Thus, syncing with this scheme is efficient only if we can cut off more than 3/4 of the chain. In theory, this is no problem - every block could have a commitment. Then we could cut off almost the full chain. If we would check only the 100 most recent extended blocks, we could sync our succinct full node by downloading: 
-
-`headers_chain + bit_vector + extended_blocks ~ 27 MB + 63 MB + 100 * 4 MB = 490 MB`. 
-
-This is only 1.5 YouTube videos and therefore interesting to serve endusers.
-
-
 ### Efficient UTXO Queries
-We can modify our scheme to perform efficient balance queries `address -> balance`. Instead of the bit vector we download the set of output paths. An output path requires naively 6 bytes, so the set of unspent output paths has `70 * 10^6 * 6 bytes ~ 420 MB`. Suppose the set is ordered lexicographically by the Bitcoin address of the corresponding output. Then we can perform a binary search to find all outputs of an address. In an UTXO set size of `N` this requires `log(N)` steps. For every step we have to query the corresponding inclusion proof for the output path to check its address. This assumes someone provides the proofs. ( Another optimization: addresses are distributed evenly. We can do binary search based on expected values. Basically, we can guess an address' index, and reduce the number of actual proof queries below `log(N)` ). 
+We want to perform efficient balance queries `address -> balance`. An output path requires naively 6 bytes, so the set of unspent output paths has `70 * 10^6 * 6 bytes ~ 420 MB`. Suppose the set is ordered lexicographically by the Bitcoin address of the corresponding output. Then we can perform a binary search to find all outputs of an address. In an UTXO set size of `N` this requires `log(N)` steps. For every step we have to query the corresponding inclusion proof for the output path to check its address. This assumes someone provides the proofs. ( Another optimization: addresses are distributed evenly. We can do binary search based on expected values. Basically, we can guess an address' index, and reduce the number of actual proof queries below `log(N)` ). 
 
 We can optimize the scheme above. A second query, at a later block, can reuse the knowledge retrieved from the first query. 
 The output path's index won't change much. Furthermore, we are mostly interested in the question if we received new bitcoins. 
 In regards to our database that means the output path next to our previous query result must have changed. Only if that entry changed a receiving transaction could have occurred. 
 
-How to respond to a proof query? We have already reduced the number of proof queries below `log(N)`. Now we actually want to answer a `query: output_path -> output_inclusion_proof`. Per definition is `output_path = block_index/tx_index/output_index`. Thus the trivial response is the full block at height `block_index`. Today's bitcoin nodes can already answer such a query. Yet, it is about 1.3 MB (that might be good for privacy though). In total, the overhead is less than 
+How to respond to a proof query? We have already reduced the number of proof queries below `log(N)`. Now we actually want to answer a `query: output_path -> output_inclusion_proof`. Per definition is `output_path = block_index/tx_index/output_index`. Thus the trivial response is the full block at height `block_index`. Today's bitcoin nodes can already answer such a query. Yet, it is about 1.3 MB (that might be good for privacy though). In total, the overhead is much less than 
 `1.3 MB * log2(N) = 1.3 MB * log2(70'000'000) ~ 33 MB` for the first balance query.
 
-Ideally, there would be a network of light nodes, sharing inclusion proofs. Ideally, once the light network has grown large enough, the light nodes would never have to request a full block from mainnet full nodes again. They could serve themselves with inclusion proofs.  
+Ideally, there would be a network of light nodes, sharing inclusion proofs. Ideally, once the light network has grown large enough, the light nodes would never have to request an old block from mainnet full nodes again. There's a tipping point where they can fully serve themselves with inclusion proofs derived from new blocks.
 
 #### Efficient Set of Output Paths
 A set size of 420 MB is cumbersome. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. Probably you don't need to know it ever. This scheme enables efficient set commitments. Assuming hashing speeds of [1GB/sec on a single core](https://github.com/minio/blake2b-simd#introduction), this is neglectable effort. Within each block we can commit to the full set.
@@ -123,7 +94,20 @@ A set size of 420 MB is cumbersome. Again, Merkle FTW! We chunk it into pieces o
 Note that chunks sorted by time reduce the entropy within a chunk drastically. Every chunk has a chain height where it starts and ends, and for every output path in the chunk that reduces the `block_index` to values in that range.
 Furthermore, our encoding of 6 bytes per output path is highly inefficient. Almost no block has a transaction with 3000 outputs and if it has, then it can not have 3000 transactions. This compresses well. I'd assume an efficiently updatable data structure with a compression factor of 50% is realistic. That would reduce the total set size down to 210 MB with chunks of size 2.5 MB. Most of the chunks are never needed. A query for very old addresses is "very expensive" because it requires lookups in many chunks. 
 
+The set is in total 210 MB. Suppose we need 2/3 of the set to sync. This results in a download of 140 MB. 
+
+
 Side note: The only update operation on old chunks is deleting. The delta can be communicated efficiently as sparse bit vector.
+
+
+
+## Sync Succinctly
+If we had a commitment to the set of UTXO paths at some block height, we could simply download the set and start syncing the chain from there with extended blocks. Extended blocks are about 4x as big as regular blocks. Thus, syncing with this scheme is efficient only if we can cut off more than 3/4 of the chain. In theory, this is no problem - every block could have a commitment. Then we could cut off almost the full chain. If we would check only the 100 most recent extended blocks, we could sync our succinct full node by downloading: 
+
+`headers_chain + utxo_paths + extended_blocks ~ 27 MB + 140 MB + 100 * 4 MB = 567 MB`. 
+
+This is only 2 YouTube videos and therefore interesting for endusers. Also, this is an upper bound and real world compression might be up to 25% better. 
+
 
 
 ## Related Work 
@@ -132,7 +116,6 @@ Side note: The only update operation on old chunks is deleting. The delta can be
 - https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
 - https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2017-May/014337.html
 - https://petertodd.org/2016/delayed-txo-commitments
-
 
 
 
