@@ -79,7 +79,7 @@ Currently, the set of all UTXO paths would be about `70'000'000 * 6 bytes = 420 
 
 
 ### UTXO Bit Vector
-Using Output Paths, we can represent the status of all outputs within a large bit vector. Naively, there are 
+Using output paths, we can represent the status of all outputs within a large bit vector. Naively, there are 
 `#blocks * transactions/block * outputs/transaction` many outputs. Their status `spent` or `unspent` is represented in one bit. This is `615000 * 3000 * 3000 bits ~ 691 GB`. Yet, there are only `70'000'000` unspent outputs. Thus, we can compress the bit vector heavily. Simple entropy encoding already reduces to: 
 
 ```
@@ -108,24 +108,28 @@ This is only 1.5 YouTube videos and therefore interesting to serve endusers.
 
 
 ### Efficient UTXO Queries
-We can modify our scheme to perform efficient balance queries `address -> balance`. Instead of the bit vector we download the set of output paths. An output path requires naively 6 bytes, so the set of unspent output paths has `70 * 10^6 * 6 bytes ~ 420 MB`. Suppose we have that set from a trusted source (see below for better solutions). Assuming further, the set is ordered lexicographically by the Bitcoin address of the corresponding output. Then we can perform a binary search to find all outputs of an address. In an UTXO set size of `N` this requires `log(N)` steps. For every step we have to query the corresponding inclusion proof for the output path to check its address. This assumes someone provides the proofs. ( Another optimization: addresses are distributed evenly. We can do binary search based on expected values. Basically, we can guess an address' index, and reduce the number of actual proof queries below `log(N)` )
+We can modify our scheme to perform efficient balance queries `address -> balance`. Instead of the bit vector we download the set of output paths. An output path requires naively 6 bytes, so the set of unspent output paths has `70 * 10^6 * 6 bytes ~ 420 MB`. Suppose the set is ordered lexicographically by the Bitcoin address of the corresponding output. Then we can perform a binary search to find all outputs of an address. In an UTXO set size of `N` this requires `log(N)` steps. For every step we have to query the corresponding inclusion proof for the output path to check its address. This assumes someone provides the proofs. ( Another optimization: addresses are distributed evenly. We can do binary search based on expected values. Basically, we can guess an address' index, and reduce the number of actual proof queries below `log(N)` )
 
 We can optimize the scheme above. A second query, at a later block, can reuse the knowledge retrieved from the first query. 
 The output path's index won't change much. Furthermore, we are mostly interested in the question if we received new bitcoins. 
 In regards to our database that means the output path next to our previous query result must have changed. Only if that entry changed a receiving transaction could have occurred. 
 
 #### Efficient Set of Output Paths
-A set size of 420 MB is cumbersome. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. Probably you don't need to know it ever. This scheme enables efficient set commitments. Assuming hashing speeds of [1GB/sec on a single core](https://github.com/minio/blake2b-simd#introduction), this is neglectable effort. We can easily commit to the full set within every block.
+A set size of 420 MB is cumbersome. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. Probably you don't need to know it ever. This scheme enables efficient set commitments. Assuming hashing speeds of [1GB/sec on a single core](https://github.com/minio/blake2b-simd#introduction), this is neglectable effort. Within each block we can commit to the full set.
 
 Note that chunks sorted by time reduce the entropy within a chunk drastically. Every chunk has a chain height where it starts and ends, and for every output path in the chunk that reduces the `block_index` to values in that range.
-Furthermore, our encoding of 6 bytes per output path is highly inefficient. Almost no block has a transaction with 3000 outputs and if it has, then it can not have 3000 transactions. This compresses well. I'd assume an efficiently updatable data structure with a compression factor of 2 is realistic. That would reduce the total set size down to 210 MB with chunks of size 2.5 MB. Most of the chunks are never needed. A query for very old addresses could be seen as "very expensive" because it requires lookups in many chunks. 
+Furthermore, our encoding of 6 bytes per output path is highly inefficient. Almost no block has a transaction with 3000 outputs and if it has, then it can not have 3000 transactions. This compresses well. I'd assume an efficiently updatable data structure with a compression factor of 50% is realistic. That would reduce the total set size down to 210 MB with chunks of size 2.5 MB. Most of the chunks are never needed. A query for very old addresses is "very expensive" because it requires lookups in many chunks. 
 
-
-
+Sidenote: The only update operation on old chunks is deleting. The delta can be communicated efficiently as sparse bit vector.
 
 
 ### References 
 - http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
 - https://www.youtube.com/watch?v=52FVkHlCh7Y
 - https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
+
+
+
+
+
 
