@@ -1,7 +1,7 @@
 # Succinct Bitcoin Consensus 
 
 The following are back-of-the-envelope calculations regarding ideas to compress bitcoin's blockchain for light nodes.
-Most of these ideas [have been discussed vaguely before](#references). This work estimates order-of-magnitudes that help assess their feasibility.
+Most of these ideas [have been discussed vaguely before](#related-work). This work estimates order-of-magnitudes that help assess their feasibility.
 
 We assume Bitcoin's blockchain currently has 
 - `615'000 blocks` [Source](https://statoshi.info/)
@@ -128,12 +128,12 @@ Furthermore, our encoding of 6 bytes per output path is highly inefficient. Almo
 Sidenote: The only update operation on old chunks is deleting. The delta can be communicated efficiently as sparse bit vector.
 
 
-### References 
+### Related Work 
 - http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
 - https://www.youtube.com/watch?v=52FVkHlCh7Y
 - https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
-
-
+- https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2017-May/014337.html
+- https://petertodd.org/2016/delayed-txo-commitments
 
 
 
