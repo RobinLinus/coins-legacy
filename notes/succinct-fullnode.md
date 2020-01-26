@@ -16,8 +16,10 @@ As a ballpark figure for "a lot of data for an enduser" we assume a [YouTube vid
 The raw size of the headers chain is `block_height * 80 bytes`. As of today this is about `615000 blocks * 80 bytes ~ 49.2 MB`. 
 Headers are not random data, but compressible with a factor of about `1.77` 
 ([see Headergolf](https://github.com/alecalve/headergolf)). This compresses the current chain down to `27 MB`. 
+If we suppose blocks are generated every 10 minutes, the headers chain grows by `80 bytes * 6 * 24 * 365 = 4.2MB` per year.
+Compressed that is `4.2 MB / 1.77 = 2.4 MB` per year.
 
-A consensus change to support [FlyClient](https://eprint.iacr.org/2019/226.pdf) or [NiPoPoW](https://eprint.iacr.org/2017/963.pdf) could compress the headers chain down to about 1 MB.  
+A consensus change to support [FlyClient](https://eprint.iacr.org/2019/226.pdf) or [NiPoPoW](https://eprint.iacr.org/2017/963.pdf) could compress the full headers chain down to about 1 MB.  
 
 ## Extended Blocks
 
@@ -63,7 +65,8 @@ We might be able to reduce the network overhead further by extending blocks inte
 ## UTXO Set
 
 ### Output Paths
-We can address every output ever happened with a simple scheme: `block_index/transaction_index/output_index`. We call that an *output path*.
+We can address every output ever happened with a simple scheme: 
+`output_path = block_index/transaction_index/output_index`. We call that an *output path*.
 Output paths correspond perfectly with inclusion proofs via Merkle paths. To verify an inclusion proof, we need to know the block header in the chain, 
 which corresponds to a `block_index`. The inclusion proof is a Merkle path, which corresponds to a certain `transaction_index` 
 within that block. The full transaction defines the `output_index` of its outputs. 
