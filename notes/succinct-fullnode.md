@@ -80,16 +80,16 @@ Currently, the set of all UTXO paths would be about `70'000'000 * 6 bytes = 420 
 
 
 ### Efficient UTXO Queries
-We want to perform efficient balance queries `address -> balance`. An output path requires naively 6 bytes, so the set of unspent output paths has `70 * 10^6 * 6 bytes ~ 420 MB`. Suppose the set is ordered lexicographically by the Bitcoin address of the corresponding output. Then we can perform a binary search to find all outputs of an address. In an UTXO set size of `N` this requires `log(N)` steps. For every step we have to query the corresponding inclusion proof for the output path to check its address. This assumes someone provides the proofs. ( Another optimization: addresses are distributed evenly. We can do binary search based on expected values. Basically, we can guess an address' index, and reduce the number of actual proof queries below `log(N)` ). 
+We want to perform efficient balance queries `address -> balance`. An output path requires naively 6 bytes, so the set of unspent output paths has `70 * 10^6 * 6 bytes ~ 420 MB`. Suppose the set is ordered lexicographically by the Bitcoin address of the corresponding output. Then we can perform a binary search to find all outputs of an address. In an UTXO set size of `N` this requires `log(N)` steps. For every step we have to query the corresponding inclusion proof for the output path to check its address. This assumes someone provides the proofs. ( Another optimization: addresses are distributed evenly. We can do binary search based on expected values. Basically, we can guess an address' index, and reduce the number of actual proof queries much below `log(N)` ). 
 
 We can optimize the scheme above. A second query, at a later block, can reuse the knowledge retrieved from the first query. 
 The output path's index won't change much. Furthermore, we are mostly interested in the question if we received new bitcoins. 
 In regards to our database that means the output path next to our previous query result must have changed. Only if that entry changed a receiving transaction could have occurred. 
 
-How to respond to a proof query? We have already reduced the number of proof queries below `log(N)`. Now we actually want to answer a `query: output_path -> output_inclusion_proof`. Per definition is `output_path = block_index/tx_index/output_index`. Thus the trivial response is the full block at height `block_index`. Today's bitcoin nodes can already answer such a query. Yet, it is about 1.3 MB (that might be good for privacy though). In total, the overhead is much less than 
-`1.3 MB * log2(N) = 1.3 MB * log2(70'000'000) ~ 33 MB` for the first balance query.
+How to respond to a proof query? We want to answer a `query: output_path -> output_inclusion_proof`. Per definition is `output_path = block_index/tx_index/output_index`. Thus the trivial response is the full block at height `block_index`. Today's bitcoin nodes can already answer such a query. Yet, a block is about 1.2 MB (that might be good for privacy though). In total, the naive overhead is 
+`1.3 MB * log2(N) = 1.2 MB * log2(70'000'000) ~ 31 MB` to prove the first balance query. We showed how to reduce the number of proof queries below `log(N)` by guessing the index. Most likely, 5 to 10 queries are sufficient. That would reduce the worst case overhead to 6 - 12 MB.
 
-Ideally, there would be a network of light nodes, sharing inclusion proofs. Ideally, once the light network has grown large enough, the light nodes would never have to request an old block from mainnet full nodes again. There's a tipping point where they can fully serve themselves with inclusion proofs derived from new blocks.
+Ideally, there would be a network of light nodes, sharing succinct inclusion proofs. Ideally, once the lite network has grown large enough, the lite nodes would never have to request an old block from mainnet full nodes again. There's a tipping point where they can fully serve themselves with inclusion proofs derived from new blocks.
 
 ### Efficient Set of Output Paths
 A set size of 420 MB is cumbersome. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. Probably you don't need to know it ever. This scheme enables efficient set commitments. Assuming hashing speeds of [1GB/sec on a single core](https://github.com/minio/blake2b-simd#introduction), this is neglectable effort. Within each block we can commit to the full set.
@@ -109,7 +109,7 @@ If we had a commitment to the set of UTXO paths at some block height, we could s
 
 `headers_chain + utxo_paths + extended_blocks ~ 27 MB + 140 MB + 100 * 4 MB = 567 MB`. 
 
-This is only 2 YouTube videos and therefore interesting for endusers. Also, this is an upper bound and real world compression might be up to 25% better. 
+This is only 2 YouTube videos and therefore interesting for endusers. Also, this is an upper bound and real world compression might be up to 25% better. Syncing Bitcoin in 425 MB might be realistic. 
 
 
 
