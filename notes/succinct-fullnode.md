@@ -22,7 +22,8 @@ A consensus change to support [FlyClient](https://eprint.iacr.org/2019/226.pdf) 
 
 ### Inclusion Proofs for Spent Outputs
 
-We can extend each block with Merkle inclusion proofs for every spent output. Block extensions prove output inclusion. They reduce the required knowledge of the UTXO set to the question, if a particular output is actually unspent. The construction requires an overhead of about:
+We can extend each block with Merkle inclusion proofs for every spent output. In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. Block extensions prove outputs inclusion. They reduce the required knowledge of the UTXO set to the question, if a particular included output is actually unspent. This construction requires an overhead of about:
+
 - `proof_size * outputs/transaction * transactions / block`
   - `proof_size ~ ( log2( transactions/block ) - 1) * 32 bytes` ( We can do `-1` here because the Merkle root is in the header and the transaction hash is in the current block as UTXO-ID, which's inclusion we want to prove. )
 - `( (log2(3000) -1) * 32 bytes ) * 2 * 3000 ~ 1.83 MB / block` for the inclusion proofs
@@ -34,9 +35,10 @@ We can extend each block with Merkle inclusion proofs for every spent output. Bl
     - Currently, 50% SegWit-active block: `2 * 1500 * 256 bytes + 2 * 1500 * 128 bytes ~ 1.15 MB / block`
 
 In total a overhead of about `1.83 MB + 1.15 MB - 192 kBytes ~ 2.8 MB / block` is necessary.
+The naive size of an extended block is about `1.2 MB + 2.8 MB ~ 4 MB`.
 
-In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. The size of an extended block is about `1.2 MB + 2.8 MB ~ 4 MB`.
 
+In the following we discuss more succinct proofs.
 
 ### Progressive Hash Digest
 The transactions within the inclusion proofs are a major inefficiency. SegWit transactions help because they exclude the Signatures from a transaction's hash. We might be able to reduce the data further by progressively digesting the transaction. 
