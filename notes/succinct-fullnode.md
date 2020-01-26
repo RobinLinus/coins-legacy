@@ -23,7 +23,9 @@ A consensus change to support [FlyClient](https://eprint.iacr.org/2019/226.pdf) 
 
 ### Inclusion Proofs for Spent Outputs
 
-We can extend each block with Merkle inclusion proofs for every spent output. In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. Block extensions prove outputs inclusion. They reduce the required knowledge of the UTXO set to the question, if a particular included output is actually unspent. This construction requires an overhead of about:
+We can extend each block with Merkle inclusion proofs for every spent output. In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. Block extensions prove outputs inclusion. They reduce the required knowledge of the UTXO set to the question, if a particular *included* output is actually *unspent*.
+
+This construction requires an overhead of about:
 
 - `proof_size * outputs/TX * TX/block`
   - `proof_size ~ ( log2( TX/block ) - 1) * 32 bytes` ( We can do `-1` here because the Merkle root is in the header and the transaction hash is in the current block as UTXO-ID, which's inclusion we want to prove. )
