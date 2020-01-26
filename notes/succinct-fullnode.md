@@ -38,9 +38,7 @@ In total a overhead of about `1.83 MB + 1.15 MB - 192 kBytes ~ 2.8 MB / block` i
 In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. The size of an extended block is about `1.2 MB + 2.8 MB ~ 4 MB`.
 
 
-### Further Compression Ideas
-
-#### Progressive Hash Digest
+### Progressive Hash Digest
 The transactions within the inclusion proofs are a major inefficiency. SegWit transactions help because they exclude the Signatures from a transaction's hash. We might be able to reduce the data further by progressively digesting the transaction. 
 We do not care about its inputs - we want to prove only one output. So we can pre-digest all inputs and all outputs up to our output's index. This compresses the "first half" of the transaction into a SHA256 digest state which has 32 bytes. That is sufficient. In particular because we perform a second round of SHA256 with the final hash to derive the actual TXID.
 
@@ -52,7 +50,7 @@ Indeed, according to the [pseudo code](https://en.wikipedia.org/wiki/SHA-2#Pseud
 
 An even more efficient construction would work in three steps `preimage = prefix + output + postfix` and pre-digest both the prefix and the postfix such that we would have to insert only our output to retrieve the hash. This is probably(?) impossible though.
 
-#### Extending Blocks on Request
+### Extending Blocks on Request
 We might be able to reduce the network overhead further by extending blocks interactively. New UTXOs are more likely to get spent. Thus, the longer a node listens the fewer block extensions it requires. The more blocks it knows the fewer proofs it needs. We can extend our protocol such that a node requests blocks "extended with proofs from before chain height X" where X is a constant communicated at the beginning of a peer session.
 
 
@@ -117,7 +115,7 @@ In regards to our database that means the output path next to our previous query
 How to respond to a proof query? We have already reduced the number of proof queries below `log(N)`. Now we actually want to answer a `query: output_path -> output_inclusion_proof`. Per definition is `output_path = block_index/tx_index/output_index`. Thus the trivial response is the full block at height `block_index`. Today's bitcoin nodes can already answer such a query. Yet, it is about 1.3 MB (that might be good for privacy though). In total, the overhead is less than 
 `1.3 MB * log2(N) = 1.3 MB * log2(70'000'000) ~ 33 MB` for the first balance query.
 
-Ideally, there would be a network of light nodes, sharing inclusion proofs. Ideally, once the light network has grown large enough, the light nodes would never have to request a full block from mainnet fullnodes again. They could serve themselves with inclusion proofs.  
+Ideally, there would be a network of light nodes, sharing inclusion proofs. Ideally, once the light network has grown large enough, the light nodes would never have to request a full block from mainnet full nodes again. They could serve themselves with inclusion proofs.  
 
 #### Efficient Set of Output Paths
 A set size of 420 MB is cumbersome. Again, Merkle FTW! We chunk it into pieces of, i.e, 5 MB and build another Merkle set. Sorted by time. That exploits the fact that old outputs are much less likely to get spent. The "left part" of the Merkle tree rarely changes at all. Probably you don't need to know it ever. This scheme enables efficient set commitments. Assuming hashing speeds of [1GB/sec on a single core](https://github.com/minio/blake2b-simd#introduction), this is neglectable effort. Within each block we can commit to the full set.
@@ -125,10 +123,10 @@ A set size of 420 MB is cumbersome. Again, Merkle FTW! We chunk it into pieces o
 Note that chunks sorted by time reduce the entropy within a chunk drastically. Every chunk has a chain height where it starts and ends, and for every output path in the chunk that reduces the `block_index` to values in that range.
 Furthermore, our encoding of 6 bytes per output path is highly inefficient. Almost no block has a transaction with 3000 outputs and if it has, then it can not have 3000 transactions. This compresses well. I'd assume an efficiently updatable data structure with a compression factor of 50% is realistic. That would reduce the total set size down to 210 MB with chunks of size 2.5 MB. Most of the chunks are never needed. A query for very old addresses is "very expensive" because it requires lookups in many chunks. 
 
-Sidenote: The only update operation on old chunks is deleting. The delta can be communicated efficiently as sparse bit vector.
+Side note: The only update operation on old chunks is deleting. The delta can be communicated efficiently as sparse bit vector.
 
 
-### Related Work 
+## Related Work 
 - http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
 - https://www.youtube.com/watch?v=52FVkHlCh7Y
 - https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
