@@ -25,17 +25,17 @@ A consensus change to support [FlyClient](https://eprint.iacr.org/2019/226.pdf) 
 
 We can extend each block with Merkle inclusion proofs for every spent output. In the following, blocks extended with such inclusion proofs are denoted as *extended blocks*. Block extensions prove outputs inclusion. They reduce the required knowledge of the UTXO set to the question, if a particular included output is actually unspent. This construction requires an overhead of about:
 
-- `proof_size * outputs/transaction * transactions / block`
-  - `proof_size ~ ( log2( transactions/block ) - 1) * 32 bytes` ( We can do `-1` here because the Merkle root is in the header and the transaction hash is in the current block as UTXO-ID, which's inclusion we want to prove. )
-- `( (log2(3000) -1) * 32 bytes ) * 2 * 3000 ~ 1.83 MB / block` for the inclusion proofs
+- `proof_size * outputs/TX * TX/block`
+  - `proof_size ~ ( log2( TX/block ) - 1) * 32 bytes` ( We can do `-1` here because the Merkle root is in the header and the transaction hash is in the current block as UTXO-ID, which's inclusion we want to prove. )
+- `( (log2(3000) -1) * 32 bytes ) * 2 * 3000 ~ 1.83 MB/block` for the inclusion proofs
 - The proof is incomplete without the corresponding transaction, which is additionally about 250 bytes per transaction.
-  - This means about another `2 * 3000 * 256 bytes ~ 1.53 MB / block`
+  - This means about another `2 * 3000 * 256 bytes ~ 1.53 MB/block`
     - We can remove the spending UTXO-Ids from the most recent blocks and replace them with their UTXO-Number, which saves us about `32 bytes` per transaction, so `32*3000*2 bytes ~ 192 kBytes/Block`
   - SegWit transactions are significantly more compact for this use case because we do not need the signature data. The non-witness part of a transaction is roughly `#inputs * 32 + #outputs * 32 bytes`, which reduces our average transaction size to about `128 bytes`
-    - A SegWit-only block: `2 * 3000 * 128 bytes ~ 768 kBytes / block`
-    - Currently, 50% SegWit-active block: `2 * 1500 * 256 bytes + 2 * 1500 * 128 bytes ~ 1.15 MB / block`
+    - A SegWit-only block: `2 * 3000 * 128 bytes ~ 768 kBytes/block`
+    - Currently, 50% SegWit-active block: `2 * 1500 * 256 bytes + 2 * 1500 * 128 bytes ~ 1.15 MB/block`
 
-In total a overhead of about `1.83 MB + 1.15 MB - 192 kBytes ~ 2.8 MB / block` is necessary.
+In total a overhead of about `1.83 MB + 1.15 MB - 192 kBytes ~ 2.8 MB/block` is necessary.
 The naive size of an extended block is about `1.2 MB + 2.8 MB ~ 4 MB`.
 
 
@@ -87,7 +87,7 @@ The output path's index won't change much. Furthermore, we are mostly interested
 In regards to our database that means the output path next to our previous query result must have changed. Only if that entry changed a receiving transaction could have occurred. 
 
 How to respond to a proof query? We want to answer a `query: output_path -> output_inclusion_proof`. Per definition is `output_path = block_index/tx_index/output_index`. Thus the trivial response is the full block at height `block_index`. Today's bitcoin nodes can already answer such a query. Yet, a block is about 1.2 MB (that might be good for privacy though). In total, the naive overhead is 
-`1.3 MB * log2(N) = 1.2 MB * log2(70'000'000) ~ 31 MB` to prove the first balance query. We showed how to reduce the number of proof queries below `log(N)` by guessing the index. Most likely, 5 to 10 queries are sufficient. That would reduce the worst case overhead to 6 - 12 MB.
+`1.2 MB * log2(N) = 1.2 MB * log2(70'000'000) ~ 31 MB` to prove the first balance query. We showed how to reduce the number of proof queries below `log(N)` by guessing the index. Most likely, 5 to 10 queries are sufficient. That would reduce the worst case overhead to 6 - 12 MB.
 
 Ideally, there would be a network of light nodes, sharing succinct inclusion proofs. Ideally, once the lite network has grown large enough, the lite nodes would never have to request an old block from mainnet full nodes again. There's a tipping point where they can fully serve themselves with inclusion proofs derived from new blocks.
 
