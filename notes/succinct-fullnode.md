@@ -126,11 +126,16 @@ Usually, Bitcoin SPV clients join the network to find servers. Such clients cons
 
 
 ## Related Work 
-- http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/
-- https://www.youtube.com/watch?v=52FVkHlCh7Y
-- https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c
-- https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2017-May/014337.html
-- https://petertodd.org/2016/delayed-txo-commitments
-
-
+- [High-performance merkle set implementation
+](http://diyhpl.us/wiki/transcripts/sf-bitcoin-meetup/2017-07-08-bram-cohen-merkle-sets/)
+- [High-performance merkle set implementation
+ [video]](https://www.youtube.com/watch?v=52FVkHlCh7Y)
+- [Storing the UTXO as a bit-vector
+](https://gist.github.com/gavinandresen/f209a02ee559905aa69bf56e3b41040c)
+- [[bitcoin-dev] Rolling UTXO set hashes
+](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2017-May/014337.html)
+- [Making UTXO Set Growth Irrelevant With Low-Latency Delayed TXO Commitments
+](https://petertodd.org/2016/delayed-txo-commitments)
+- [Utreexo: A dynamic hash-based accumulator
+optimized for the Bitcoin UTXO set](https://eprint.iacr.org/2019/611.pdf)
 
