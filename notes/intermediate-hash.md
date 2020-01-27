@@ -77,7 +77,7 @@ To parse all outputs from a suffix the proof needs to tell us the position of th
 The prover tells the verifier to parse the suffix like this:
 
 ```
-408e63e5b7e3cf90835cceb19868f54f8961a825ffffffff // throw away
+408e63e5b7e3cf90835cceb19868f54f8961a825ffffffff // residue of the inputs. throw away
 01 // outputs count
 4baf2100000000001976a914db4d1141d0048b1ed15839d0b7a4c488cd368b0e88ac // all outputs
 00000000 // locktime ( the meaning of those bytes is non-malleable )
@@ -90,14 +90,16 @@ Therefore, a maliciously crafted position could indeed craft some random outputs
 
 Still there remains a standard output with a variable length: `OP_RETURN` followed by 40 arbitrary bytes.
 
-This leaves enough room to craft malicious outputs that can be interpreted as: 
+This leaves enough room to craft malicious transactions with an output such that the `suffix` can be interpreted as: 
 ```
+<residue> // residue of the inputs. throw away
 outputs count:		01
 output #1
-	value:		<8 bytes value>
-	scriptPubKey:	OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
+	value:		<8 bytes>
+	scriptPubKey:	OP_DUP OP_HASH160 <20 bytes> OP_EQUALVERIFY OP_CHECKSIG
 ```
-Which is sufficient to craft a transaction containing a malicious output which has a valid proof for a fake output with an arbitrary value for an arbitrary owner.
+
+This results in a "valid" proof for a fake output with an arbitrary value for an arbitrary owner.
 Probably we can not fix this... Looks like our nice intermediate-hash construction breaks apart. 
 This scheme is insecure with today's bitcoin transactions. :(
 
