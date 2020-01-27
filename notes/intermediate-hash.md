@@ -93,11 +93,11 @@ Still there remains a standard output with a variable length: `OP_RETURN` follow
 
 This leaves enough room to craft malicious transactions with an output such that the `suffix` can be interpreted as: 
 ```
-<residue> // residue of the inputs. throw that away
+<residue (attacker-controlled length)> // residue of the inputs. throw that away
 outputs count:		01
 output #1
 	value:		<8 bytes>
-	scriptPubKey:	OP_DUP OP_HASH160 <20 bytes> OP_EQUALVERIFY OP_CHECKSIG
+	scriptPubKey:	OP_DUP OP_HASH160 <public key hash (20 bytes)> OP_EQUALVERIFY OP_CHECKSIG
 ```
 
 This results in a "valid" proof for a fake output with an arbitrary value for an arbitrary owner.
