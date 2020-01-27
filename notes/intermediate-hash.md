@@ -59,6 +59,14 @@ Thus, outputs of all standard transactions are obvious to parse because they hav
 
 The only remaining standard option with a variable length is `OP_RETURN` outputs up to 40 bytes. 
 
-This is enough to craft malicious outputs. Probably we can not fix this... Looks like our nice construction breaks appart. 
+This is enough to craft malicious outputs that can be interpreted as: 
+```
+outputs count:		01
+output #1
+	value:		<8 bytes value>
+	scriptPubKey:	OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
+```
+Which is sufficient to craft a transaction containing a malicious output with any value for any key or script.
+Probably we can not fix this... Looks like our nice construction breaks appart. 
 This scheme is insecure. :(
 
