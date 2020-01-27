@@ -77,9 +77,9 @@ To parse all outputs from a suffix the proof needs to tell us the position of th
 The prover tells the verifier to parse the suffix like this:
 
 ```
-408e63e5b7e3cf90835cceb19868f54f8961a825ffffffff014baf21000000000    // throw away
+408e63e5b7e3cf90835cceb19868f54f8961a825ffffffff // throw away
 01 // outputs count
-976a914db4d1141d0048b1ed15839d0b7a4c488cd368b0e88ac00000000 // all outputs
+4baf2100000000001976a914db4d1141d0048b1ed15839d0b7a4c488cd368b0e88ac00000000 // all outputs
 ```
 
 This leaves too much room for malleability.
