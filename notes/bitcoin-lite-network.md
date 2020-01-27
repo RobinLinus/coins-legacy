@@ -96,10 +96,12 @@ Suppose a lite node has synced only the longest PoW chain and the most recent UT
 = 3000 * 2 * 625 bytes / block
 ~ 3.75 MB / block
 ```
-Suppose we have downloaded such SPV proofs for each block. They prove output inclusion and imply the output paths. Then to prove an output was *unspent*, for each output we have to download the corresponding chunk of UTXO paths.
+Suppose we have downloaded the SPV proofs for each UTXO consumed in the block. They prove output inclusion and imply the output paths. Then to prove an output was actually *unspent* we have to download the corresponding chunk of UTXO paths.
+
 Assuming we have to download 2/3 of the chunks to prove all outputs of the 100 most recent blocks. Then we would have to download 280 MB of UTXO paths (uncompressed size).
 
 Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proofs, we can update the chunks and thus, the root UTXO commitment.
 Updating old chunks only means deleting entries. Adding entries only ever happens in the newest chunk. The oldest chunk is rarely touched at all.
+
 
 
