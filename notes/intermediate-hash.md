@@ -66,13 +66,15 @@ output #1
 	value:		<8 bytes value>
 	scriptPubKey:	OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
 ```
-Which is sufficient to craft a transaction containing a malicious output with any value for any key or script.
-Probably we can not fix this... Looks like our nice construction breaks apart. 
-This scheme is insecure. :(
+Which is sufficient to craft a transaction containing a malicious output which is a false proof for a false output with an arbitrary value for an arbitrary owner.
+Probably we can not fix this... Looks like our nice intermediate-hash construction breaks apart. 
+This scheme is insecure with today's bitcoin transactions. :(
 
 #### Cumbersome Fixes
-Argument 1: Most likely, nobody can craft malicious outputs within old transactions because any exploit need to get crafted explicitly.
+Argument 1: Most likely, nobody can craft malicious outputs within old transactions because any exploit needs an explicitly forged transaction. So one could argue that the scheme is secure for "old transactions".
 
 
-Argument 2: We can make it a rule to accept succinct proofs only if their suffix is long enough to prove that the output is not ambiguous. So we could exploit that it is "kinda obvious" if an output is actually an `OP_RETURN`. However, that feels like blacklisting inputs for eval though. There are too many possibilities to fake outputs.
+Argument 2: We can make it a rule to accept succinct proofs only if their suffix is long enough to prove that the output is not ambiguous. So one could exploit that it is "kinda obvious" if an output is actually an `OP_RETURN`. However, that feels like blacklisting inputs for eval though. There are too many possibilities to forge outputs. 
+
+Argument 3: Hardfork bitcoin
 
