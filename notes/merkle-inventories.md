@@ -35,3 +35,5 @@ This can provide further privacy if there are way more potential nodes to sync f
 Any kind of marker within a TXID can identify a particular type of transaction. TXIDs are malleable transaction hashs.
 So a protocol could enforce participants to mine TXIDs such that it becomes easy to identify all relevant transactions by TXID and thus, identify transactions within Merkle inventories.
 
+Also if there is some kind of competitive protocol, mined TXIDs in Merkle inventories can establish a total order on transactions competing for leadership.
+
