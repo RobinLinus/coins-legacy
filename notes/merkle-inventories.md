@@ -4,7 +4,7 @@ The root within a Bitcoin block header proves the Merkle set of transactions. A 
 the set of all leaves of the Merkle tree (which is the set of TXIDs in that block) is only `3000*32 bytes = 96kB`. 
 This is about 10% of the raw block size. 
 
-In the following, we call that construction *Merkle inventories*. It is short term for "set of all TXIDs of all TXs in a block". We suppose there are Bitcoin nodes serving Merkle inventories for all blocks.
+In the following, we call that construction *Merkle inventories*. It is short term for "set of TXIDs of all TXs in a block". We suppose there are Bitcoin nodes serving Merkle inventories for all blocks.
 
 Unfortunately, the TXID does not tell us much by itself. Still, if we want to scan for particular transactions, inventories can be helpful to scan the blockchain. 
 They can be ten times more compact than a full node whiteout sacrificing privacy.
