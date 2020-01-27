@@ -1,14 +1,15 @@
 # Intermediate Hash
 
 The following is an example how to compress the transaction data of output inclusion proofs.
-We manipulate SHA256 and digest a bitcoin transaction in chunks of 64 bytes to derive an intermediate hash of 32 bytes [demo](https://coins.github.io/notes/progressive-sha256.html). This allows to prove succinctly the TXID and values of a transaction's outputs. The scheme is broken though.
+We manipulate SHA256 and digest a bitcoin transaction in chunks of 64 bytes to derive an intermediate hash of 32 bytes [demo](https://coins.github.io/notes/progressive-sha256.html). This allows to prove succinctly the TXID and values of a transaction's outputs. Unfortunately, The scheme is broken though.
  
-Example 191 bytes
+ 
+Example 191 bytes raw transaction
 ```
 01000000017967a5185e907a25225574544c31f7b059c1a191d65b53dcc1554d339c4f9efc010000006a47304402206a2eb16b7b92051d0fa38c133e67684ed064effada1d7f925c842da401d4f22702201f196b10e6e4b4a9fff948e5c5d71ec5da53e90529c8dbd122bff2b1d21dc8a90121039b7bcd0824b9a9164f7ba098408e63e5b7e3cf90835cceb19868f54f8961a825ffffffff014baf2100000000001976a914db4d1141d0048b1ed15839d0b7a4c488cd368b0e88ac00000000
 ```
  
-Parsed as transaction
+Parsed as a transaction object
 ```
 version:		01000000
 inputs count:		01
@@ -77,7 +78,7 @@ To parse all outputs from a suffix the proof needs to tell us the position of th
 The prover tells the verifier to parse the suffix like this:
 
 ```
-408e63e5b7e3cf90835cceb19868f54f8961a825ffffffff // residue of the inputs. throw away
+408e63e5b7e3cf90835cceb19868f54f8961a825ffffffff // residue of the inputs. throw that away
 01 // outputs count
 4baf2100000000001976a914db4d1141d0048b1ed15839d0b7a4c488cd368b0e88ac // all outputs
 00000000 // locktime ( the meaning of those bytes is non-malleable )
@@ -92,7 +93,7 @@ Still there remains a standard output with a variable length: `OP_RETURN` follow
 
 This leaves enough room to craft malicious transactions with an output such that the `suffix` can be interpreted as: 
 ```
-<residue> // residue of the inputs. throw away
+<residue> // residue of the inputs. throw that away
 outputs count:		01
 output #1
 	value:		<8 bytes>
@@ -109,4 +110,4 @@ Argument 1: Most likely, nobody can craft malicious outputs within old transacti
 
 Argument 2: We can make it a rule to refuse succinct proofs if their suffix is too short to prove that the output is not ambiguous. One could argue that it is "kinda obvious" if an output is actually an `OP_RETURN`. However, that feels like blacklisting inputs for eval though. There are too many possibilities to forge outputs. Even P2PK and P2SH both leave 20 bytes of attacker-controlled data. One might argue that this is too few bytes to craft an exploit, yet the output values are also arbitrary to some degree. This scheme is very fragile and hard to reason about
 
-
+Argument 3: We can make an attackers life as hard as possible by verifying the transaction data's consistency. i.e we know that `outputs count` is always proceeded by the last inputs' `sequence`. Still, that hardly solves the problem.
