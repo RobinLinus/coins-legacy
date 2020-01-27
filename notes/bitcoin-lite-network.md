@@ -92,3 +92,12 @@ Assuming we have to download 2/3 of the chunks to prove all outputs of the 100 m
 Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proofs, we can update the chunks and thus, the root UTXO commitment.
 Updating old chunks only means deleting entries. Adding entries only ever happens in the newest chunk. The oldest chunk is rarely touched at all.
 
+#### Chunking Strategy 
+We need a deterministic chunking strategy. A naive solution is to chunk every 1000th block. The first blocks were much more sparse though, so the first chunks would be very small.
+
+Another naive solution is to chunk every 5 MB. That is highly dynamic though and might require to rehash all chunks every block. That is too inefficient.
+
+We need a balancing strategy for chunks such that they are balanced and efficiently updatable.
+
+
+
