@@ -72,6 +72,6 @@ This scheme is insecure with today's bitcoin transactions. :(
 Argument 1: Most likely, nobody can craft malicious outputs within old transactions because any exploit needs an explicitly forged transaction. So one could argue that the scheme is secure for "old transactions".
 
 
-Argument 2: We can make it a rule to refuse succinct proofs if their suffix is too short to prove that the output is not ambiguous. One could argue that it is "kinda obvious" if an output is actually an `OP_RETURN`. However, that feels like blacklisting inputs for eval though. There are too many possibilities to forge outputs. Even P2PK and P2SH both leave 20 bytes of attacker controlled data. One might argue that this is too few to craft an exploit, yet the output values are also arbitrary to some degree. This scheme is very fragile and hard to reason about
+Argument 2: We can make it a rule to refuse succinct proofs if their suffix is too short to prove that the output is not ambiguous. One could argue that it is "kinda obvious" if an output is actually an `OP_RETURN`. However, that feels like blacklisting inputs for eval though. There are too many possibilities to forge outputs. Even P2PK and P2SH both leave 20 bytes of attacker-controlled data. One might argue that this is too few bytes to craft an exploit, yet the output values are also arbitrary to some degree. This scheme is very fragile and hard to reason about
 
 
