@@ -79,6 +79,16 @@ This construction results in both efficient queries and efficient UTXO commitmen
 **Side note:** Chunks have a start and end block height. This reduces the entropy of the paths further and allows for even better compression.
 
 
+#### Chunking Strategy 
+We need a deterministic chunking strategy. A naive solution is to chunk every 1000th block. The first blocks were much more sparse though, so the first chunks would be very small and the most recent chunks would be much bigger than 5MB.
+
+Another naive solution is to chunk every 5 MB. That has highly dynamic boundaries though, and might require to rehash all chunks every block. That is too inefficient.
+
+We need a balancing strategy for chunks such that they are balanced and efficiently updatable. 
+
+A more objective measure would be to chunk i.e. every n-th transaction or every n-th output. That would be static boundaries that take into account the number of outputs. Nevertheless, it cannot model that old blocks contain much fewer *unspent* outputs.
+
+
 ### UTXO Commitment Updates
 Suppose a lite node downloaded only the longest PoW chain and the most recent UTXO commitment. To validate a next block it needs an SPV proof for every input spent in the block. Naively, for each block, that is an overhead of about:
 ```
@@ -91,14 +101,5 @@ Assuming we have to download 2/3 of the chunks to prove all outputs of the 100 m
 
 Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proofs, we can update the chunks and thus, the root UTXO commitment.
 Updating old chunks only means deleting entries. Adding entries only ever happens in the newest chunk. The oldest chunk is rarely touched at all.
-
-#### Chunking Strategy 
-We need a deterministic chunking strategy. A naive solution is to chunk every 1000th block. The first blocks were much more sparse though, so the first chunks would be very small and the most recent chunks would be much bigger than 5MB.
-
-Another naive solution is to chunk every 5 MB. That has highly dynamic boundaries though, and might require to rehash all chunks every block. That is too inefficient.
-
-We need a balancing strategy for chunks such that they are balanced and efficiently updatable. 
-
-A more objective measure would be to chunk i.e. every n-th transaction or every n-th output. That would be static boundaries that take into account the number of outputs. Nevertheless, it cannot model that old blocks contain much fewer *unspent* outputs.
 
 
