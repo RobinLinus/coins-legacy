@@ -105,6 +105,6 @@ Updating old chunks only means deleting entries. Adding entries only ever happen
 
 
 ## Bridge Nodes and Satoshi Pruning
-Satoshi described in the section "Reclaiming Disc Space" how to use the blocks' Merkle trees to prune the blockchain down to inclusion proofs for the UTXO set. Such *pruned blocks* are exacty what's needed to derive missing SPV proofs.
+In Satoshi's whitepaper "Reclaiming Disc Space" explains how to use the blocks' Merkle trees to prune the blockchain down to inclusion proofs for the UTXO set. Such *pruned blocks* are exacty what's needed to derive missing SPV proofs.
 
-So a bridge node would not need to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a node just serves the raw block and let the recipient compute all demanded SPV proofs. Responses are not trusted. The root of trust is the UTXO paths commitment -- not the existence of an SPV proof.
+Bridge node do not need to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a node just serves the raw block and let the recipient compute all demanded SPV proofs. Any Bitcoin node can serve a lite node today. The degree of pruning is irrelevant for security. The root of trust is the UTXO commitment -- not the existence of an SPV proof.
