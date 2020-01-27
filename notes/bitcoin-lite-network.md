@@ -95,8 +95,10 @@ Updating old chunks only means deleting entries. Adding entries only ever happen
 #### Chunking Strategy 
 We need a deterministic chunking strategy. A naive solution is to chunk every 1000th block. The first blocks were much more sparse though, so the first chunks would be very small and the most recent chunks would be much bigger than 5MB.
 
-Another naive solution is to chunk every 5 MB. That is a highly dynamic partition though, and might require to rehash all chunks every block. That is too inefficient.
+Another naive solution is to chunk every 5 MB. That has highly dynamic boundaries though, and might require to rehash all chunks every block. That is too inefficient.
 
-We need a balancing strategy for chunks such that they are balanced and efficiently updatable.
+We need a balancing strategy for chunks such that they are balanced and efficiently updatable. 
+
+A more objective measure would be to chunk i.e. every n-th transaction or the n-th output. That would be static boundaries that model at least the number of outputs. Nevertheless, it does not take into account that old blocks contain much fewer *unspent* outputs.
 
 
