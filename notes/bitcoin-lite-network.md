@@ -26,7 +26,7 @@ We can encode an output path naively by padding zeros. This results in an intege
 ~ 6 bytes
 ```
 
-We encode output paths such that their natural order corresponds to their age. Therefore, a path's most significant bits is its block index.
+We encode output paths such that their natural order corresponds to their chronlogical orcer. Therefore, a path's most significant bits is its block index.
 
 **Side note:** No block can have 3000 transactions with 3000 outputs. UTXO paths do not have 6 byte of entropy and thus compress well.
 
@@ -68,9 +68,9 @@ To support binary search, the output paths within each chunk are, again, sorted 
 Querying outputs in recent blocks becomes cheaper and queries in old blocks are more expensive because they have to download also the older chunks.
 
 Algorithm Summary 
-- Sort the UTXO paths chronologically
+- Sort the UTXO paths by time
 - Chunk them into slices of ~ 5MB
-- Within the chunks, sort the UTXO paths by address lexicographically
+- Within the chunks, sort the UTXO paths by address
 - Hash the chunks and build a Merkle tree ( in chronological order )
 - the Merkle root is the UTXO commitment 
 
