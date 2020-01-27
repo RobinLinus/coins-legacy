@@ -1,7 +1,8 @@
 # Bitcoin Lite Network
 
 We introduce a protocol for endusers to query Bitcoin's blockchain efficiently. "Sync by downloading less than a Youtube video".
-Our construction requires no consensus change and works on top of today's bitcoin network.
+Our construction requires no consensus change and works on top of today's bitcoin network. 
+In contrast to lite *clients* our protocol enables lite *nodes* to contribute to the network. 
 
 ## Output Paths 
 An *output path* is a simple scheme to address every output ever happened in Bitcoin's blockchain:
@@ -27,7 +28,7 @@ We can encode an output path naively by padding zeros. This results in an intege
 
 We encode output paths such that their natural order corresponds to their age. Therefore, a path's most significant bits is its block index.
 
-Side note: No block can have 3000 transactions with 3000 outputs. UTXO paths do not have 6 byte of entropy and thus compress well.
+**Side note:** No block can have 3000 transactions with 3000 outputs. UTXO paths do not have 6 byte of entropy and thus compress well.
 
 ## UTXO paths
 The *output paths* is the set of all *unspent* outputs' paths. Currently, the set of all UTXO paths would be about 
@@ -55,11 +56,11 @@ Therefore, a naive query requires total proof data of
 ```
 per address.
 
-Addresses are distributed evenly and the set is sorted. So we can mostly guess a path's index and reduce the number of necessary SPV proofs for our query.
+**Side note** Addresses are distributed evenly and the set is sorted. So we can mostly guess a path's index to reduce the number of necessary SPV proofs per query.
 
 
-### Chunking the UTXO paths
-420MB UTXO paths is still too large. We can split it into more handy chunks, of say 5 MB each, and merklize the set of all chunks.
+### Chunking the set of UTXO paths
+A set of 420MB UTXO paths is still too large to sync quickly. We can split it into more handy chunks, of say 5 MB each, and merklize the set of all chunks.
 To make updates more efficient, we sort the set by output age before chunking. 
 This exploits the fact that old outputs are much more unlikely to get spent. The "oldest" chunk rarely gets touched at all. 
 
@@ -72,4 +73,5 @@ This construction results in both efficient queries and efficient UTXO commitmen
 
 
 
-## 
+## Updating UTXO paths
+
