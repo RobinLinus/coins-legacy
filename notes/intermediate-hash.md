@@ -79,7 +79,8 @@ The prover tells the verifier to parse the suffix like this:
 ```
 408e63e5b7e3cf90835cceb19868f54f8961a825ffffffff // throw away
 01 // outputs count
-4baf2100000000001976a914db4d1141d0048b1ed15839d0b7a4c488cd368b0e88ac00000000 // all outputs
+4baf2100000000001976a914db4d1141d0048b1ed15839d0b7a4c488cd368b0e88ac // all outputs
+00000000 // locktime ( the meaning of those bytes is non-malleable )
 ```
 
 This leaves too much room for malleability.
