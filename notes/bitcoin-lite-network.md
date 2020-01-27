@@ -59,7 +59,7 @@ per address.
 **Side note** Addresses are distributed evenly and the set is sorted. So we can mostly guess a path's index to reduce the number of necessary SPV proofs per query.
 
 
-### Chunking the set of UTXO paths
+### UTXO Commitments
 A set of 420MB UTXO paths is still too large to sync quickly. We can split it into more handy chunks, of say 5 MB each, and merklize the set of all chunks.
 To make updates more efficient, we sort the set by output age before chunking. 
 This exploits the fact that old outputs are much more unlikely to get spent. The "oldest" chunk rarely gets touched at all. 
@@ -72,6 +72,17 @@ This construction results in both efficient queries and efficient UTXO commitmen
 **Side note:** Chunks have a start and end block height. This reduces the entropy of the paths further and allows for even better compression.
 
 
+### UTXO Commitment Updates
+Suppose a lite node downloaded only the longest PoW chain and the most recent UTXO commitment. To validate a next block it needs an SPV proof for every input spent in the block. Naively, for each block, that is an overhead of about:
+```
+  #TX/block * #outputs/TX * SPV_proof_size
+= 3000 * 2 * 625 bytes / block
+~ 3.75 MB / block
+```
+Suppose we have such SPV proofs for the block. Then for each output we have to download the corresponding chunk of UTXO paths.
+Assuming we have to download 2/3 of the chunks to prove all outputs of the 100 most recent blocks. Then we would have to download 280 MB of UTXO paths (uncompressed size).
 
-## Updating UTXO paths
+Having the chunks of UTXO paths, the blocks and their inputs SPV inclusion proofs, we can update the chunks and thus, the UTXO commitment.
+
+Updating old chunks only means deleting entries. Adding entries only ever happens in the newest chunk. The oldest chunk is rarely touched at all.
 
