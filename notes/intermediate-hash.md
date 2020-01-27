@@ -49,8 +49,8 @@ Savings in comparison to the full transaction: `96 bytes ~ 50%`.
 
 
 
-### Malleability of Proofs 
-To parse all outputs from a suffix the proof need to tell us the position of the `outputs count` within the suffix. One might argue that this leaves too much room for malleability.
+### Malleability of Proofs (THE SCHEME IS BROKEN!)
+To parse all outputs from a suffix the proof needs to tell us the position of the `outputs count` within the suffix. One might argue that this leaves too much room for malleability.
 A counterargument is that the verifier can check the consistency of the position by parsing all outputs and performing a sanity check on all values. 
 Furthermore, proofs are relevant only in contexts where also the unlocking script is checked. 
 Therefore, a maliciously crafted position could indeed craft some random outputs. Such outputs would contain random hashes or keys though. An attacker would not be able to find a key pair which digests to such a random hash.
