@@ -1,7 +1,7 @@
 # Intermediate Hash
 
 The following is an example how to compress the transaction data of output inclusion proofs.
-It shows how to manipulate SHA256 and digest a bitcoin transaction in chunks of 64 bytes. This allows to derive an intermediate hash of 32 bytes which can be used to prove succinctly the TXID and values of a transaction's outputs. The scheme is broken though.
+We manipulate SHA256 and digest a bitcoin transaction in chunks of 64 bytes to derive an intermediate hash of 32 bytes [demo](https://coins.github.io/notes/progressive-sha256.html). This allows to prove succinctly the TXID and values of a transaction's outputs. The scheme is broken though.
  
 Example 191 bytes
 ```
