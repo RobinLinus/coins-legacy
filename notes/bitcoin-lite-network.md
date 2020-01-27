@@ -82,7 +82,6 @@ Suppose a lite node downloaded only the longest PoW chain and the most recent UT
 Suppose we have such SPV proofs for the block. Then for each output we have to download the corresponding chunk of UTXO paths.
 Assuming we have to download 2/3 of the chunks to prove all outputs of the 100 most recent blocks. Then we would have to download 280 MB of UTXO paths (uncompressed size).
 
-Having the chunks of UTXO paths, the blocks and their inputs SPV inclusion proofs, we can update the chunks and thus, the UTXO commitment.
-
+Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proofs, we can update the chunks and thus, the root UTXO commitment.
 Updating old chunks only means deleting entries. Adding entries only ever happens in the newest chunk. The oldest chunk is rarely touched at all.
 
