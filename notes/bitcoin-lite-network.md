@@ -90,13 +90,13 @@ A more objective measure would be to chunk i.e. every n-th transaction or every 
 
 
 ### UTXO Commitment Updates
-Suppose a lite node downloaded only the longest PoW chain and the most recent UTXO commitment. To validate a next block it needs an SPV proof for every input spent in the block. Naively, for each block, that is an overhead of about:
+Suppose a lite node has synced only the longest PoW chain and the most recent UTXO commitment. To validate a next block it needs an SPV proof for every input spent in the block. Naively, for each block, that is an overhead of about:
 ```
   #TX/block * #outputs/TX * SPV_proof_size
 = 3000 * 2 * 625 bytes / block
 ~ 3.75 MB / block
 ```
-Suppose we have downloaded such SPV proofs for each block. Then for each output we have to download the corresponding chunk of UTXO paths.
+Suppose we have downloaded such SPV proofs for each block. They prove output inclusion and imply the output paths. Then to prove an output was *unspent*, for each output we have to download the corresponding chunk of UTXO paths.
 Assuming we have to download 2/3 of the chunks to prove all outputs of the 100 most recent blocks. Then we would have to download 280 MB of UTXO paths (uncompressed size).
 
 Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proofs, we can update the chunks and thus, the root UTXO commitment.
