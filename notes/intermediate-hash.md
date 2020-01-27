@@ -66,7 +66,7 @@ output #1
 	value:		<8 bytes value>
 	scriptPubKey:	OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
 ```
-Which is sufficient to craft a transaction containing a malicious output which is has a valid proof for a fake output with an arbitrary value for an arbitrary owner.
+Which is sufficient to craft a transaction containing a malicious output which has a valid proof for a fake output with an arbitrary value for an arbitrary owner.
 Probably we can not fix this... Looks like our nice intermediate-hash construction breaks apart. 
 This scheme is insecure with today's bitcoin transactions. :(
 
