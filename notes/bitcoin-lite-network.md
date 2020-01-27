@@ -67,6 +67,13 @@ This exploits the fact that old outputs are much more unlikely to get spent. The
 To support binary search, the output paths within each chunk are, again, sorted by the output's recipient address.
 Querying outputs in recent blocks becomes cheaper and queries in old blocks are more expensive because they have to download also the older chunks.
 
+Algorithm Summary 
+- Sort the UTXO paths chronologically
+- Chunk them into slices of ~ 5MB
+- Within the chunks, sort the UTXO paths by address lexicographically
+- Hash the chunks and build a Merkle tree ( in chronological order )
+- the Merkle root is the UTXO commitment 
+
 This construction results in both efficient queries and efficient UTXO commitments.
 
 **Side note:** Chunks have a start and end block height. This reduces the entropy of the paths further and allows for even better compression.
