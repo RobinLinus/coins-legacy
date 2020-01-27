@@ -31,7 +31,7 @@ We encode output paths such that their natural order corresponds to their age. T
 **Side note:** No block can have 3000 transactions with 3000 outputs. UTXO paths do not have 6 byte of entropy and thus compress well.
 
 ## UTXO paths
-The *output paths* is the set of all *unspent* outputs' paths. Currently, the set of all UTXO paths would be about 
+The *UTXO paths* is the set of all *unspent* outputs' paths. Currently, the set of all UTXO paths would be about 
 ```
 70'000'000 UTXOs * 6 bytes = 420 MB
 ```
