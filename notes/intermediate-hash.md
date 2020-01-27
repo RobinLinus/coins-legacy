@@ -50,14 +50,14 @@ Savings in comparison to the full transaction: `96 bytes ~ 50%`.
 
 
 ### Malleability of Proofs 
-To parse all outputs from a suffix we need to get told the position of the `outputs count` within the suffix. One might argue that this leaves too much room for malleability.
+To parse all outputs from a suffix the proof need to tell us the position of the `outputs count` within the suffix. One might argue that this leaves too much room for malleability.
 A counterargument is that the verifier can check the consistency of the position by parsing all outputs and performing a sanity check on all values. 
 Furthermore, proofs are relevant only in contexts where also the unlocking script is checked. 
-Therefore, a maliciously crafted position could indeed craft some random outputs. Such outputs would contain random hashs or keys though. An attacker would not be able to find a key pair which digests to such a random hash.
+Therefore, a maliciously crafted position could indeed craft some random outputs. Such outputs would contain random hashes or keys though. An attacker would not be able to find a key pair which digests to such a random hash.
 Note that the problem is only relevant to non-standard outputs. All standard transactions have only outputs with standard formats like P2PK, P2SH.
 Thus, outputs of all standard transactions are obvious to parse because they have a fixed size. We could accept proofs only for such outputs.
 
-The only remaining standard option with a variable length is `OP_RETURN` outputs up to 40 bytes. 
+Still there remains a standard option with a variable length: `OP_RETURN` outputs up to 40 bytes. 
 
 This is enough to craft malicious outputs that can be interpreted as: 
 ```
@@ -67,6 +67,12 @@ output #1
 	scriptPubKey:	OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
 ```
 Which is sufficient to craft a transaction containing a malicious output with any value for any key or script.
-Probably we can not fix this... Looks like our nice construction breaks appart. 
+Probably we can not fix this... Looks like our nice construction breaks apart. 
 This scheme is insecure. :(
+
+#### Cumbersome Fixes
+Argument 1: Most likely, nobody can craft malicious outputs within old transactions because any exploit need to get crafted explicitly.
+
+
+Argument 2: We can make it a rule to accept succinct proofs only if their suffix is long enough to prove that the output is not ambiguous. So we could exploit that it is "kinda obvious" if an output is actually an `OP_RETURN`. However, that feels like blacklisting inputs for eval though. There are too many possibilities to fake outputs.
 
