@@ -1,12 +1,16 @@
 # Merkle Inventories
+A *Merkle inventory* is the set of TXIDs of all transactions in a block. The root within a Bitcoin block header proves the Merkle set of transactions. A full block has about 3000 transactions and thus, a block's inventory is only 
 
-The root within a Bitcoin block header proves the Merkle set of transactions. A full block has about 3000 transactions and thus, 
-the set of all leaves of the Merkle tree (which is the set of TXIDs in that block) is only `3000*32 bytes = 96kB`. 
+```
+3000 TXIDs/block * 32 bytes/TXID
+= 96 kB/block
+``` 
+
 This is about 10% of the raw block size. 
 
-In the following, we call that construction *Merkle inventories*. It is short term for "set of TXIDs of all TXs in a block". We suppose there are Bitcoin nodes serving Merkle inventories for all blocks.
+We suppose it is easy to run Bitcoin nodes serving Merkle inventories for all blocks because it requires only 10% space and bandwidth of a regular node.
 
-Unfortunately, the TXID does not tell us much by itself. Still, if we want to scan for particular transactions, inventories can be helpful to scan the blockchain. 
+Unfortunately, the TXID does not tell us much by itself. Still, if we have knowledge about our TXIDs, inventories can be helpful to scan the blockchain. 
 They can be ten times more compact than a full node whiteout sacrificing privacy.
 
 The growth of Merkle inventories is roughly `96kB/block * 6 block/h * 24h ~ 13.8 MB/day`.
