@@ -19,7 +19,7 @@ Large transactions (i.e. batched transactions) reduce a block's inventory size p
 
 ## Privacy Preserving Lightning Node
 Suppose we are a lightning node that wants to watch its channels. 
-We can keep a history of all TXIDs in our channel backups. For efficiency, we can truncate the channel's TXIDs down to 4 bytes instead of 32. This is sufficiently collision resistant to scan Merkle inventories. 
+We can keep a history of all TXIDs in our channel backups. For efficiency, we can truncate the channel's TXIDs down to 4 bytes instead of 32. This is sufficiently collision resistant to scan Merkle inventories. It corresponds to 4 MB overhead per 1 Million channel updates. 
 
 A node that syncs once a week to watch its channels, would have to download less than 100 MB. 
 Furthermore, such a node can serve other nodes while it is online. It can contribute almost as much resources as it consumes.
