@@ -50,14 +50,12 @@ Savings in comparison to the full transaction: `96 bytes ~ 50%`.
 
 
 ### Malleability of Proofs (THE SCHEME IS BROKEN!)
-To parse all outputs from a suffix the proof needs to tell us the position of the `outputs count` within the suffix. One might argue that this leaves too much room for malleability.
-A counterargument is that the verifier can check the consistency of the position by parsing all outputs and performing a sanity check on all values. 
+To parse all outputs from a suffix the proof needs to tell us the position of the `outputs count` within the suffix. This leaves too much room for malleability.
+One might argue that the verifier can check the consistency of the position by parsing all outputs and performing a sanity check on all values. 
 Furthermore, proofs are relevant only in contexts where also the unlocking script is checked. 
-Therefore, a maliciously crafted position could indeed craft some random outputs. Such outputs would contain random hashes or keys though. An attacker would not be able to find a key pair which digests to such a random hash.
-Note that the problem is only relevant to non-standard outputs. All standard transactions have only outputs with standard formats like P2PK, P2SH.
-Thus, outputs of all standard transactions are obvious to parse because they have a fixed size. We could accept proofs only for such outputs.
+Therefore, a maliciously crafted position could indeed craft some random outputs, yet such outputs would contain random hashes or keys. An attacker would not be able to find a key pair which digests to such a random hash. Furthermore, standard transactions have only outputs with standard formats like P2PK, P2SH. Outputs of all standard transactions are obvious to parse because they have a fixed size. We could accept proofs only for such outputs.
 
-Still there remains a standard option with a variable length: `OP_RETURN` outputs up to 40 bytes. 
+Still there remains a standard output with a variable length: `OP_RETURN` followed by 40 arbitrary bytes.
 
 This is enough to craft malicious outputs that can be interpreted as: 
 ```
@@ -74,7 +72,6 @@ This scheme is insecure with today's bitcoin transactions. :(
 Argument 1: Most likely, nobody can craft malicious outputs within old transactions because any exploit needs an explicitly forged transaction. So one could argue that the scheme is secure for "old transactions".
 
 
-Argument 2: We can make it a rule to accept succinct proofs only if their suffix is long enough to prove that the output is not ambiguous. So one could exploit that it is "kinda obvious" if an output is actually an `OP_RETURN`. However, that feels like blacklisting inputs for eval though. There are too many possibilities to forge outputs. 
+Argument 2: We can make it a rule to refuse succinct proofs if their suffix is too short to prove that the output is not ambiguous. One could argue that it is "kinda obvious" if an output is actually an `OP_RETURN`. However, that feels like blacklisting inputs for eval though. There are too many possibilities to forge outputs. Even P2PK and P2SH both leave 20 bytes of attacker controlled data. One might argue that this is too few to craft an exploit, yet the output values are also arbitrary to some degree. This scheme is very fragile and hard to reason about
 
-Argument 3: Hardfork bitcoin
 
