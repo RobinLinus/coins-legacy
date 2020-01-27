@@ -70,7 +70,7 @@ Querying outputs in recent blocks becomes cheaper and queries in old blocks are 
 Algorithm Summary 
 - Sort the UTXO paths by time
 - Chunk them into slices of ~ 5MB
-- Within the chunks, sort the UTXO paths by address
+- Within each chunks, sort all UTXO paths by address
 - Hash the chunks and build a Merkle tree ( in chronological order )
 - the Merkle root is the UTXO commitment 
 
