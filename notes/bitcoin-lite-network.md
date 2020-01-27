@@ -99,6 +99,6 @@ Another naive solution is to chunk every 5 MB. That has highly dynamic boundarie
 
 We need a balancing strategy for chunks such that they are balanced and efficiently updatable. 
 
-A more objective measure would be to chunk i.e. every n-th transaction or the n-th output. That would be static boundaries that model at least the number of outputs. Nevertheless, it does not take into account that old blocks contain much fewer *unspent* outputs.
+A more objective measure would be to chunk i.e. every n-th transaction or every n-th output. That would be static boundaries that take into account the number of outputs. Nevertheless, it cannot model that old blocks contain much fewer *unspent* outputs.
 
 
