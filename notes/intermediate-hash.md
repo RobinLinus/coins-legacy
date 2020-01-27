@@ -73,14 +73,23 @@ Savings in comparison to the full transaction: `96 bytes ~ 50%`.
 
 
 ### Malleability of Proofs (THE SCHEME IS BROKEN!)
-To parse all outputs from a suffix the proof needs to tell us the position of the `outputs count` within the suffix. This leaves too much room for malleability.
+To parse all outputs from a suffix the proof needs to tell us the position of the `outputs count` within the suffix. 
+The prover tells the verifier to parse the suffix like this:
+
+```
+408e63e5b7e3cf90835cceb19868f54f8961a825ffffffff014baf21000000000    // throw away
+01 // outputs count
+976a914db4d1141d0048b1ed15839d0b7a4c488cd368b0e88ac00000000 // all outputs
+```
+
+This leaves too much room for malleability.
 One might argue that the verifier can check the consistency of the position by parsing all outputs and performing a sanity check on all values. 
 Furthermore, proofs are relevant only in contexts where also the unlocking script is checked. 
 Therefore, a maliciously crafted position could indeed craft some random outputs, yet such outputs would contain random hashes or keys. An attacker would not be able to find a key pair which digests to such a random hash. Furthermore, standard transactions have only outputs with standard formats like P2PK, P2SH. Outputs of all standard transactions are obvious to parse because they have a fixed size. We could accept proofs only for such outputs.
 
 Still there remains a standard output with a variable length: `OP_RETURN` followed by 40 arbitrary bytes.
 
-This is enough to craft malicious outputs that can be interpreted as: 
+This leaves enough room to craft malicious outputs that can be interpreted as: 
 ```
 outputs count:		01
 output #1
