@@ -42,6 +42,13 @@ Total proof size for the output: `intermediate hash + suffix = 32 + 63 bytes = 9
 
 Savings in comparison to the full transaction: `96 bytes ~ 50%`.
 
+### Side Notes
+- Any number of inputs can be compressed down to 32 bytes. 
+- Any standard input data is roughly `TXID + public key + signature` which is about `32+32+64 bytes = 128 bytes`. That fits well our constraint of chunks having 64 bytes. 
+- We can compress the suffix even further. The `locktime`, the `value`, the `output count` and the opcodes in the `scriptPubKey` have low entropy.
+
+
+
 ### Malleability of Proofs 
 To parse all outputs from a suffix we need to get told the position of the `outputs count` within the suffix. One might argue that this leaves too much room for malleability.
 A counterargument is that the verifier can check the consistency of the position by parsing all outputs and performing a sanity check on all values. 
@@ -51,9 +58,6 @@ Note that the problem is only relevant to non-standard outputs. All standard tra
 Thus, outputs of all standard transactions are obvious to parse because they have a fixed size. 
 The only standard option with a variable length is `OP_RETURN` outputs up to 40 bytes. 
 
-We can 
+Probably we can not fix this... Looks like our nice construction breaks appart :( 
+This scheme is insecure.
 
-### Side Notes
-- Any number of inputs can be compressed down to 32 bytes. 
-- Any standard input data is roughly `TXID + public key + signature` which is about `32+32+64 bytes = 128 bytes`. That fits well our constraint of chunks having 64 bytes. 
-- We can compress the suffix even further. The `locktime`, the `value`, the `output count` and the opcodes in the `scriptPubKey` have low entropy.
