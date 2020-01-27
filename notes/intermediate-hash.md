@@ -55,9 +55,10 @@ A counterargument is that the verifier can check the consistency of the position
 Furthermore, proofs are relevant only in contexts where also the unlocking script is checked. 
 Therefore, a maliciously crafted position could indeed craft some random outputs. Such outputs would contain random hashs or keys though. An attacker would not be able to find a key pair which digests to such a random hash.
 Note that the problem is only relevant to non-standard outputs. All standard transactions have only outputs with standard formats like P2PK, P2SH.
-Thus, outputs of all standard transactions are obvious to parse because they have a fixed size. 
-The only standard option with a variable length is `OP_RETURN` outputs up to 40 bytes. 
+Thus, outputs of all standard transactions are obvious to parse because they have a fixed size. We could accept proofs only for such outputs.
 
-Probably we can not fix this... Looks like our nice construction breaks appart :( 
-This scheme is insecure.
+The only remaining standard option with a variable length is `OP_RETURN` outputs up to 40 bytes. 
+
+This is enough to craft malicious outputs. Probably we can not fix this... Looks like our nice construction breaks appart. 
+This scheme is insecure. :(
 
