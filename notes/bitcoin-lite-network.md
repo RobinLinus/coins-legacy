@@ -96,7 +96,7 @@ Suppose a lite node has synced only the longest PoW chain and the most recent UT
 = 3000 * 2 * 625 bytes / block
 ~ 3.75 MB / block
 ```
-Suppose we have downloaded the SPV proofs for each UTXO consumed in the block. They prove output inclusion and imply the output paths. Then to prove an output was actually *unspent* we have to download the corresponding chunk of UTXO paths.
+Suppose we have downloaded the SPV proofs for each UTXO consumed in the block. We denote such a set of SPV proofs as *block extension*. They prove output inclusion and imply the output paths. Then to prove an output was actually *unspent* we have to download the corresponding chunk of UTXO paths.
 
 Assuming we have to download 2/3 of the chunks to prove all outputs of the 100 most recent blocks. Then we would have to download 280 MB of UTXO paths (uncompressed size).
 
@@ -104,4 +104,7 @@ Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proo
 Updating old chunks only means deleting entries. Adding entries only ever happens in the newest chunk. The oldest chunk is rarely touched at all.
 
 
+## Bridge Nodes and Satoshi Pruning
+Satoshi described in the section "Reclaiming Disc Space" how to use the blocks' Merkle trees to prune the blockchain down to inclusion proofs for the UTXO set. Such *pruned blocks* are exacty what's needed to derive missing SPV proofs.
 
+So a bridge node would not need to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a node just serves the raw block and let the recipient compute all demanded SPV proofs. Responses are not trusted. The root of trust is the UTXO paths commitment -- not the existence of an SPV proof.
