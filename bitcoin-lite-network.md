@@ -136,4 +136,4 @@ A much more efficient algorithm to sync in case of two conflicting UTXO commitme
 - Download the first chunks that are different. 
 - Compare the two chunks and find the first output path that differs. 
 - Ask the other node for a *spending proof* for that output path. 
-- Any malicous node has to abort this protocol quickly.
+- Any malicous node quickly disproves itself or aborts the protocol.
