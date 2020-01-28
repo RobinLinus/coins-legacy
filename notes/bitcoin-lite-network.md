@@ -72,7 +72,7 @@ Algorithm Summary
 - Chunk them into slices of ~ 5MB
 - Within each chunks, sort all UTXO paths by address
 - Hash the chunks and build a Merkle tree ( in chronological order )
-- the Merkle root is the UTXO commitment 
+- The Merkle root is the UTXO commitment 
 
 This construction results in both efficient queries and efficient UTXO commitments.
 
@@ -100,7 +100,7 @@ Suppose we have downloaded the SPV proofs for each UTXO consumed in the block. W
 
 Assuming we have to download 2/3 of the chunks to prove all outputs of the 100 most recent blocks. Then we would have to download 280 MB of UTXO paths (uncompressed size).
 
-Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proofs, we can update the chunks and thus, the root UTXO commitment.
+Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proofs, we can update the chunks. Thus, lite nodes can update the root UTXO commitment.
 Updating old chunks only means deleting entries. Adding entries only ever happens in the newest chunk. The oldest chunk is rarely touched at all.
 
 
