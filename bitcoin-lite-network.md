@@ -1,6 +1,6 @@
 # Bitcoin Lite Network
 
-"Sync with Bitcoin by downloading less than a Youtube video". We introduce a second-layer protocol for endusers to query Bitcoin's blockchain efficiently. Our construction works on top of today's bitcoin network and requires no consensus changes. 
+TL;DR: *"Sync Bitcoin by downloading less than a Youtube video"*. We introduce a second-layer protocol for endusers to query Bitcoin's blockchain efficiently. Our construction works on top of today's bitcoin network and requires no consensus changes. 
 In contrast to traditional light *clients* our protocol supports lite *nodes* which contribute resources to the network. 
 
 ## Output Paths 
