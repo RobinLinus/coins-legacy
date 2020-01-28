@@ -131,7 +131,7 @@ Lite nodes need to learn the UTXO commitment somehow. Ideally, there would be a 
 
 A much more efficient algorithm to sync in case of two conflicting UTXO commitments is as follows: 
 
-- The longest chain is determined as usual. We discuss the case that both nodes believe in the same headers chain but in different UTXO commitments.
+- The longest PoW chain is determined as usual. We discuss the case that both nodes believe in the same headers chain but in different UTXO commitments. 
 - Download the Merkle leaves of both UTXO commitments. Suppose there are 500 chunks, that is `500*32 bytes = 16kBytes` of hashes.
 - Compare the chunks' hashes and find the difference.
 - Download the first chunks that are different. 
