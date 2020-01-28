@@ -104,11 +104,13 @@ Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proo
 Updating old chunks only means deleting entries. Adding entries only ever happens in the newest chunk. The oldest chunk is rarely touched at all.
 
 
-## Bridge Nodes and Satoshi Pruning
-In Satoshi's whitepaper "Reclaiming Disc Space" explains how to use the blocks' Merkle trees to prune the blockchain down to inclusion proofs for the UTXO set. Such *pruned blocks* are exacty what's needed to derive missing SPV proofs.
+## Satoshi Pruning and Bridge Nodes 
+In Satoshi's whitepaper the chapter "Reclaiming Disc Space" explains how to use the blocks' Merkle trees to prune the blockchain down to inclusion proofs for the UTXO set. Such *pruned blocks* are exacty what's needed to derive missing SPV proofs.
 
-Bridge node do not need to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a node just serves the raw block and let the recipient compute all demanded SPV proofs. Any Bitcoin node can serve a lite node today. The degree of pruning is irrelevant for security. The root of trust is the UTXO commitment -- not the existence of an SPV proof.
-
-Whatever a lite node recieves as an answer to a query for an SPV, it can reuse the full answer in its next query, or to answer queries of other users.
+Bridge node do not need to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a node just serves the raw block and let the recipient compute all demanded SPV proofs. A lite node can translate its queries to get served by any bitcoin node today. The degree of block pruning is irrelevant for security. The root of trust is the UTXO commitment -- not the existence of an SPV proof.
 
 **The circle of proofs:** The old, *pruned blocks* imply the *block extensions* for the new blocks.
+
+## Lite Nodes 
+Lite node mostly perform queries `output_path -> SPV_proof`. They might receive an SPV proof, a pruned block or a raw block.
+In any case, it can reuse the full answer in its next query, or to answer queries of other users with SPV proofs.
