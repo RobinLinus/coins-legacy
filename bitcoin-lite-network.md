@@ -129,7 +129,7 @@ In Satoshi's whitepaper the chapter "Reclaiming Disc Space" explains how to use 
 Bridge nodes do not have to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a node just serves the raw block and let the recipient compute all demanded SPV proofs. A lite node can translate its queries to get served by any bitcoin node today. The degree of block pruning is irrelevant for security. The root of trust is the UTXO commitment -- not the existence of an SPV proof.
 
 ### The circle of proofs
-Summary. At the core of the lite network there are "output paths" and the following fact about Bitcoin's blockchain:
+Summary. At the core of the lite network there are "output paths" pointing to outputs and the following fact about Bitcoin's blockchain:
 
 The old, *pruned blocks* imply the *block extensions* to prove the new blocks.
 
