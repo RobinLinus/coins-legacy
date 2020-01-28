@@ -48,12 +48,14 @@ We encode output paths such that their natural order corresponds to their chrono
 **Side note:** No block can have 3000 transactions with 3000 outputs. UTXO paths do not have 6 bytes of entropy and thus compress well.
 
 ## UTXO paths
-In the following we denote an *UTXO path* as an output path pointing to an *unspent* output.
-The *UTXO paths* is the set of all *unspent* outputs' paths. Currently, the set of all UTXO paths would be about 
+In the following we denote an *UTXO path* to be an output path pointing to an *unspent* output.
+
+Currently, the set of all UTXO paths would be about 
 ```
 70'000'000 UTXOs * 6 bytes = 420 MB
 ```
 encoded naively. 
+We call this set set of all *unspent* outputs' paths the "*UTXO paths*". 
 
 
 ### Binary Search in the UTXO paths
