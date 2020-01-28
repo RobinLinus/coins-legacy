@@ -44,7 +44,7 @@ We can encode an output path naively by padding zeros. This results in an intege
 
 We encode output paths such that their natural order corresponds to their chronological order. Therefore, a path's most significant bits is its block index.
 
-**Side note:** No block can have 3000 transactions with 3000 outputs. UTXO paths do not have 6 byte of entropy and thus compress well.
+**Side note:** No block can have 3000 transactions with 3000 outputs. UTXO paths do not have 6 bytes of entropy and thus compress well.
 
 ## UTXO paths
 The *UTXO paths* is the set of all *unspent* outputs' paths. Currently, the set of all UTXO paths would be about 
