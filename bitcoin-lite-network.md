@@ -22,7 +22,7 @@ this corresponds to a `block_index`. The Merkle path corresponds to a `transacti
 
 A SPV proof proves an output path's output.
 
-#### SPV Proof size
+#### SPV Proof Size
 
 The size of a SPV proof is about:
 ```
