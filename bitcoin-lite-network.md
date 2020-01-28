@@ -22,6 +22,16 @@ this corresponds to a `block_index`. The Merkle path corresponds to a `transacti
 
 A SPV proof proves an output path's output.
 
+#### SPV Proof size
+
+The size of a SPV proof is about:
+```
+= log2( #TX/block ) * hash_size + avg_TX_size
+= log2(3000) * 32 bytes + 256 bytes
+SPV_proof_size ~ 625 bytes
+```
+SPV Proofs for SegWit Transactions are much more compact because they exclude the signatures from the transaction hash.
+
 ### Output Path Encoding
 We can encode an output path naively by padding zeros. This results in an integer of:
 
@@ -47,12 +57,6 @@ encoded naively.
 ### Binary Search in the UTXO paths
 A user wants to query all outputs of a particular Bitcoin address within the UTXO set. To do that efficiently, we can sort the set of all unspent output paths by the output's recipient addresses. 
 This allows for binary search within the UTXO set. Each step requires downloading an SPV proof to compare the address at the current position. 
-The size of a SPV proof is about:
-```
-= log2( #TX/block ) * hash_size + avg_TX_size
-= log2(3000) * 32 bytes + 256 bytes
-SPV_proof_size ~ 625 bytes
-```
 
 Therefore, a naive query requires total proof data of
 ```
