@@ -30,7 +30,7 @@ The size of a SPV proof is about:
 = log2(3000) * 32 bytes + 256 bytes
 SPV_proof_size ~ 625 bytes
 ```
-SPV Proofs for SegWit Transactions are a bit more compact because they exclude the signatures from the transaction hash.
+SPV Proofs for SegWit Transactions are slightly more compact because they exclude all witness data from the transaction hash.
 
 ### Output Path Encoding
 We can encode an output path naively by padding zeros. This results in an integer of:
