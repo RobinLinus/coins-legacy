@@ -11,8 +11,7 @@ output_path = block_index / transaction_index / output_index
 ```
 
 ### Output Paths and SPV proofs
-Output paths correspond perfectly to SPV proofs. 
-This is easy to see: To verify an SPV proof one needs to know its block header within the best chain, 
+Output paths correspond naturally to SPV inclusion proofs. This is easy to see: To verify an SPV proof one needs to know its block header within the best chain, 
 this corresponds to a `block_index`. The Merkle path corresponds to a `transaction_index` and the transaction itself proves the `output_index`.
 This means an `output_path` is provable.
 
