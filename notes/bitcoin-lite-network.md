@@ -39,9 +39,9 @@ encoded naively.
 
 
 ### Binary Search in the UTXO paths
-We want to query all outputs of a Bitcoin address within the UTXO set. We can sort the set of all unspent output paths by the output's recipient addresses. 
+A user wants to query all outputs of a particular Bitcoin address within the UTXO set. To do that efficiently, we can sort the set of all unspent output paths by the output's recipient addresses. 
 This allows for binary search within the UTXO set. Each step requires downloading an SPV proof to compare the address at the current position. 
-An SPV proof is about:
+The size of a SPV proof is about:
 ```
 = log2( #TX/block ) * hash_size + avg_TX_size
 = log2(3000) * 32 bytes + 256 bytes
