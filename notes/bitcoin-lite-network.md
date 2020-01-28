@@ -113,7 +113,7 @@ Bridge nodes do not have to serve individual SPV proofs, but only the pruned blo
 
 ## Lite Nodes 
 Lite nodes mostly perform queries `output_path -> SPV_proof`. They might get as response an SPV proof, a pruned block or a raw block.
-In any case, it can reuse the full answer in its next query, or to answer other users' queries with SPV proofs to save bandwith. 
+In any case, a node can reuse the full answer in its next query, or to answer other users' queries with SPV proofs to save bandwith. 
 
 Lite nodes need to learn the UTXO commitment somehow. Ideally, there would be a consensus change to expect miners to include the current UTXO commitment in every block. Until then, we need a workaround. Lite nodes can check if all their peers believe in the same root hash. If there is a conflict, they could fall back to syncing the full chain since a trusted checkpoint.
 
