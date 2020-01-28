@@ -31,7 +31,7 @@ We can encode an output path naively by padding zeros. This results in an intege
 ~ 6 bytes
 ```
 
-We encode output paths such that their natural order corresponds to their chronlogical order. Therefore, a path's most significant bits is its block index.
+We encode output paths such that their natural order corresponds to their chronological order. Therefore, a path's most significant bits is its block index.
 
 **Side note:** No block can have 3000 transactions with 3000 outputs. UTXO paths do not have 6 byte of entropy and thus compress well.
 
@@ -125,9 +125,9 @@ The old, *pruned blockchain* implies the proofs for the new, *extended blockchai
 
 ## Lite Nodes 
 Lite nodes mostly perform queries `output_path -> SPV_proof`. They might get as response an SPV proof, a pruned block or a raw block.
-In any case, a node can reuse the full answer in its next query, or to answer other users' queries with SPV proofs to save bandwith. 
+In any case, a node can reuse the full answer in its next query, or to answer other users' queries with SPV proofs to save bandwidth. 
 
-Lite nodes need to learn the UTXO commitment somehow. Ideally, there would be a consensus change to expect miners to include the current UTXO commitment in every block. Until then, we need a workaround. Lite nodes can check if all their peers believe in the same root hash. If there is a conflict, they could fall back to syncing the full chain since a trusted checkpoint. Verfying a chain of extended blocks requires no further trust.
+Lite nodes need to learn the UTXO commitment somehow. Ideally, there would be a consensus change to expect miners to include the current UTXO commitment in every block. Until then, we need a workaround. Lite nodes can check if all their peers believe in the same root hash. If there is a conflict, they could fall back to syncing the full chain since a trusted checkpoint. Verifying a chain of extended blocks requires no further trust.
 
 A much more efficient algorithm to sync in case of two conflicting UTXO commitments is as follows: 
 
@@ -137,6 +137,6 @@ A much more efficient algorithm to sync in case of two conflicting UTXO commitme
 - Download the first chunks that are different. 
 - Compare the two chunks and find the first output path that differs. 
 - Ask the other node for a *spending SPV proof* for that output path. 
-- Any malicous node disproves itself or aborts the protocol.
+- Any malicious node disproves itself or aborts the protocol.
 
-The drawback here is that we require a *spending SPV proof* to prove a chunk's incorrectness. In theory, there could be a few servers that provide all spending proofs. The overhead to run a spending proof server is much less than serving the blockchain. It is basically just pointers into the correct block. And they are requested rarely because only in case of an attack.
+The drawback here is that we require a *spending SPV proof* to prove a chunk's incorrectness. In theory, there could be a few servers that provide all spending proofs. The overhead to run a server for spending proofs is much less than serving the blockchain. Spending proofs are basically pointers into the correct block. And they are requested rarely because only in case of an attack. Their sheer existence makes an attack infeasible.
