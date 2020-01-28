@@ -11,12 +11,15 @@ output_path = block_index / transaction_index / output_index
 
 ### Output Paths and SPV proofs
 Since the early days Bitcoin supported SPV inclusion proofs.
+
 <p align="center">
   <img src="assets/spv-proof.png" width="80%" alt="SPV proof">
 </p>
+
 Output paths correspond naturally to SPV proofs. This is easy to see: To verify an SPV proof one needs to know its block header within the best chain, 
 this corresponds to a `block_index`. The Merkle path corresponds to a `transaction_index` and the transaction itself proves the `output_index`.
-An SPV proof proves an output path's output.
+
+A SPV proof proves an output path's output.
 
 ### Output Path Encoding
 We can encode an output path naively by padding zeros. This results in an integer of:
