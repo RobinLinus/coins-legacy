@@ -8,6 +8,7 @@ An *output path* is a simple scheme to address every output ever happened in Bit
 ```
 output_path = block_index / transaction_index / output_index
 ```
+An *output path* is a succinct pointer to a particular output.
 
 ### Output Paths and SPV proofs
 Since the early days Bitcoin supported SPV inclusion proofs.
