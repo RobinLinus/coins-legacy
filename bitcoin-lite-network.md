@@ -133,7 +133,7 @@ A much more efficient algorithm to sync in case of two conflicting UTXO commitme
 
 - Download the Merkle leaves of both UTXO commitments. Suppose there are 500 chunks, that is `500*32 bytes = 16kBytes` of hashes.
 - Compare the chunks' hashes and find the difference.
-- Download the first chunk that is different. 
+- Download the first chunks that are different. 
 - Compare the chunks and find the first output path that differs. 
-- Ask the other node for a *spending proof* of that output path.
+- Ask the other node for a *spending proof* for that output path. 
 - Any malicous node has to abort this protocol quickly.
