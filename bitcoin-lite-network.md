@@ -93,7 +93,7 @@ We need a balancing strategy for chunks such that they are balanced and efficien
 
 A more objective measure would be to chunk i.e. every n-th transaction or every n-th output. That would be static boundaries that take into account the number of outputs. Nevertheless, it cannot model that old blocks contain much fewer *unspent* outputs.
 
-Any decent long-term compression requires some dynamic within the chunk sizes. Though we can damp the dynamic to reduce malleability. For example a chunk size re-allocation could happen only once every 2 years at a particular block heigth.
+Any decent long-term compression requires some dynamic within the chunk sizes. Though we can damp the dynamic to reduce malleability. For example, a chunk size re-allocation could happen only once every 2 years at a particular block heigth.
 
 ### UTXO Commitment Updates
 Suppose a lite node has synced only the longest PoW chain and the most recent UTXO commitment. To validate a next block it needs an SPV proof for every input spent in the block. Naively, for each block, that is an overhead of about:
