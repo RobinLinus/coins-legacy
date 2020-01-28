@@ -131,9 +131,12 @@ Lite nodes need to learn the UTXO commitment somehow. Ideally, there would be a 
 
 A much more efficient algorithm to sync in case of two conflicting UTXO commitments is as follows: 
 
+- The longest chain is determined as usual. We discuss the case that both nodes believe in the same headers chain but in different UTXO commitments.
 - Download the Merkle leaves of both UTXO commitments. Suppose there are 500 chunks, that is `500*32 bytes = 16kBytes` of hashes.
 - Compare the chunks' hashes and find the difference.
 - Download the first chunks that are different. 
 - Compare the two chunks and find the first output path that differs. 
 - Ask the other node for a *spending SPV proof* for that output path. 
-- Any malicous node quickly disproves itself or aborts the protocol.
+- Any malicous node disproves itself or aborts the protocol.
+
+The drawback here is that we require a *spending SPV proof* to disprove a chunks' correctness.
