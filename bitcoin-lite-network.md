@@ -129,7 +129,7 @@ In any case, a node can reuse the full answer in its next query, or to answer ot
 
 Lite nodes need to learn the UTXO commitment somehow. Ideally, there would be a consensus change to expect miners to include the current UTXO commitment in every block. Until then, we need a workaround. Lite nodes can check if all their peers believe in the same root hash. If there is a conflict, they could fall back to syncing the full chain since a trusted checkpoint. Verfying a chain of extended blocks requires no further trust.
 
-A much more efficient algorithm to sync in case of two conflicting UTXO commitment conflict is as follows: 
+A much more efficient algorithm to sync in case of two conflicting UTXO commitments is as follows: 
 
 - Download the Merkle leaves of both UTXO commitments. Suppose there are 500 chunks, that is `500*32 bytes = 16kBytes` of hashes.
 - Compare the chunks' hashes and find the difference.
