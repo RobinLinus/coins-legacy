@@ -66,7 +66,7 @@ Therefore, a naive query requires total proof data of
 ```
 per address.
 
-**Side note** Addresses are distributed evenly and the set is sorted. So we can mostly guess a path's index to reduce the number of necessary SPV proofs per query.
+**Side note:** Addresses are distributed evenly and the set is sorted. So we can mostly guess a path's index to reduce the number of necessary SPV proofs per query.
 
 
 ### UTXO Commitments
