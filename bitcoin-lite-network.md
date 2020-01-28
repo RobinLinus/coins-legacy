@@ -1,8 +1,7 @@
 # Bitcoin Lite Network
 
-We introduce a protocol for endusers to query Bitcoin's blockchain efficiently. "Sync by downloading less than a Youtube video".
-Our construction requires no consensus change and works on top of today's bitcoin network. 
-In contrast to lite *clients* our protocol supports lite *nodes* which can contribute to the network. 
+"Sync with Bitcoin by downloading less than a Youtube video". We introduce a second-layer protocol for endusers to query Bitcoin's blockchain efficiently. Our construction works on top of today's bitcoin network and requires no consensus changes. 
+In contrast to traditional light *clients* our protocol supports lite *nodes* which contribute resources to the network. 
 
 ## Output Paths 
 An *output path* is a simple scheme to address every output ever happened in Bitcoin's blockchain:
