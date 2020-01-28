@@ -139,4 +139,4 @@ A much more efficient algorithm to sync in case of two conflicting UTXO commitme
 - Ask the other node for a *spending SPV proof* for that output path. 
 - Any malicous node disproves itself or aborts the protocol.
 
-The drawback here is that we require a *spending SPV proof* to disprove a chunks' correctness.
+The drawback here is that we require a *spending SPV proof* to prove a chunk's incorrectness. In theory, there could be a few servers that provide all spending proofs. The overhead to run a spending proof server is much less than serving the blockchain. It is basically just pointers into the correct block. And they are requested rarely because only in case of an attack.
