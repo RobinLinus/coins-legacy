@@ -154,4 +154,4 @@ A much more efficient algorithm to sync in case of two peers offering conflictin
 
 The only drawback here is that we require a *spending SPV proof* to prove a chunk's incorrectness. Yet, only very few servers have to provide all spending proofs. And the overhead to run a server for spending proofs is much less than serving the blockchain. The set of spending proofs is a map `output_path -> block_index`. Such a mapping is sufficient for a lite note to extract a spending proof from any node that serves blocks. They are requested rarely because they are relevant only in case of an attack. Their sheer availability makes an attack infeasible.
 
-This protocol provides much better security than usual SPV clients because it requires only one assumption: There is a single honest peer.
+This protocol provides much better security than usual SPV clients because it requires only one assumption: There is at least one honest peer.
