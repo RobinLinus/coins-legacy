@@ -110,7 +110,7 @@ Bridge nodes do not have to serve individual SPV proofs, but only the pruned blo
 ## The circle of proofs
 The old, *pruned blocks* imply the *block extensions* to prove the new blocks.
 
-The old, *pruned blockchain* implies the proofs for the *extended blockchain*.
+The old, *pruned blockchain* implies the proofs for the new, *extended blockchain*.
 
 ## Lite Nodes 
 Lite nodes mostly perform queries `output_path -> SPV_proof`. They might get as response an SPV proof, a pruned block or a raw block.
