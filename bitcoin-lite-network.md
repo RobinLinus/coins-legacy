@@ -135,5 +135,5 @@ A much more efficient algorithm to sync in case of two conflicting UTXO commitme
 - Compare the chunks' hashes and find the difference.
 - Download the first chunks that are different. 
 - Compare the two chunks and find the first output path that differs. 
-- Ask the other node for a *spending proof* for that output path. 
+- Ask the other node for a *spending SPV proof* for that output path. 
 - Any malicous node quickly disproves itself or aborts the protocol.
