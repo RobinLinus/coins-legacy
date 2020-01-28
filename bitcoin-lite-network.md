@@ -10,7 +10,7 @@ output_path = block_index / transaction_index / output_index
 ```
 
 ### Output Paths and SPV proofs
-Since the early days Bitcoin supported SPV inclusion proofs.
+Since the early dayss Bitcoin supports SPV inclusion proofs.
 <p align="center">
   <img src="assets/spv-proof.png" width="80%" alt="SPV proof">
 </p>
