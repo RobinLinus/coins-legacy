@@ -126,7 +126,7 @@ In Satoshi's whitepaper the chapter "Reclaiming Disc Space" explains how to use 
 </p>
 
 
-Bridge nodes do not have to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a node just serves the raw block and let the recipient compute all demanded SPV proofs. A lite node can translate its queries to get served by any bitcoin node today. The degree of block pruning is irrelevant for security. The root of trust is the UTXO commitment -- not the existence of an SPV proof.
+Bridge nodes do not have to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a server node simply serves the raw block and let the client compute all demanded SPV proofs. A lite node can translate its queries to get served by any bitcoin node today. The degree of block pruning is irrelevant for security. The root of trust is the UTXO commitment -- not the existence of an SPV proof.
 
 ### The circle of proofs
 Summary. At the core of the lite network there are "output paths" pointing to outputs and the following fact about Bitcoin's blockchain:
@@ -153,3 +153,5 @@ A much more efficient algorithm to sync in case of two peers offering conflictin
 - Any malicious node disproves itself or aborts the protocol.
 
 The only drawback here is that we require a *spending SPV proof* to prove a chunk's incorrectness. Yet, only very few servers have to provide all spending proofs. And the overhead to run a server for spending proofs is much less than serving the blockchain. The set of spending proofs is a map `output_path -> block_index`. Such a mapping is sufficient for a lite note to extract a spending proof from any node that serves blocks. They are requested rarely because they are relevant only in case of an attack. Their sheer availability makes an attack infeasible.
+
+This protocol provides much better security than usual SPV clients because it requires only one assumption: There is a single honest peer.
