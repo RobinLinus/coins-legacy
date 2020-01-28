@@ -12,7 +12,10 @@ output_path = block_index / transaction_index / output_index
 ### Output Paths and SPV proofs
 Output paths correspond naturally to SPV inclusion proofs. This is easy to see: To verify an SPV proof one needs to know its block header within the best chain, 
 this corresponds to a `block_index`. The Merkle path corresponds to a `transaction_index` and the transaction itself proves the `output_index`.
-This means an `output_path` is provable.
+<p align="center">
+  <img src="assets/spv-proof.png" width="80%" alt="SPV proof">
+</p>
+SPV proofs prove output paths.
 
 ### Output Path Encoding
 We can encode an output path naively by padding zeros. This results in an integer of:
@@ -104,6 +107,10 @@ Updating old chunks only means deleting entries. Adding entries only ever happen
 
 ## Satoshi Pruning and Bridge Nodes 
 In Satoshi's whitepaper the chapter "Reclaiming Disc Space" explains how to use the blocks' Merkle trees to prune the blockchain down to inclusion proofs for the UTXO set. Such *pruned blocks* are exacty what's needed to derive missing SPV proofs.
+<p align="center">
+  <img src="assets/satoshi-pruning.png" width="80%" alt="Satoshi pruning">
+</p>
+
 
 Bridge nodes do not have to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a node just serves the raw block and let the recipient compute all demanded SPV proofs. A lite node can translate its queries to get served by any bitcoin node today. The degree of block pruning is irrelevant for security. The root of trust is the UTXO commitment -- not the existence of an SPV proof.
 
