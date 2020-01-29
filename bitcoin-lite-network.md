@@ -18,7 +18,7 @@ Since the early days Bitcoin supported SPV inclusion proofs.
   <img src="assets/spv-proof.png" width="80%" alt="SPV proof">
 </p>
 
-Output paths correspond naturally to SPV proofs. This is easy to see: To verify an SPV proof one needs to know its block header within the best chain, 
+Output paths correspond naturally to SPV proofs. This is easy to see: To verify an SPV proof one needs to know its block header within the best chain – 
 this corresponds to a `block_index`. The Merkle path corresponds to a `transaction_index` and the transaction itself proves the `output_index`.
 
 A SPV proof proves an output path's output.
