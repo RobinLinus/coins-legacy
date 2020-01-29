@@ -3,12 +3,14 @@
 TL;DR: *"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for endusers to query Bitcoin's blockchain efficiently. Our construction works on top of today's bitcoin network and requires no consensus changes. 
 In contrast to traditional light *clients* our protocol supports lite *nodes* which contribute resources to the network. 
 
-## Overview: The circle of proofs
-Summary. At the core of the lite network there are three concepts:
+The only security assumption is that there is at least one honest peer. On average, lite nodes sync by downloading just a few MB. If there are attackers, nodes can disprove them succinctly.
 
-- ***output paths*** are succinct pointers to address outputs contained in the blockchain. The set of *unspent* output paths is an efficient represenation for the UTXO set. 
-- ***extended blocks*** are blocks extended with SPV proofs for every spending input.
-- ***pruned blocks*** are blocks pruned as described in Satoshi's whitepaper.
+## Overview: The circle of proofs
+Summary. The Lite Network allows Lite Nodes to sync succinctly. At its core there are three main concepts:
+
+- ***Output paths*** are succinct pointers to address outputs contained in the blockchain. The set of *unspent* output paths is an efficient represenation for the UTXO set. 
+- ***Extended blocks*** are blocks extended with SPV proofs for every spending input.
+- ***Pruned blocks*** are blocks pruned as described in Satoshi's whitepaper.
 
 These three structures imply the *circle of proofs*:
 
@@ -17,6 +19,8 @@ These three structures imply the *circle of proofs*:
 or phrased differently:
 
 **The old, *pruned blockchain* implies the proofs for the new, *extended blockchain*.**
+
+
 
 ## Output Paths 
 An *output path* is a simple scheme to address every output ever happened in Bitcoin's blockchain:
