@@ -72,8 +72,8 @@ We encode output paths such that their natural order corresponds to their chrono
 ### Summary: Output Paths
 Output paths have remarkable properties. Here's a short summary:
 
-- Any output is addressable with an output path.
-- Output paths emerge from the existing blockchain structure. They are unambiguous and immutable.
+- Any output is addressable with an output path `block_index/tx_index/output_index`.
+- Output paths emerge from the existing blockchain structure. They are unique and immutable.
 - Output paths are only 6 bytes (uncompressed).
 - Full blocks can prove output paths.
 - SPV proofs can prove output paths succinctly.
