@@ -218,7 +218,7 @@ We want to query the UTXO set. So we download the UTXO paths. We do not download
 What does it mean to download 2/3 of the most recent UTXOs? It assumes, all our outputs are not older than 2/3 of all outputs.
 If we can narrow down that assumption, we have to download much fewer chunks. 
 
-We can download chunks chronologically. We never have to download chunks that contain only paths which are older than our addresses. [About 50% of the UTXOs have an age of 100k blocks or less](https://eklitzke.org/an-overview-of-bitcoin-utxos). If we know our keys are not older than `100k blocks ~ 2 years` we have to download at not more than 50% of all chunks. We would be down to 150 MB. Downloadable in chunks of only 5 MB.
+We can download chunks chronologically. We never have to download chunks that contain only paths which are older than our addresses. [About 50% of the UTXOs have an age of 100k blocks or less](https://eklitzke.org/an-overview-of-bitcoin-utxos). If we know our keys are not older than `100k blocks ~ 2 years` we have to download not more than 50% of all chunks. We would be down to 150 MB. Downloadable in chunks of only 5 MB.
 
 #### Download SPV Proofs
 We perform 10 queries which requires about `10 * 16.3 kB = 163 kB` SPV proof size data. The worst case of downloading a full block to extract an SPV proof is an overhead of `1.3 MB/block`, yet if there are many lite nodes that can be circumvented almost always. Furthermore, we can reuse all proofs from previous queries for the next addresses. Moreover, we can guess an addresses' index within the set to reduce the number of queries. 
