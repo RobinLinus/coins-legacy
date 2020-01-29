@@ -201,7 +201,7 @@ Naively the download size is:
 
 In total: 480 MB for a naive sync. 
 
-In the following, we discuss how to compress everything down to a couple MB. Most techniques exploit the chronological order of chunks.
+In the following, we discuss how to compress everything down to a couple MB. Most techniques exploit the chronological order of chunks. Thus, they assume we know the each of our keys roughly. It is a good idea for lite nodes to timestamp their keys somehow such that they know how much of the chain they can skip savely.
 
 #### Download Headers Chain
 A node has to know the headers chain. The raw headers chain is `block_height * 80 bytes = 615000 * 80 bytes ~ 51 MB`.
