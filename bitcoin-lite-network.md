@@ -199,7 +199,7 @@ Naively the download size is:
 - The UTXO paths are 420 MB
 - The SPV proofs for our query are at most a few MB
 
-In total: 480 MB for a naive sync. 
+In total, 480 MB for a naive sync. 
 
 In the following, we discuss how to compress everything down to a couple MB. Most techniques exploit the chronological order of chunks. Thus, the techniques assume we know the age of our keys roughly. It is a good idea for lite nodes to timestamp their keys such that they know how much of the chain they can skip savely.
 
