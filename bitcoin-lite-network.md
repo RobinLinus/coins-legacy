@@ -1,6 +1,6 @@
 # Bitcoin Lite Network
 
-TL;DR: *"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for *lite nodes* to sync quickly. Our construction works on top of today's bitcoin network and requires no consensus changes. All necessary constructions emerge from the existing blockchain.
+*"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for *lite nodes* to sync quickly. Our construction works on top of today's bitcoin network and requires no consensus changes. All necessary constructions emerge from the existing blockchain.
 In contrast to traditional light *clients* our protocol supports lite *nodes* which update and share their state. 
 
 The only security assumption is that there is at least one honest peer. In the optimistic case, lite nodes can sync by downloading just about 30 MB. Otherwise, nodes can still disprove attackers succinctly.
