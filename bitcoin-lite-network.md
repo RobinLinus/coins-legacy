@@ -1,16 +1,16 @@
-# Bitcoin Lite Network
+# Bitcoin Nano Network
 
-*"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for *lite nodes* to sync quickly. Our construction works on top of today's Bitcoin network and requires no consensus changes. All necessary constructions emerge from the existing blockchain.
-In contrast to traditional light *clients* our protocol supports lite *nodes* which update and share their state. 
+*"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for *nano nodes* to sync quickly. Our construction works on top of today's Bitcoin network and requires no consensus changes. All necessary constructions emerge from the existing blockchain.
+In contrast to traditional light *clients* our protocol supports nano *nodes* which update and share their state. 
 
-Lite nodes sync by downloading just about 150 MB initially. The only security assumption is that there is at least one honest peer available. If so, nodes can disprove attackers with neglectable effort.
+Nano nodes sync by downloading just about 150 MB initially. The only security assumption is that there is at least one honest peer available. If so, nodes can disprove attackers with neglectable effort.
 
-In comparison to regular SPV clients, lite nodes provide better security and privacy. Furthermore they can serve each other and contribute to the network.
+In comparison to regular SPV clients, nano nodes provide better security and privacy. Furthermore they can serve each other and contribute to the network.
 
 This proposal is interesting in particular for lightning network nodes that come online only once a week to watch their channels. Re-syncing is much more efficient than an initial sync.
 
 ## Overview: The Circle of Proofs
-The lite network allows *lite nodes* to sync quickly. There are four main concepts:
+The nano network allows *nano nodes* to sync quickly. There are four main concepts:
 
 - An ***output path*** is simply `block_index/tx_index/output_index`. A succinct pointer to address a particular output in the blockchain. Furthermore, SPV proofs correspond to output paths. 
 - The ***set of UTXO paths*** is an efficient representation for the UTXO set via output paths.
@@ -143,7 +143,7 @@ A more objective measure would be to chunk i.e. every n-th transaction or every 
 Any decent long-term compression requires some dynamic within the chunk sizes. Though we can damp the dynamic to reduce malleability. For example, a chunk size re-allocation could happen only once every 2 years at a particular block heigth.
 
 ### UTXO Commitment Updates
-Suppose a lite node has synced only the longest PoW chain and the most recent UTXO commitment. To validate a next block it needs an SPV proof for every input spent in the block. Naively, for each block, that is an overhead of about:
+Suppose a nano node has synced only the longest PoW chain and the most recent UTXO commitment. To validate a next block it needs an SPV proof for every input spent in the block. Naively, for each block, that is an overhead of about:
 ```
   #TX/block * #outputs/TX * SPV_proof_size
 = 3000 * 2 * 625 bytes / block
@@ -153,7 +153,7 @@ Suppose we have downloaded the SPV proofs for each UTXO consumed in the block. W
 
 Assuming we have to download 2/3 of the chunks to prove all outputs of the 100 most recent blocks. Then we would have to download 280 MB of UTXO paths (uncompressed size).
 
-Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proofs, we can update the chunks. Thus, lite nodes can update the root UTXO commitment.
+Having the chunks of UTXO paths, the blocks and their inputs' SPV inclusion proofs, we can update the chunks. Thus, nano nodes can update the root UTXO commitment.
 Updating old chunks only means deleting entries. Adding entries only ever happens in the newest chunk. The oldest chunk is rarely touched at all.
 
 
@@ -164,17 +164,17 @@ In Satoshi's whitepaper the chapter "Reclaiming Disc Space" explains how to use 
 </p>
 
 
-Bridge nodes do not have to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a server node simply serves the raw block and let the client compute all demanded SPV proofs. A lite node can translate its queries to get served by any bitcoin node today. The degree of block pruning is irrelevant for security. The root of trust is the UTXO commitment – not the existence of an SPV proof.
+Bridge nodes do not have to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a server node simply serves the raw block and let the client compute all demanded SPV proofs. A nano node can translate its queries to get served by any bitcoin node today. The degree of block pruning is irrelevant for security. The root of trust is the UTXO commitment – not the existence of an SPV proof.
 
 
-## Lite Nodes 
-Lite nodes mostly perform queries `output_path -> SPV_proof`. They might get as response an SPV proof, a pruned block or a raw block.
+## Nano Nodes 
+Nano nodes mostly perform queries `output_path -> SPV_proof`. They might get as response an SPV proof, a pruned block or a raw block.
 In any case, a node can reuse the full answer in its next query, or to answer other users' queries with SPV proofs to save bandwidth. 
 
 ### Resolving Conflicting Commitments
-Lite nodes need to learn the UTXO commitment somehow. Ideally, there would be a consensus change to expect miners to include the current UTXO commitment in every block. Until then, we need a workaround. 
+Nano nodes need to learn the UTXO commitment somehow. Ideally, there would be a consensus change to expect miners to include the current UTXO commitment in every block. Until then, we need a workaround. 
 
-The naive solution is as follows: Lite nodes can check if all their peers believe in the same root hash. If there is a conflict, they could fall back to syncing the full chain since a trusted checkpoint. Verifying a chain of extended blocks requires no further trust.
+The naive solution is as follows: Nano nodes can check if all their peers believe in the same root hash. If there is a conflict, they could fall back to syncing the full chain since a trusted checkpoint. Verifying a chain of extended blocks requires no further trust.
 
 
 A much more efficient algorithm to sync in case of two peers offering conflicting UTXO commitments is as follows: 
@@ -187,13 +187,13 @@ A much more efficient algorithm to sync in case of two peers offering conflictin
 - Ask the other node for a *spending SPV proof* for that output path. 
 - Any malicious node disproves itself or aborts the protocol.
 
-The only drawback here is that we require a *spending SPV proof* to prove a chunk's incorrectness. Yet, only very few servers have to provide all spending proofs. And the overhead to run a server for spending proofs is much less than serving the blockchain. The set of spending proofs is a map `output_path -> block_index`. Such a mapping is sufficient for a lite note to extract a spending proof from any node that serves blocks. They are requested rarely because they are relevant only in case of an attack. Their sheer availability makes an attack infeasible.
+The only drawback here is that we require a *spending SPV proof* to prove a chunk's incorrectness. Yet, only very few servers have to provide all spending proofs. And the overhead to run a server for spending proofs is much less than serving the blockchain. The set of spending proofs is a map `output_path -> block_index`. Such a mapping is sufficient for a nano note to extract a spending proof from any node that serves blocks. They are requested rarely because they are relevant only in case of an attack. Their sheer availability makes an attack infeasible.
 
 This protocol provides much better security than usual SPV clients because it requires only one assumption: There is at least one honest peer.
 
 
 ### Download Sizes
-Suppose we are a lite node that wants to sync and prove the outputs of 10 addresses. How much data do we have to download?
+Suppose we are a nano node that wants to sync and prove the outputs of 10 addresses. How much data do we have to download?
 
 Naively the download size is:
 
@@ -203,7 +203,7 @@ Naively the download size is:
 
 In total, 480 MB for a naive sync. 
 
-In the following, we discuss how to compress everything down to a couple MB. Most techniques exploit the chronological order of chunks. Thus, the techniques assume we know the age of our keys roughly. It is a good idea for lite nodes to timestamp their keys such that they know how much of the chain they can skip savely.
+In the following, we discuss how to compress everything down to a couple MB. Most techniques exploit the chronological order of chunks. Thus, the techniques assume we know the age of our keys roughly. It is a good idea for nano nodes to timestamp their keys such that they know how much of the chain they can skip savely.
 
 #### Download Headers Chain
 A node has to know the headers chain. The raw headers chain is `block_height * 80 bytes = 615000 * 80 bytes ~ 51 MB`.
@@ -226,7 +226,7 @@ This is the absolute worst case of an intital sync with relatively old keys. Mor
 
 
 #### Download SPV Proofs
-We perform 10 queries which requires about `10 * 16.3 kB = 163 kB` SPV proof size data. The worst case of downloading a full block to extract an SPV proof is an overhead of `1.3 MB/block`, yet if there are many lite nodes that can be circumvented almost always. Furthermore, we can reuse all proofs from previous queries for the next addresses. Moreover, we can guess an addresses' index within the set to reduce the number of queries. 
+We perform 10 queries which requires about `10 * 16.3 kB = 163 kB` SPV proof size data. The worst case of downloading a full block to extract an SPV proof is an overhead of `1.3 MB/block`, yet if there are many nano nodes that can be circumvented almost always. Furthermore, we can reuse all proofs from previous queries for the next addresses. Moreover, we can guess an addresses' index within the set to reduce the number of queries. 
 
 
 #### Download New Blocks 
