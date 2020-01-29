@@ -222,3 +222,8 @@ We can download chunks chronologically. We never have to download chunks that co
 
 #### Download SPV Proofs
 We perform 10 queries which requires about `10 * 16.3 kB = 163 kB` SPV proof size data. The worst case of downloading a full block to extract an SPV proof is an overhead of `1.3 MB/block`, yet if there are many lite nodes that can be circumvented almost always. Furthermore, we can reuse all proofs from previous queries for the next addresses. Moreover, we can guess an addresses' index within the set to reduce the number of queries. 
+
+
+### Download Blocks 
+As long as the node is online it listens for new blocks to update its set of UTXO paths. An extended block is about 4 MB, so we have an overhead `6 * 4 MB / h = 24 MB/h` as long as we are online. 
+
