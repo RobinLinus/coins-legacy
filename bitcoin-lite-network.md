@@ -30,6 +30,7 @@ output_path = block_index / transaction_index / output_index
 ```
 An *output path* is a succinct pointer to a particular output included in the blockchain.
 
+The trivial way to prove an output path is to download the full block at `block_index`.
 
 ### Output Paths and SPV proofs
 Since the early days Bitcoin supported SPV inclusion proofs.
