@@ -8,9 +8,9 @@ The only security assumption is that there is at least one honest peer. In the o
 ## Overview: The Circle of Proofs
 Summary. The lite network enables *lite nodes* to sync quickly. At its core there are three main concepts:
 
-- ***Output paths*** are succinct pointers to address outputs contained in the blockchain. The set of *unspent* output paths is an efficient representation for the UTXO set. 
-- ***Extended blocks*** are blocks extended with SPV proofs for every spending input.
-- ***Pruned blocks*** are blocks pruned as described in Satoshi's whitepaper.
+- An ***Output path*** is a succinct pointer to address an output contained in the blockchain. The set of *unspent* output paths is an efficient representation for the UTXO set. 
+- An ***Extended block*** is a regular block plus a SPV inclusion proof for every spending input.
+- A ***Pruned block*** is a block pruned as described in Satoshi's whitepaper.
 
 These three structures imply the *circle of proofs*:
 
