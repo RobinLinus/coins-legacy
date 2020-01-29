@@ -6,7 +6,7 @@ In contrast to traditional light *clients* our protocol supports lite *nodes* wh
 The only security assumption is that there is at least one honest peer. In the optimistic case, lite nodes sync by downloading just a few MB. Otherwise, nodes can disprove attackers quickly.
 
 ## Overview: The Circle of Proofs
-Summary. The Lite Network allows Lite Nodes to sync succinctly. At its core there are three main concepts:
+Summary. The lite network enables *lite nodes* to sync succinctly. At its core there are three main concepts:
 
 - ***Output paths*** are succinct pointers to address outputs contained in the blockchain. The set of *unspent* output paths is an efficient represenation for the UTXO set. 
 - ***Extended blocks*** are blocks extended with SPV proofs for every spending input.
