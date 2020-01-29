@@ -8,7 +8,7 @@ The only security assumption is that there is at least one honest peer. In the o
 ## Overview: The Circle of Proofs
 Summary. The lite network enables *lite nodes* to sync quickly. At its core there are three main concepts:
 
-- ***Output paths*** are succinct pointers to address outputs contained in the blockchain. The set of *unspent* output paths is an efficient represenation for the UTXO set. 
+- ***Output paths*** are succinct pointers to address outputs contained in the blockchain. The set of *unspent* output paths is an efficient representation for the UTXO set. 
 - ***Extended blocks*** are blocks extended with SPV proofs for every spending input.
 - ***Pruned blocks*** are blocks pruned as described in Satoshi's whitepaper.
 
@@ -27,7 +27,7 @@ An *output path* is a very simple scheme to address every output ever happened i
 ```
 output_path = block_index / transaction_index / output_index
 ```
-An *output path* is a succinct pointer to a particular output incluced in the blockchain.
+An *output path* is a succinct pointer to a particular output included in the blockchain.
 
 
 ### Output Paths and SPV proofs
