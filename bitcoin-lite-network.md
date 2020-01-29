@@ -3,7 +3,7 @@
 *"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for *lite nodes* to sync quickly. Our construction works on top of today's Bitcoin network and requires no consensus changes. All necessary constructions emerge from the existing blockchain.
 In contrast to traditional light *clients* our protocol supports lite *nodes* which update and share their state. 
 
-The only security assumption is that there is at least one honest peer. In the optimistic case, lite nodes sync by downloading just about 30 MB. Otherwise, nodes can still disprove attackers succinctly.
+The only security assumption is that there is at least one honest peer available. In the optimistic case, lite nodes sync by downloading just about 30 MB. Otherwise, nodes can still disprove attackers succinctly.
 
 In comparison to regular SPV clients, lite nodes provide better security and privacy. Furthermore they can serve each other and contribute to the network.
 
