@@ -8,7 +8,7 @@ The only security assumption is that there is at least one honest peer. In the o
 In comparison to regular SPV clients, lite nodes provide better security and privacy. Furthermore they can serve each other and contribute to the network.
 
 ## Overview: The Circle of Proofs
-The lite network enables *lite nodes* to sync quickly. There are four main concepts:
+The lite network allows *lite nodes* to sync quickly. There are four main concepts:
 
 - An ***output path*** is simply `block_index/tx_index/output_index`. A succinct pointer to address a particular output in the blockchain. Furthermore, SPV proofs prove output paths. 
 - The ***set of UTXO paths*** is an efficient representation for the UTXO set via output paths.
