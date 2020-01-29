@@ -210,7 +210,7 @@ The headers chain is compressible with a rate of about 1.77 (see [Headergolf](ht
 
 If we knew our keys age roughly, and had some trusted checkpoints, we could cut off all older headers. The compressed chain growth rate is only 2.4 MB/year. Suppose our keys are not older than 2 years. That's only 5 MB.
 
-It is possible to prune the headers chain down to 1 MB with techniques like [FlyClient](https://eprint.iacr.org/2019/226.pdf). A Merkle tree for headers interoperates perfectly with the output paths.
+Theoretically, it is possible to prune the headers chain down to 1 MB with techniques like [FlyClient](https://eprint.iacr.org/2019/226.pdf). A Merkle tree for headers interoperates perfectly with output paths.
 
 #### Download Chunks
 We want to query the UTXO set. So we download the UTXO paths. We do not download all chunks, but assume we need only the 2/3 most recent UTXOs. That is uncompressed 280 MB. Let's assume the compressed size is not more than 200 MB (because of the low entropy of 6 byte paths).
