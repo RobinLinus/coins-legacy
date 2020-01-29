@@ -7,7 +7,7 @@ Lite nodes sync by downloading just about 150 MB initially. The only security as
 
 In comparison to regular SPV clients, lite nodes provide better security and privacy. Furthermore they can serve each other and contribute to the network.
 
-This proposal is interesting in particular for lightning network nodes that come online only once a week to watch their channels. Syncing from an old state is much more efficient than an initial sync.
+This proposal is interesting in particular for lightning network nodes that come online only once a week to watch their channels. Re-syncing is much more efficient than an initial sync.
 
 ## Overview: The Circle of Proofs
 The lite network allows *lite nodes* to sync quickly. There are four main concepts:
