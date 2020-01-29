@@ -33,7 +33,7 @@ output_path = block_index / transaction_index / output_index
 The trivial way to prove an output path is to download the full block at `block_index`. In the following we discuss more compact proofs.
 
 ### Output Paths and SPV proofs
-Since the early days Bitcoin supported SPV inclusion proofs.
+Since the early days Bitcoin supported SPV inclusion proofs (via Merkle roots in the block headers).
 
 <p align="center">
   <img src="assets/spv-proof.png" width="80%" alt="SPV proof">
