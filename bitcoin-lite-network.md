@@ -69,8 +69,8 @@ We encode output paths such that their natural order corresponds to their chrono
 
 **Side note:** No block can have 3000 transactions with 3000 outputs. UTXO paths do not have 6 bytes of entropy and thus compress well.
 
-### Summary of Output Paths 
-Output paths have remarkable properties. Here's a summary:
+### Summary: Output Paths
+Output paths have remarkable properties. Here's a short summary:
 
 - Any output is addressable with an output path.
 - Output paths are only 6 bytes (uncompressed).
