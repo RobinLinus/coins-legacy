@@ -77,7 +77,7 @@ Currently, the set of all UTXO paths would be about
 encoded naively. 
 We call this "set of all *unspent* outputs' paths" the "*UTXO paths*". 
 
-This set is a very efficient representation of Bitcoin's UTXO set. In the following we discuss how to update and query the set of UTXO paths efficiently.
+This set is a very efficient representation of Bitcoin's UTXO set. In the following we discuss how to update and query the set of UTXO paths efficiently. Furthermore, we show how to disprove an incorrect set of UTXO paths.
 
 ### Binary Search in the UTXO paths
 A user wants to query all outputs of a particular Bitcoin address within the UTXO set. To do that efficiently, we can sort the set of all unspent output paths by the output's recipient addresses. 
