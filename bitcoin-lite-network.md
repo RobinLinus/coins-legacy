@@ -3,10 +3,10 @@
 TL;DR: *"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for endusers to query Bitcoin's blockchain efficiently. Our construction works on top of today's bitcoin network and requires no consensus changes. 
 In contrast to traditional light *clients* our protocol supports lite *nodes* which contribute resources to the network. 
 
-The only security assumption is that there is at least one honest peer. In the optimistic case, lite nodes sync by downloading just a few MB. Otherwise, nodes can disprove attackers quickly.
+The only security assumption is that there is at least one honest peer. In the optimistic case, lite nodes sync by downloading just a few MB. Otherwise, nodes can disprove attackers succinctly.
 
 ## Overview: The Circle of Proofs
-Summary. The lite network enables *lite nodes* to sync succinctly. At its core there are three main concepts:
+Summary. The lite network enables *lite nodes* to sync quickly. At its core there are three main concepts:
 
 - ***Output paths*** are succinct pointers to address outputs contained in the blockchain. The set of *unspent* output paths is an efficient represenation for the UTXO set. 
 - ***Extended blocks*** are blocks extended with SPV proofs for every spending input.
