@@ -24,12 +24,10 @@ Phrased differently:
 
 
 ## Output Paths 
-An *output path* is a very simple scheme to address every output ever happened in Bitcoin's blockchain:
+An *output path* is a succinct pointer to a particular output included in the blockchain. It is a very simple scheme:
 ```
 output_path = block_index / transaction_index / output_index
 ```
-An *output path* is a succinct pointer to a particular output included in the blockchain.
-
 The trivial way to prove an output path is to download the full block at `block_index`. In the following we discuss more compact proofs.
 
 ### Output Paths and SPV proofs
