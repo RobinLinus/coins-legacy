@@ -5,7 +5,7 @@ In contrast to traditional light *clients* our protocol supports lite *nodes* wh
 
 The only security assumption is that there is at least one honest peer. In the optimistic case, lite nodes can sync by downloading just about 30 MB. Otherwise, nodes can still disprove attackers succinctly.
 
-In comparison to regular SPV clients, lite nodes provide better security and privacy. Furthermore they can serve each other.
+In comparison to regular SPV clients, lite nodes provide better security and privacy. Furthermore they can serve each other and contribute to the network.
 
 ## Overview: The Circle of Proofs
 The lite network enables *lite nodes* to sync quickly. There are four main concepts:
