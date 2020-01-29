@@ -23,7 +23,7 @@ or phrased differently:
 
 
 ## Output Paths 
-An *output path* is a simple scheme to address every output ever happened in Bitcoin's blockchain:
+An *output path* is a very simple scheme to address every output ever happened in Bitcoin's blockchain:
 ```
 output_path = block_index / transaction_index / output_index
 ```
