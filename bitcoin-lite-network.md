@@ -8,7 +8,7 @@ The only security assumption is that there is at least one honest peer. In the o
 ## Overview: The Circle of Proofs
 The lite network enables *lite nodes* to sync quickly. There are four main concepts:
 
-- An ***output path*** is simply `block_index / tx_index / output_index`. A succinct pointer to address any output contained in the blockchain. SPV proofs prove output paths. 
+- An ***output path*** is simply `block_index/tx_index/output_index`. A succinct pointer to address any output contained in the blockchain. SPV proofs prove output paths. 
 - The ***set of UTXO paths*** is an efficient representation for the UTXO set via output paths.
 - An ***extended block*** is a regular block plus a SPV inclusion proof for every spending input.
 - A ***pruned block*** is pruned down to its unspent outputs as described in Satoshi's whitepaper.
