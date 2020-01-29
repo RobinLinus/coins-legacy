@@ -10,7 +10,7 @@ Summary. The lite network enables *lite nodes* to sync quickly. At its core ther
 
 - An ***output path*** is a succinct pointer to address an output contained in the blockchain. The set of *unspent* output paths is an efficient representation for the UTXO set. 
 - An ***extended block*** is a regular block plus a SPV inclusion proof for every spending input.
-- A ***pruned block*** is a block pruned as described in Satoshi's whitepaper.
+- A ***pruned block*** is pruned down to its unspent outputs as described in Satoshi's whitepaper.
 
 These three structures imply the *circle of proofs*:
 
