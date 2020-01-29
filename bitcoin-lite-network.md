@@ -220,7 +220,7 @@ If we can narrow down that assumption, we have to download much fewer chunks.
 
 We can download chunks chronologically. We never have to download chunks that contain only paths which are older than our addresses. [About 50% of the UTXOs have an age of 100k blocks or less](https://eklitzke.org/an-overview-of-bitcoin-utxos). If we know our keys are not older than `100k blocks ~ 2 years` we have to download not more than 50% of all chunks. We would be down to 150 MB. Downloadable in chunks of only 5 MB.
 
-This is the absolute worst case of an intital sync with relatively old keys. More realistic is that most people with old keys have synced their node at some point. That reduces the download significantly. In all chunks but the most recent, they only have to delete all spent outputs. The difference can be represented in a bitstring of marginal size.
+This is the absolute worst case of an intital sync with relatively old keys. More realistic is that most people with old keys have synced their node at some point. That reduces the download significantly. In all chunks but the most recent, they only have to delete all spent outputs. The difference can be represented in a bit string of marginal size.
 
 
 #### Download SPV Proofs
