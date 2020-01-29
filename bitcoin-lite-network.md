@@ -220,6 +220,9 @@ If we can narrow down that assumption, we have to download much fewer chunks.
 
 We can download chunks chronologically. We never have to download chunks that contain only paths which are older than our addresses. [About 50% of the UTXOs have an age of 100k blocks or less](https://eklitzke.org/an-overview-of-bitcoin-utxos). If we know our keys are not older than `100k blocks ~ 2 years` we have to download not more than 50% of all chunks. We would be down to 150 MB. Downloadable in chunks of only 5 MB.
 
+This is the absolute worst case of an intital sync with relatively old keys. More realistic is that most people with old keys have synced their node at some point. That reduces the download significantly. For all chunks but the most recent, they only have to delete all spent outputs. The difference can be represented in a bitstring of marginal size.
+
+
 #### Download SPV Proofs
 We perform 10 queries which requires about `10 * 16.3 kB = 163 kB` SPV proof size data. The worst case of downloading a full block to extract an SPV proof is an overhead of `1.3 MB/block`, yet if there are many lite nodes that can be circumvented almost always. Furthermore, we can reuse all proofs from previous queries for the next addresses. Moreover, we can guess an addresses' index within the set to reduce the number of queries. 
 
