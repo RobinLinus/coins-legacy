@@ -16,7 +16,7 @@ These three structures imply the *circle of proofs*:
 
 **The old, *pruned blocks* imply the *block extensions* to prove the new blocks.**
 
-or phrased differently:
+Phrased differently:
 
 **The old, *pruned blockchain* implies the proofs for the new, *extended blockchain*.**
 
