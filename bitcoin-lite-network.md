@@ -3,7 +3,7 @@
 *"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for *lite nodes* to sync quickly. Our construction works on top of today's Bitcoin network and requires no consensus changes. All necessary constructions emerge from the existing blockchain.
 In contrast to traditional light *clients* our protocol supports lite *nodes* which update and share their state. 
 
-The only security assumption is that there is at least one honest peer available. In the optimistic case, lite nodes sync by downloading just about 30 MB. Otherwise, nodes can still disprove attackers succinctly.
+Lite nodes sync by downloading just about 150 MB initially. The only security assumption is that there is at least one honest peer available. If so, nodes can disprove attackers with neglectable effort.
 
 In comparison to regular SPV clients, lite nodes provide better security and privacy. Furthermore they can serve each other and contribute to the network.
 
@@ -188,3 +188,37 @@ A much more efficient algorithm to sync in case of two peers offering conflictin
 The only drawback here is that we require a *spending SPV proof* to prove a chunk's incorrectness. Yet, only very few servers have to provide all spending proofs. And the overhead to run a server for spending proofs is much less than serving the blockchain. The set of spending proofs is a map `output_path -> block_index`. Such a mapping is sufficient for a lite note to extract a spending proof from any node that serves blocks. They are requested rarely because they are relevant only in case of an attack. Their sheer availability makes an attack infeasible.
 
 This protocol provides much better security than usual SPV clients because it requires only one assumption: There is at least one honest peer.
+
+
+### Download Sizes
+Suppose we are a lite node that wants to sync and prove the outputs of 10 addresses. How much data do we have to download?
+
+Naively the download size is:
+
+- The headers chain is about 51 MB
+- The UTXO paths are 420 MB
+- The SPV proofs for our query are at most a few MB
+
+In total: 480 MB for a naive sync. 
+
+In the following, we discuss how to compress everything down to a couple MB. Most techniques exploit the chronological order of chunks.
+
+#### Download Headers Chain
+A node has to know the headers chain. The raw headers chain is `block_height * 80 bytes = 615000 * 80 bytes ~ 51 MB`.
+
+The headers chain is compressible with a rate of about 1.77 (see [Headergolf](https://github.com/alecalve/headergolf)). This reduces the current chain down to roughly 30 MB. 
+
+If we knew our keys age roughly, and had some trusted checkpoints, we could cut off all older headers. The compressed chain growth rate is only 2.4 MB/year. Suppose our keys are not older than 2 years. That's only 5 MB.
+
+It is possible to prune the headers chain down to 1 MB with techniques like [FlyClient](https://eprint.iacr.org/2019/226.pdf). A Merkle tree for headers interoperates perfectly with the output paths.
+
+#### Download Chunks
+We want to query the UTXO set. So we download the UTXO paths. We do not download all chunks, but assume we need only the 2/3 most recent UTXOs. That is uncompressed 280 MB. Let's assume the compressed size is not more than 200 MB (because of the low entropy of 6 byte paths).
+
+What does it mean to download 2/3 of the most recent UTXOs? It assumes, all our outputs are not older than 2/3 of all outputs.
+If we can narrow down that assumption, we have to download much fewer chunks. 
+
+We can download chunks chronologically. We never have to download chunks that contain only paths which are older than our addresses. [About 50% of the UTXOs have an age of 100k blocks or less](https://eklitzke.org/an-overview-of-bitcoin-utxos). If we know our keys are not older than `100k blocks ~ 2 years` we have to download at not more than 50% of all chunks. We would be down to 150 MB. Downloadable in chunks of only 5 MB.
+
+#### Download SPV Proofs
+We perform 10 queries which requires about `10 * 16.3 kB = 163 kB` SPV proof size data. The worst case of downloading a full block to extract an SPV proof is an overhead of `1.3 MB/block`, yet if there are many lite nodes that can be circumvented almost always. Furthermore, we can reuse all proofs from previous queries for the next addresses. Moreover, we can guess an addresses' index within the set to reduce the number of queries. 
