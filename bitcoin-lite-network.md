@@ -3,6 +3,21 @@
 TL;DR: *"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for endusers to query Bitcoin's blockchain efficiently. Our construction works on top of today's bitcoin network and requires no consensus changes. 
 In contrast to traditional light *clients* our protocol supports lite *nodes* which contribute resources to the network. 
 
+## Overview: The circle of proofs
+Summary. At the core of the lite network there are three concepts:
+
+- ***output paths*** are succinct pointers to address outputs contained in the blockchain. The set of *unspent* output paths is an efficient represenation for the UTXO set. 
+- ***extended blocks*** are blocks extended with SPV proofs for every spending input.
+- ***pruned blocks*** are blocks pruned as described in Satoshi's whitepaper.
+
+These three structures imply the *circle of proofs*:
+
+**The old, *pruned blocks* imply the *block extensions* to prove the new blocks.**
+
+or phrased differently:
+
+**The old, *pruned blockchain* implies the proofs for the new, *extended blockchain*.**
+
 ## Output Paths 
 An *output path* is a simple scheme to address every output ever happened in Bitcoin's blockchain:
 ```
@@ -58,6 +73,7 @@ Currently, the set of all UTXO paths would be about
 encoded naively. 
 We call this "set of all *unspent* outputs' paths" the "*UTXO paths*". 
 
+This set is a very efficient representation of Bitcoin's UTXO set. In the following we discuss how to update and query the set of UTXO paths efficiently.
 
 ### Binary Search in the UTXO paths
 A user wants to query all outputs of a particular Bitcoin address within the UTXO set. To do that efficiently, we can sort the set of all unspent output paths by the output's recipient addresses. 
@@ -129,12 +145,6 @@ In Satoshi's whitepaper the chapter "Reclaiming Disc Space" explains how to use 
 
 Bridge nodes do not have to serve individual SPV proofs, but only the pruned blocks. This is only little computational overhead given the fact that old blocks are updated rarely. Also updates can happen lazily. In the worst case, a server node simply serves the raw block and let the client compute all demanded SPV proofs. A lite node can translate its queries to get served by any bitcoin node today. The degree of block pruning is irrelevant for security. The root of trust is the UTXO commitment -- not the existence of an SPV proof.
 
-### The circle of proofs
-Summary. At the core of the lite network there are "output paths" addressing outputs and the following fact about Bitcoin's blockchain:
-
-The old, *pruned blocks* imply the *block extensions* to prove the new blocks.
-
-The old, *pruned blockchain* implies the proofs for the new, *extended blockchain*.
 
 ## Lite Nodes 
 Lite nodes mostly perform queries `output_path -> SPV_proof`. They might get as response an SPV proof, a pruned block or a raw block.
