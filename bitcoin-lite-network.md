@@ -79,7 +79,7 @@ Output paths have remarkable properties. Here's a short summary:
 - SPV proofs can prove output paths succinctly.
 - Analogously, for any *spent* output there is a spending *input path*.
 - Mapping from output path to a block is simple if one knows the headers chain.
-
+- Their natural order corresponds to their chronological order
 
 
 ## UTXO paths
