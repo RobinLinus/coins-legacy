@@ -13,7 +13,7 @@ The lite network enables *lite nodes* to sync quickly. There are four main conce
 - An ***extended block*** is a regular block plus a SPV inclusion proof for every spending input.
 - A ***pruned block*** is pruned down to its unspent outputs as described in Satoshi's whitepaper.
 
-These three structures imply the *circle of proofs*:
+These four structures imply the *circle of proofs*:
 
 **The old, *pruned blocks* imply the *block extensions* to prove the new blocks.**
 
