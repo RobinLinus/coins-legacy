@@ -1,6 +1,6 @@
 # Nano Network Strawman
 
-An optimistic strawman example to demonstrate stateless bitcoin nodes. 
+A strawman construction to demonstrate stateless bitcoin nodes. 
 
 <img src="../assets/utxo-bit-vector.png" alt="UTXO bit vector">
 
