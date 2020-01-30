@@ -1,6 +1,6 @@
 # Nano Network Strawman
 
-A strawman construction to demonstrate stateless bitcoin nodes. 
+A straw-man proposal to demonstrate stateless bitcoin nodes and explain the [nano network](../bitcoin-nano-network.md). 
 
 <img src="../assets/utxo-bit-vector.png" alt="UTXO bit vector">
 
