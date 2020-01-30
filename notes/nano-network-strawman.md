@@ -6,7 +6,6 @@ A straw-man proposal to demonstrate stateless bitcoin nodes and explain the [nan
 ## Optimistic Stateless Nodes 
 
 <img src="../assets/utxo-bit-vector.png" alt="UTXO bit vector">
-
 The blockchain is an accumulator with succinct inclusion proofs. The only problem is that our accumulator does not support deletion. Hence, we don't know if an included output is unspent.
 Nevertheless, we can "extend" blocks with SPV proofs for every input consumed in the block. Such an extension reduces already the required knowledge to verify a block significantly. Our uncertainty is only 1 bit per output in the chain.
 
