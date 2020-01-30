@@ -9,8 +9,11 @@ In comparison to regular SPV clients, nano nodes provide better security and pri
 
 This proposal is interesting in particular for lightning network nodes that come online only once a week to watch their channels. Re-syncing is much more efficient than an initial sync.
 
+
 ## Overview: The Circle of Proofs
-The nano network allows *nano nodes* to sync quickly. There are four main concepts:
+The nano network allows *nano nodes* to sync quickly.
+[The most basic ideas are demonstrated by the strawman nano node](notes/nano-network-strawman.md). 
+There are four main concepts:
 
 - An ***output path*** is simply `block_index/tx_index/output_index`. A succinct pointer to address a particular output in the blockchain. Furthermore, SPV proofs correspond to output paths. 
 - The ***set of UTXO paths*** is an efficient representation for the UTXO set via output paths.
