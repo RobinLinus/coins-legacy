@@ -2,6 +2,8 @@
 
 An optimistic strawman example to demonstrate stateless bitcoin nodes. 
 
+<img src="../assets/utxo-bit-vector.png" alt="UTXO bit vector">
+
 ## Optimistic Stateless Nodes 
 
 The blockchain is an accumulator with succinct inclusion proofs. The only problem is that our accumulator does not support deletion. Hence, we don't know if an included output is unspent.
