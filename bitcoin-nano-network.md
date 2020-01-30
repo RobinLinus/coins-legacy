@@ -97,7 +97,7 @@ We call this "set of all *unspent* outputs' paths" the "*UTXO paths*".
 This set is a very efficient representation of Bitcoin's UTXO set. In the following we discuss how to update and query the set of UTXO paths efficiently. Furthermore, we show how to disprove an incorrect set of UTXO paths.
 
 ### Binary Search in the UTXO paths
-A user wants to query all outputs of a particular Bitcoin address within the UTXO set. To do that efficiently, we can sort the set of UTXO paths by the output's recipient addresses. 
+A user wants to query all outputs of a particular Bitcoin address within the UTXO set (i.e. to prove the next block). To do that efficiently, we can sort the set of UTXO paths by the output's recipient addresses. 
 This allows for binary search within the UTXO set. Each step requires downloading an SPV proof to compare the address at the current position. 
 
 Therefore, a naive query requires total proof data of
