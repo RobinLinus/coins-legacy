@@ -12,7 +12,7 @@ This proposal is interesting in particular for lightning network nodes that come
 
 ## Overview: The Circle of Proofs
 The nano network allows *nano nodes* to sync quickly.
-[The most basic ideas are demonstrated by the strawman nano node](notes/nano-network-strawman.md). 
+[The most basic ideas are demonstrated by the straw-man nano node](notes/nano-network-strawman.md). 
 There are four main concepts:
 
 - An ***output path*** is simply `block_index/tx_index/output_index`. A succinct pointer to address a particular output in the blockchain. Furthermore, SPV proofs correspond to output paths. 
