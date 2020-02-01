@@ -1,4 +1,4 @@
-# Nano Network Strawman
+# Nano Network Straw-man
 
 A straw-man proposal to demonstrate stateless bitcoin nodes and explain the [nano network](../bitcoin-nano-network.md). 
 
