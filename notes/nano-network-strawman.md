@@ -27,7 +27,7 @@ If there is one honest peer available, this provides full node security.
 
 
 ### Analysis 
-This strawman scheme works though it is not very efficient. Such nodes cannot extend blocks themselves. 
+This straw-man proposal kinda works though it is not very efficient. Such nodes cannot extend blocks themselves. 
 Additionally, they always have to work with the full vector of 160 MB. 
 Furthermore, in case of only one malicious actor, everyone just syncs like a full node.
 
