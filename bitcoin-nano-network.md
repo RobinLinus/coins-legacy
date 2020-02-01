@@ -1,6 +1,6 @@
 # Bitcoin Nano Network
 
-*"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for *nano nodes* to sync quickly. Our construction works on top of today's Bitcoin network and requires no consensus changes. All necessary constructions emerge from the existing blockchain.
+*"Sync a Bitcoin node by downloading less than a Youtube video"*. We introduce a second-layer protocol for nodes to sync quickly. Our construction works on top of today's Bitcoin network and requires no consensus changes. All necessary constructions emerge from the existing blockchain.
 In contrast to traditional light *clients* our protocol supports nano *nodes* which update and share their state. 
 
 Nano nodes sync by downloading just about 150 MB initially. The only security assumption is that there is at least one honest peer available. If so, nodes can disprove attackers with neglectable effort.
