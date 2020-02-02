@@ -105,13 +105,16 @@ var sha256 = function sha256(ascii, h, original_l) {
 	return result;
 };
 
+	
+prefix = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+suffix = 'bbbb'
 
-preimage = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb'
+preimage = prefix + suffix
 
 
-intermediate = [-547637220, -400685530, -79320940, 1339297585, -1302435818, -690710079, -1416607447, 6512230]
+intermediate = [-547637220, -400685530, -79320940, 1339297585, -1302435818, -690710079, -1416607447, 6512230] // hash of prefix
 
-console.log( sha256(preimage), sha256('bbbb', intermediate, preimage.length*8) )
+console.log( sha256(preimage), sha256(suffix, intermediate, preimage.length*8) )
 
 	
 </script>
