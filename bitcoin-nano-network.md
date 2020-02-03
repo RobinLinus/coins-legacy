@@ -249,7 +249,7 @@ Re-syncing is more efficient than an initial sync. New outputs are added only to
 - Alice computes the difference to the hashes of her last known state
 - For every different chunk
   - Ask Bob for "the diff" of the chunk
-  - Bob computes the sparse bit vector of all unspent UTXOs of that chunk and sends it to Alice `~ 1 MB` (see below)
+  - Bob computes the sparse bit vector of all unspent UTXOs of that chunk and sends it to Alice `~ 1 MB` (see below). That is not the most compact diff, but the vector is easy to compute for Bob because he knows the UTXO paths.
   - Alice deletes every spent output path from her chunk
   - Alice hashes her resulting chunk of UTXO paths and verifies inclusion in the UTXO commitment
 
