@@ -233,5 +233,28 @@ We perform 10 queries which requires about `10 * 16.3 kB = 163 kB` SPV proof siz
 
 
 #### Download New Blocks 
-As long as the node is online it listens for new blocks to update its set of UTXO paths. An extended block is about 4 MB, so we have an overhead `6 * 4 MB/h = 24 MB/h` as long as we are online. 
+As long as the node is online it listens for new blocks to update its set of UTXO paths. An extended block is about 4 MB, so we have an overhead `6 * 4 MB/h = 24 MB/h` as long as we are online. The longer we listen the fewer SPV proofs we need, because many outputs are consumed quickly, so we can extract their proofs from recent blocks.
 
+Whenever there is no node serving SPV proofs we have to fall back to downloading full blocks to extract the SPVs proofs. This increases the overhead significantly. In the worst case we have to download `1.3 MB` for every input in the new block.
+In case our connection is too weak, we can simply wait a couple seconds until nodes with stronger connections share the extracted SPV proofs.
+
+
+#### Re-Sync
+Re-syncing is more efficient than an initial sync. New outputs are added only to the most recent chunk. In any older chunk the only update operation is deletion. Suppose Alice wants re-sync with the help of Bob:
+
+- Alice determines the correct headers chain and UTXO commitment as usual.
+- Alice asks Bob for the hashes of all chunks
+- Bob sends the hashes `#chunks * 32 bytes ~ 3.2 kbytes`
+- Alice verifies that the hashes are the Merkle leaves of the UTXO commitment
+- Alice computes the difference to the hashes of her last known state
+- For every different chunk
+  - Ask Bob for "the diff" of the chunk
+  - Bob computes the sparse bit vector of all unspent UTXOs of that chunk and sends it to Alice `~ 1 MB` (see below)
+  - Alice deletes every spent output path from her chunk
+  - Alice hashes her resulting chunk of UTXO paths and verifies inclusion in the UTXO commitment
+
+**Side Note** 
+[The UTXO bit vector of the full blockchain is about 60 MB](notes/nano-network-strawman.md). Suppose there are about 60 chunks. That means every chunk's UTXO vector is roughly 1 MB.
+
+#### Watching Payment Channels 
+In the above re-sync scenario Alice updates every chunk. Suppose she runs a lightning network node and wants to watch her payment channels. That requires to update only the chunks which include her outputs. The worst case is that all her channels are spread across different chunks. So even in the worst case we have to download only ~1 MB per payment channel.
