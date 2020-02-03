@@ -259,7 +259,7 @@ Re-syncing is more efficient than an initial sync. New outputs are added only to
 [The UTXO bit vector of the full blockchain is about 60 MB](notes/nano-network-strawman.md). Suppose there are about 60 chunks. That means every chunk's UTXO vector is roughly 1 MB.
 
 #### Watching Payment Channels 
-In the above re-sync scenario Alice updates every chunk. Suppose she runs a lightning network node and wants to watch her payment channels. That requires to update only the chunks which include her outputs. She just wants to verify that her output paths are still included in the set of UTXO paths. The worst case is that all her channels are spread across different chunks. So even in the worst case we have to download only ~1 MB per payment channel. 
+In the above re-sync scenario Alice updates every chunk. Suppose she runs a lightning network node and wants to watch her payment channels. That requires to update only the chunks which include her outputs. Suppose she remembered her output paths after creation.  Now she just wants to verify that her output paths are still included in the set of UTXO paths. The worst case is that all her channels are spread across different chunks. So even in the worst case she has to download only ~1 MB per payment channel. 
 
 **Side Note** This scheme provides nice privacy properties because an attacker would learn only in which chunks her outputs are included. Theoretically, she can further increase the anonymity set by downloading more chunks.
 
