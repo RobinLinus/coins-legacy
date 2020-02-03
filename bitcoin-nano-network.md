@@ -145,6 +145,8 @@ A more objective measure would be to chunk i.e. every n-th transaction or every 
 
 Any decent long-term compression requires some dynamic within the chunk sizes. Though we can damp the dynamic to reduce malleability. For example, a chunk size re-allocation could happen only once every 2 years at a particular block heigth.
 
+
+
 ### UTXO Commitment Updates
 Suppose a nano node has synced only the longest PoW chain and the most recent UTXO commitment. To validate a next block it needs an SPV proof for every input spent in the block. Naively, for each block, that is an overhead of about:
 ```
@@ -260,3 +262,19 @@ Re-syncing is more efficient than an initial sync. New outputs are added only to
 In the above re-sync scenario Alice updates every chunk. Suppose she runs a lightning network node and wants to watch her payment channels. That requires to update only the chunks which include her outputs. She just wants to verify that her output paths are still included in the set of UTXO paths. The worst case is that all her channels are spread across different chunks. So even in the worst case we have to download only ~1 MB per payment channel. 
 
 **Side Note** This scheme provides nice privacy properties because an attacker would learn only in which chunks her outputs are included. Theoretically, she can further increase the anonymity set by downloading more chunks.
+
+
+
+
+## Optimizations 
+
+
+#### Verifying the Total Supply
+The anchor of truth for the total supply is implied by the length of the headers chain and bitcoins reward halving function.
+We can apply a series of cheap integrity checks to harden our construction. The Merkle tree of chunks should be a *Merkle sum tree* such that its root commits to the total bitcoin supply. 
+ - SPV proofs are sufficient to update a chunk's sum successively.
+ - Roughly speaking, 20% of a chunk's outputs prove 80% of its value. This results in relatively strong proofs for the total supply. 
+ - Any output path implies the total supply at the output's creation date. 
+ - Chunks are sorted chronologically so they have static upper limits of value. 
+ - Only the most recent chunk's value can increase. All older chunks' values only *decrease* over time.
+ 
