@@ -270,8 +270,8 @@ In the above re-sync scenario Alice updates every chunk. Suppose she runs a ligh
 
 
 #### Verifying the Total Supply
-The anchor of truth for the total supply is implied by the length of the headers chain and bitcoins reward halving function.
-We can apply a series of cheap integrity checks to harden our construction. The Merkle tree of chunks should be a *Merkle sum tree* such that its root commits to the total bitcoin supply. 
+The anchor of truth for the total supply is implied by the length of the headers chain and bitcoin's reward halving function.
+We can apply a series of simple integrity checks to harden our construction. The Merkle tree of chunks should be a *Merkle sum tree* such that its root commits to the total bitcoin supply. 
  - SPV proofs are sufficient to update a chunk's sum successively.
  - Roughly speaking, 20% of a chunk's outputs prove 80% of its value. This results in relatively strong proofs for the total supply. 
  - Any output path implies the total supply at the output's creation date. 
