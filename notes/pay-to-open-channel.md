@@ -8,7 +8,7 @@ This idea is interesting. Still, it seems to be custodial until the batched tran
 Alternatively, the hub could send the user a zero-confirmation transaction opening the channel. 
 However, then the hub can not batch more channels into that transaction to reduce its on-chain fees. 
 
-That implies a simple formula of how long funds must be helt in custody in relation to saving fees: 
+That implies a simple formula describing how long funds must be helt in custody in relation to saving fees: 
 
 ```
 t = min_channels_per_tx / avg_new_users_per_hour
