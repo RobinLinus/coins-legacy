@@ -27,7 +27,7 @@ Ideally built upon an ecosystem of components:
   - Libraries of security UI components ( HTML, CSS, JS )
   - Libraries of Bitcoin tools for transacting and networking ( RUST + WebAssembly ? )
 - Privacy tools seamlessly integrated by default ( TOR, CoinJoin, ... )
-- Seamlessly integrated p2p exchange ( in person & online )
+- Seamlessly integrated p2p exchange ( in person & online, BISQ, hodlhodl, ... )
 - Self-serving network of lite nodes sharing succinct proofs for the global consensus
 
 Most of these components already exist today in some way. Still, many apps have a cumbersome usability. 
