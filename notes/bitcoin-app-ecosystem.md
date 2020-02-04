@@ -1,6 +1,7 @@
 # Streamlined Ecosystem of Bitcoin Apps
 
 The following sketches an ideal of a streamlined ecosystem of apps to accompany users savely thoughout the world of Bitcoin.
+It can be seen as a thought experiment to navigate the community's development efforts. Ideally, it contributes to the development of more explicit usability standards within Bitcoin's ecosystem.
 
 It makes sense to distinguish three main Bitcoin applications:
 - Wallet
