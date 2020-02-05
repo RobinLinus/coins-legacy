@@ -17,8 +17,8 @@ id = "index of public key in the set" = "user id"
 ```
 So a user's `id` is simply a natural number. Suppose there are less than 100k users, then `0 < id < max_id < 100'000 `.
 
-## Mapping everyting to primes
-We want to map `id -> value`. We exploit the struture of primes to build a key value store. We assume `0 <= value < p(32)`. Then we define:
+## Mapping everything to primes
+We want to map `id -> value`. We exploit the structure of primes to build a key value store. We assume `0 <= value < p(32)`. Then we define:
 ```
 p(32 + id) = "user id prime"
 ```
@@ -38,7 +38,7 @@ m = "trusted RSA modulus"
 ```
 Furthermore, we chose some non-trivial generator `g`. Then we can introduce an accumulator as the root state:
 ```
-A = g^ledger mod m
+A = g^ledger   (mod m)
 ```
 
 Which we can update successively with the following scheme for blocks:
@@ -49,14 +49,14 @@ out = account(out_1) * ... * account(out_k)
 ```
 Additionally, a state update implicitly verifies the `proof`:
 ```
-A == proof^in mod m
+A == proof^in   (mod m)
 ```
 
 ```
-A' = proof^out mod m 
+A' = proof^out   (mod m)
 ```
 
-Both `in` and `out` are large numbers, so we use a proof of exponentation to verify state transitions more efficiently ( see the paper on [RSA accumulators](https://eprint.iacr.org/2018/1188.pdf) ).
+Both `in` and `out` are large numbers, so we use a proof of exponentiation to verify state transitions more efficiently ( see the paper on [RSA accumulators](https://eprint.iacr.org/2018/1188.pdf) ).
 
 To verify that no money was created we have to check both the `in` and `out` value:
 ```
@@ -69,3 +69,9 @@ in_value < out_value
 ```
 This can be computed efficiently. Suppose `in` is not multiplied out, but every id and value is given in a list. Then the verifier multiplies those lists out to get `in` and `out`, and the sums of the values.
 
+## Pruning the Chain
+Given an initial state `A_0` and the chain, 
+```
+A_0 -> A_1 -> A_2 -> ... -> A_t
+```
+there are never more than `max_id` accounts in the `ledger` (ideally encoded). The total data required to compute any inclusion proof is at maximum `max_id * log2(max_value) bits ~ 100 kBytes`. Any transactions happening in between can be pruned. The pruned chain is like one big block. All intermediate states `A_2, ... , A_(t-1)` are irrelevant to prove consistency within the constraints.
