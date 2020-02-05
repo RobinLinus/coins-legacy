@@ -44,16 +44,16 @@ A = g^ledger mod m
 Which we can update successively with the following scheme for blocks:
 ```
 block = (in, out, proof)
-in = account(in_1) * ... * account(in_k)
+in = account(in_1) * ... * account(in_k) 
 out = account(out_1) * ... * account(out_k)
 ```
 Additionally, a state update implicitly verifies the `proof`:
 ```
-A == proof^in
+A == proof^in mod m
 ```
 
 ```
-A' = proof^out
+A' = proof^out mod m 
 ```
 
 Both `in` and `out` are large numbers, so we use a proof of exponentation to verify state transitions more efficiently ( see the paper on [RSA accumulators](https://eprint.iacr.org/2018/1188.pdf) ).
