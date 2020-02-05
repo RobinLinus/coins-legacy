@@ -60,8 +60,12 @@ Both `in` and `out` are large numbers, so we use a proof of exponentation to ver
 
 To verify that no money was created we have to check both the `in` and `out` value:
 ```
+with:
 in_value = account(in_1).value + ... + account(in_k).value
 out_value = account(out_1).value + ... + account(out_k).value
+
+verify:
+in_value < out_value
 ```
 This can be computed efficiently. Suppose `in` is not multiplied out, but every id and value is given in a list. Then the verifier multiplies those lists out to get `in` and `out`, and the sums of the values.
 
