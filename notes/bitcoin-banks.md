@@ -2,7 +2,7 @@
 The following is based mostly on [the ideas behind fairlayer](https://medium.com/fairlayer/xln-extended-lightning-network-80fa7acf80f3).
 
 
-A *bitcoin bank* is a trust-minimized Bitcoin custodial. It is not much more than a buffer for low-value transactions.
+A *bitcoin bank* is a trust-minimized Bitcoin custodial. It is only a buffer for low-value transactions.
 It manages a balance sheet mapping Bitcoin addresses to balances.
 
 The security model is simple: Every two hours the bank reduces all custodial balances above $15 down to $5 by creating on-chain outputs for the corresponding addresses.
