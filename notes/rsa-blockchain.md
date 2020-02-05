@@ -17,9 +17,9 @@ id = "index of public key in the set" = "user id"
 ```
 So a user's `id` is simply a natural number. Suppose we constrain the system to less than 100k users:
 ```
-0 < id < max_id < 100'000 
+0 < id < max_id = 100'000 
 ```
-We constrain the values to the range:
+Furthermore, We constrain the values to the range:
 ```
 0 <= value < max_value = p(32)
 ```
