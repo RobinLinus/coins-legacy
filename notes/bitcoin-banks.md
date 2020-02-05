@@ -1,4 +1,4 @@
-# Bitcoin Bank
+# Bitcoin Banks
 The following is based mostly on [the ideas behind fairlayer](https://medium.com/fairlayer/xln-extended-lightning-network-80fa7acf80f3).
 
 
