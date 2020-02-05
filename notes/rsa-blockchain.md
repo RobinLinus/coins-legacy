@@ -19,9 +19,9 @@ So a user's `id` is simply a natural number. Suppose we constrain the system to 
 ```
 0 < id < max_id = 100'000 
 ```
-Furthermore, We constrain the values to the range:
+Furthermore, we constrain all values to the range:
 ```
-0 <= value < max_value = p(32)
+0 <= value < max_value = p(32) = 131
 ```
 
 ## Mapping everything to primes
