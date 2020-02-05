@@ -38,7 +38,7 @@ m = "trusted RSA modulus"
 ```
 Furthermore, we chose some non-trivial generator `g`. Then we can introduce an accumulator as the root state:
 ```
-A = g^ledger
+A = g^ledger mod m
 ```
 
 Which we can update successively with the following scheme for blocks:
