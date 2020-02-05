@@ -21,4 +21,6 @@ Moreover, the bank's payouts can provide privacy by acting as an automatic coin 
 Security model summarized:
 - There is a n-of-m multi-signature federation
 - They rebalance their custodial ledger frequently
-- A bank is auditable
+  - v1: on-chain outputs
+  - v2: payment channels
+- Banks are auditable
