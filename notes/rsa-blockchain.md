@@ -8,7 +8,7 @@ up to about 10^9. That means we can also compute efficiently the n-th prime by b
 ```
 p(n) = "the n-th prime number"
 ```
-Side note: we define one to be the zero-th prime `p(0)=1`, `p(1)=2`, `p(2)=3`, `p(3)=5`, ...
+Side note: we define `1` to be the zero-th prime `p(0)=1`, `p(1)=2`, `p(2)=3`, `p(3)=5`, ...
 to represent empty accounts.
 ### User IDs
 We want to manage a simple balance sheet `public_key -> balance`. For now, we assume the set of keys is static and publicly known.
