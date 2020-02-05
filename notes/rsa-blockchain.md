@@ -31,7 +31,7 @@ p(32 + id) = "user id prime"
 ```
 And a complete account is defined by the prime number:
 ```
-account(id) = p( p(32 + id) * value_id )
+account(id) = p( p(32 + id) * value )
 ```
 ## RSA Commitment
 The ledger is defined by the product of all accounts.
