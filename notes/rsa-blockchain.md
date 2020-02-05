@@ -10,7 +10,7 @@ p(n) = "the n-th prime number"
 ```
 
 ### User IDs
-We want to manage a simple balance sheet `public_key -> balance`. For now, we assume the set of public keys is static and publicly known.
+We want to manage a simple balance sheet `public_key -> balance`. For now, we assume the set of keys is static and publicly known.
 We sort the set by any pre-defined order and assign an index to each key. This simplifies our world view and we can denote: 
 ```
 id = "index of public key in the set" = "user id"
