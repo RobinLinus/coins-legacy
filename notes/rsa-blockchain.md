@@ -15,10 +15,17 @@ We sort the set by any pre-defined order and assign an index to each key. This s
 ```
 id = "index of public key in the set" = "user id"
 ```
-So a user's `id` is simply a natural number. Suppose there are less than 100k users, then `0 < id < max_id < 100'000 `.
+So a user's `id` is simply a natural number. Suppose we constrain the system to less than 100k users:
+```
+0 < id < max_id < 100'000 
+```
+We constrain the values to the range:
+```
+0 <= value < max_value = p(32)
+```
 
 ## Mapping everything to primes
-We want to map `id -> value`. We exploit the structure of primes to build a key value store. We assume `0 <= value < p(32)`. Then we define:
+We want to map `id -> value`. We exploit the structure of primes to build a key value store. We define:
 ```
 p(32 + id) = "user id prime"
 ```
