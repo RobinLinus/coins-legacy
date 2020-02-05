@@ -1,4 +1,4 @@
-# Ledger in a RSA Accumulator
+# RSA Accumulator Statechain
 The following is a ledger scheme based on [RSA accumulator techniques as recently introduced by Boneh et al](https://eprint.iacr.org/2018/1188.pdf). 
 Our scheme does not require to hash into the primes and its updates are more efficient.
 
