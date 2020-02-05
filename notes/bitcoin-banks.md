@@ -6,7 +6,7 @@ A *bitcoin bank* is a trust-minimized Bitcoin custodial. It is not much more tha
 It manages a balance sheet mapping Bitcoin addresses to balances.
 
 The security model is simple: Every two hours the bank reduces all custodial balances above $15 down to $5 by creating on-chain outputs for the corresponding addresses.
-( e.g. re-balance when my custodial balance is over `100 * on-chain fee`. This way the fee is always below 1% )
+( or e.g. re-balance when my custodial balance is over `100 * on-chain fee`. This way the fee is always below 1% )
 
 This limits the maximum trust in the bank to $15/user every two hours. Batching all payouts into one transaction reduces TX fees.
 
