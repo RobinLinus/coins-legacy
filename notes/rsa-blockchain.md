@@ -84,5 +84,6 @@ A_0 -> A_1 -> A_2 -> ... -> A_t
 there are never more than `max_id` accounts in the `ledger` (ideally encoded). The total data required to compute any inclusion proof is at maximum `max_id * log2(max_value) bits ~ 100 kBytes`. Any transactions happening in between can be pruned. The pruned chain is like one big block. All intermediate states `A_2, ... , A_(t-1)` are irrelevant to prove consistency of 
 ```
 A_0 -> A_t
+A_0^ledger = A_t  (mod p)
 ```
 within the above constraints.
