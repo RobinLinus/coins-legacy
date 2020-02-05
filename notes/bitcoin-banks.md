@@ -14,7 +14,7 @@ Transactions within a bank are basically free and instant. On-chain transactions
 
 The bank holds a single output containing all BTC held in custody. That output is a MultiSig output. A simple federation is in charge of signing the transaction. At every settlement, the bank commits to its internal state.
 
-The same principal can be extended to custodial LN wallets. That enables bank users to pay any lightning invoice instantly without having an own channel yet.  
+The same principle can be extended to custodial LN wallets. That enables bank users to pay any lightning invoice instantly without having an own channel yet.  
 
 Moreover, the bank's payouts can provide privacy by acting as an automatic coin join for all users.
 
