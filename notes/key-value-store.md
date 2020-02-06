@@ -25,7 +25,7 @@ We exploit the recursive struture of primes to encode pairs:
 ```
 pair_i = p( p(32 + key_i) * value_i )
 ```
-So every pair becomes a unique prime. Now we can represent our set `S` as a product:
+So every pair becomes a unique prime because `value_i < p(32)`. Now we can represent our set `S` as a product:
 ```
 P = pair_1 * pair_2 * pair_3 * ...
 ```
