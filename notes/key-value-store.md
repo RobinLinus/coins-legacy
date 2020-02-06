@@ -29,7 +29,7 @@ This maps the pairs to unique primes because every `value_i < p(32) = 131`.
 
 The prime number theorem `p(n) ~ 𝓞( n * log(n) )` gives an upper bound of `pair_i < 6 * 10^9 ~ 4 bytes`.
 
-The factorization theorem guarantees we can represent `S` as unique product:
+The factorization theorem guarantees we can represent `S` as a unique product:
 ```
 s = pair_1 * pair_2 * pair_3 * ...
 ```
