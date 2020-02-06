@@ -25,15 +25,16 @@ To encode the pairs we exploit the recursive structure of prime number indices:
 ```
 pair_i = p( p(32 + key_i) * value_i )
 ```
-This maps the pairs to unique primes because every `value_i < p(32) = 131`. The prime number theorem `p(n) ~ 𝓞( n * log(n) )` gives an upper bound of `pair_i < 6 * 10^9 ~ 4 bytes`.
+This maps the pairs to unique primes because every `value_i < p(32) = 131`. 
 
-Now we can represent our set `S` as a product:
+The prime number theorem `p(n) ~ 𝓞( n * log(n) )` gives an upper bound of `pair_i < 6 * 10^9 ~ 4 bytes`.
+
+The factorization theorem guarantees we can represent `S` as unique product:
 ```
 s = pair_1 * pair_2 * pair_3 * ...
 ```
 
-The factorization theorem guarantees that `s` represents `S` uniquely. So we can construct an RSA accumulator for `S` with modulus `m` and generator `g`:
-
+So we can construct an RSA accumulator for `S` with modulus `m` and generator `g`:
 ```
 A = g^s  (mod m)
 ```
