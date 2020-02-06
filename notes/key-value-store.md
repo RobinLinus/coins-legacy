@@ -27,13 +27,17 @@ pair_i = p( p(32 + key_i) * value_i )
 ```
 This maps the pairs to unique primes because every `value_i < p(32) = 131`. Now we can represent our set `S` as a product:
 ```
-P = pair_1 * pair_2 * pair_3 * ...
+s = pair_1 * pair_2 * pair_3 * ...
 ```
 
-The factorization theorem guarantees `P` represents `S` uniquely.
+The factorization theorem guarantees `s` represents `S` uniquely. With an RSA modulus `m` and a generator `g` we construct an accumulator:
+
+```
+C = g^s  (mod p)
+```
 
 
 
 ### Enhancements
 - We can extend the value range. For uniqueness it's sufficient that all factors of a `value_i` are smaller than `p(32)`.
-- `P` is most compact if the set can be sorted such that the smallest key has the largest value.
+- The product `s` is most compact if the set can be sorted such that the smallest key has the largest value.
