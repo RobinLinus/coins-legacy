@@ -17,7 +17,7 @@ Our constraints for now:
 
 We denote the n-th prime number as 
 ```
-p(n) = "the n-th prime"
+p(n) = "the n-th prime" ~ 𝓞( n * log(n) )
 ```
 and assume we can compute `p(n)` efficiently for `n < 10^9`.
 
