@@ -21,7 +21,7 @@ p(n) = "the n-th prime" ~ 𝓞( n * log(n) )
 ```
 and assume we can compute `p(n)` efficiently for `n < 10^10` with the Meissel–Lehmer algorithm.
 
-We exploit the recursive struture of primes to encode pairs:
+We exploit the recursive structure of primes to encode pairs:
 ```
 pair_i = p( p(32 + key_i) * value_i )
 ```
