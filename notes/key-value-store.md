@@ -33,7 +33,7 @@ s = pair_1 * pair_2 * pair_3 * ...
 The factorization theorem guarantees `s` represents `S` uniquely. With an RSA modulus `m` and a generator `g` we construct an accumulator:
 
 ```
-C = g^s  (mod p)
+A = g^s  (mod p)
 ```
 
 
