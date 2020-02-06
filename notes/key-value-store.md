@@ -8,14 +8,14 @@ Let `S` be a set of key-value pairs:
 S = { (key_i, value_i) }
 ```
 
-For now, we constrain `S` to integers in the range
+For now, we constrain `S` to integers in the range:
 
 ```
 1 < key_i < 100'000
 1 < value_i < 128
 ```
 
-We denote the n-th prime number as 
+We denote the n-th prime number as:
 ```
 p(n) = "the n-th prime" ~ 𝓞( n * log(n) )
 ```
