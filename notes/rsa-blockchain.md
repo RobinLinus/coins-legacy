@@ -3,7 +3,7 @@ The following is a ledger scheme based on [RSA accumulator techniques as recentl
 Our scheme does not require to hash into the primes and its updates are more efficient.
 
 ## Computing the n-th Prime Number
-[We can compute the prime counting function efficiently](https://robinlinus.github.io/prime-counting-function/index.html)
+[We can compute the prime-counting function efficiently](https://robinlinus.github.io/prime-counting-function/index.html)
 up to about 10^9. That means we can also compute efficiently the n-th prime by binary searching that range. We denote
 ```
 p(n) = "the n-th prime number"
