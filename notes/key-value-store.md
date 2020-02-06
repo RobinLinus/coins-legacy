@@ -27,7 +27,7 @@ pair_i = p( p(32 + key_i) * value_i )
 ```
 This maps every pair to a unique prime because every `value_i < p(32) = 131`. 
 
-The prime number theorem `p(n) ~ 𝓞( n * log(n) )` gives an upper bound of `pair_i < 6 * 10^9 ~ 4 bytes`.
+The prime number theorem, `p(n) ~ 𝓞( n * log(n) )`, gives an upper bound of `pair_i < 6 * 10^9 ~ 4 bytes`.
 
 The factorization theorem guarantees we can represent `S` as a unique product:
 ```
