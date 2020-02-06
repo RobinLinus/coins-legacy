@@ -36,4 +36,4 @@ The factorization theorem guarantees `P` represents `S` uniquely.
 
 ### Enhancements
 - We can allow more values. For uniqueness it's sufficient that all factors of a `value_i` are smaller than `p(32)`.
-- The representation is most compact when the set is sorted such that the smallest key has the largest value.
+- `P` is most compact when the set is sorted such that the smallest key has the largest value.
