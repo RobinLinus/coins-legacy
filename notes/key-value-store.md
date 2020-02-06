@@ -31,3 +31,9 @@ P = pair_1 * pair_2 * pair_3 * ...
 ```
 
 The factorization theorem guarantees `P` represents `S` uniquely.
+
+
+
+### Enhancements
+- We can allow more values. For uniqueness it's sufficient that all factors of a `value_i` are smaller than `p(32)`.
+- The representation is most compact when the set is sorted such that the lowest index has the highest value.
