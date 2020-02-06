@@ -30,10 +30,10 @@ This maps the pairs to unique primes because every `value_i < p(32) = 131`. Now 
 s = pair_1 * pair_2 * pair_3 * ...
 ```
 
-The factorization theorem guarantees `s` represents `S` uniquely. With an RSA modulus `m` and a generator `A_0` we construct an accumulator:
+The factorization theorem guarantees `s` represents `S` uniquely. With an RSA modulus `m` and a generator `g` we construct an accumulator:
 
 ```
-A_t = A_0^s  (mod m)
+A = g^s  (mod m)
 ```
 
 
