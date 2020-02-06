@@ -21,11 +21,11 @@ p(n) = "the n-th prime" ~ 𝓞( n * log(n) )
 ```
 and assume we can compute `p(n)` efficiently for `n < 10^10` ( e.g. with the Meissel–Lehmer algorithm ).
 
-We exploit the recursive structure of prime number indices to encode pairs:
+To encode the pairs we exploit the recursive structure of prime number indices:
 ```
 pair_i = p( p(32 + key_i) * value_i )
 ```
-This maps pairs to unique primes because every `value_i < p(32)`. Now we can represent our set `S` as a product:
+This maps the pairs to unique primes because every `value_i < p(32)`. Now we can represent our set `S` as a product:
 ```
 P = pair_1 * pair_2 * pair_3 * ...
 ```
