@@ -8,7 +8,7 @@ Let `S` be a set of key-value pairs:
 S = { (key_i, value_i) }
 ```
 
-Our constraints for now:
+For now, we constrain `S` to integers in the range
 
 ```
 1 < key_i < 100'000
