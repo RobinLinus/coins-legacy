@@ -3,7 +3,7 @@
 The following sketches an efficient key-value store for RSA accumulators as [recently discussed by Boneh et al](https://eprint.iacr.org/2018/1188.pdf).
 
 
-Let `S` be a set of key-value pairs:
+Let `S` be a set of key-value pairs of integers:
 ```
 S = { (key_i, value_i) }
 ```
