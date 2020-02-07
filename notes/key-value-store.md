@@ -15,9 +15,9 @@ For now, we constrain `S` to integers in the range:
 1 < value_i < 128
 ```
 
-We denote the n-th prime number as:
+We denote the n-th prime as:
 ```
-p(n) = "the n-th prime" 
+p(n) = "the n-th prime number" 
 ```
 and assume we can compute `p(n)` efficiently for `n < 10^10` ( e.g. with the Meissel–Lehmer algorithm ).
 
